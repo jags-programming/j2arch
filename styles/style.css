@@ -1,0 +1,9 @@
+.banner-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a7ade;
+}
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}

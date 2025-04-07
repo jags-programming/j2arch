@@ -1,0 +1,144 @@
+/* style_pastel.css */
+
+/* Pastel background */
+.root {
+    -fx-background-color: #FAF9F6;
+}
+
+/* Label color */
+.label,
+.radio-button,
+.custom-inputs-grid .label {
+    -fx-text-fill: #333333;
+}
+
+/* Button pastel tone */
+.button,
+.custom-inputs-grid .button {
+    -fx-background-color: #A7C7E7;
+    -fx-text-fill: #333333;
+
+}
+
+.button:hover,
+.custom-inputs-grid .button:hover {
+    -fx-background-color: #91B8DF;
+}
+
+.button:focused {
+    -fx-effect: dropshadow(three-pass-box, #A7C7E7, 5, 0.3, 0, 0);
+}
+
+/* Text field with pastel border */
+.text-field,
+.custom-inputs-grid .text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #FFD6E0;
+ 
+    -fx-text-fill: #333333;
+}
+
+.custom-inputs-grid .text-field:focused {
+    -fx-border-color: #FFB6C1;
+    -fx-effect: dropshadow(three-pass-box, #FFD6E0, 5, 0.3, 0, 0);
+}
+
+.custom-inputs-grid .text-field:hover {
+    -fx-border-color: #FFC0CB;
+}
+
+.custom-inputs-grid .text-field:focused:hover {
+    -fx-border-color: #FFB6C1;
+}
+
+.progress-indicator {
+    -fx-progress-color: #A7C7E7;
+}
+
+.custom-inputs-titled-pane {
+    -fx-background-color: #F5F5F5;
+    -fx-text-fill: #333333;
+    -fx-border-color: #E6E6E6;
+  
+}
+
+.custom-inputs-titled-pane > .title {
+    -fx-background-color: #EAF3FB;
+    -fx-border-color: #E6E6E6;
+}
+
+.custom-inputs-titled-pane > .title > .text {
+    -fx-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.custom-inputs-titled-pane > .content {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E6E6E6;
+}
+
+#bannerLabel {
+    -fx-text-fill: #5A5A89; /* Soft, muted purple */
+   
+}
+
+.custom-inputs-grid {
+    -fx-background-color: transparent; /* For consistency: Defined across themes for layout styling */
+    -fx-text-fill: inherit;
+}
+
+/* === TAB STYLING FOR PASTEL THEME === */
+
+/* TabPane background */
+.tab-pane {
+    -fx-background-color: #FAF9F6;
+}
+
+/* Tab headers (unselected) */
+.tab {
+    -fx-background-color: #EAF3FB;  /* very soft blue */
+    -fx-border-color: #E6E6E6 #E6E6E6 transparent #E6E6E6;
+    -fx-text-fill: #333333;
+
+}
+
+/* Hover state */
+.tab:hover {
+    -fx-background-color: #D6E9F9;  /* slightly darker on hover */
+}
+
+/* Selected tab */
+.tab:selected {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #A7C7E7 #A7C7E7 transparent #A7C7E7;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Tab label text */
+.tab-label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Tab content area */
+.tab-content-area {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E6E6E6;
+
+}
+
+.toggle-button {
+    -fx-background-color: #A7C7E7; /* For consistency: Soft pastel version of primary accent */
+    -fx-text-fill: #333333;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #91B8DF;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #91B8DF;
+    -fx-text-fill: #333333;
+}

@@ -1,0 +1,60 @@
+/* === Font and Basic Scene === */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    
+}
+
+/* === Transitions and shared button/text styles === */
+.button, .text-field {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.button,
+.custom-inputs-grid .button {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 9pt;
+    -fx-font-weight: normal;
+}
+
+/* === Layout Containers === */
+.vbox, .hbox {
+    -fx-background-color: transparent;
+
+}
+
+/* === Grid common spacing === */
+.custom-inputs-grid {
+    -fx-padding: 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-border-radius: 0 0 8 8;
+}
+
+/* === TitledPane layout structure === */
+.custom-inputs-titled-pane {
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 0;
+}
+
+.custom-inputs-titled-pane > .title {
+    -fx-border-width: 1 1 0 1;
+    -fx-border-radius: 8 8 0 0;
+}
+
+.custom-inputs-titled-pane > .content {
+    -fx-padding: 10;
+    -fx-border-width: 0 1 1 1;
+    -fx-border-radius: 0 0 8 8;
+}
+
+#bannerLabel {
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+    
+}
+

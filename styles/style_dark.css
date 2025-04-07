@@ -1,0 +1,145 @@
+.root {
+    -fx-background-color: #121212;
+}
+
+.label, .radio-button, .custom-inputs-grid .label, .tab-label, .text-field {
+    -fx-text-fill: #E0E0E0;
+}
+
+
+.button {
+    -fx-background-color: #BB86FC;
+    -fx-text-fill: black;
+    
+}
+
+.button:hover,
+.custom-inputs-grid .button:hover {
+    -fx-background-color: #9b6bdc;
+}
+
+.button:focused {
+    -fx-effect: dropshadow(three-pass-box, #BB86FC, 5, 0.3, 0, 0);
+}
+
+.text-field,
+.custom-inputs-grid .text-field {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #444444;
+    
+    -fx-text-fill: #FFFFFF;
+}
+
+.custom-inputs-grid {
+    -fx-background-color: #262626;
+    -fx-text-fill: #DDDDDD;
+}
+
+.custom-inputs-grid .text-field:focused {
+    -fx-border-color: #BB86FC;
+    -fx-effect: dropshadow(three-pass-box, #BB86FC, 5, 0.3, 0, 0);
+}
+
+.custom-inputs-grid .text-field:hover {
+    -fx-border-color: #555555;
+}
+
+.custom-inputs-grid .text-field:focused:hover {
+    -fx-border-color: #BB86FC;
+}
+
+.progress-indicator {
+    -fx-progress-color: #BB86FC;
+}
+
+.custom-inputs-grid .button {
+    -fx-background-color: #BB86FC;
+    -fx-text-fill: black;
+   
+}
+
+.custom-inputs-titled-pane {
+    -fx-background-color: #262626;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #444444;
+    
+}
+
+.custom-inputs-titled-pane > .title {
+    -fx-background-color: #1A1A1A;
+    -fx-border-color: #444444;
+}
+
+.custom-inputs-titled-pane > .title > .text {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.custom-inputs-titled-pane > .content {
+    -fx-background-color: #262626;
+    -fx-border-color: #444444;
+}
+
+#bannerLabel {
+    -fx-text-fill: #BB86FC;
+
+}
+
+
+/* Common text color */
+.label, .tab-label, .text-field, .radio-button {
+    -fx-text-fill: #E0E0E0; /* light gray for contrast */
+}
+
+.tab-label {
+    -fx-font-weight: bold; /* For consistency: Align font weight with light and pastel themes */
+}
+.tab:selected {
+    -fx-font-weight: bold; /* For consistency: Highlight selected tab text */
+}
+/* TabPane background (header bar) */
+.tab-pane {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #2C2C2C;
+}
+
+/* Tab headers (unselected) */
+.tab {
+    -fx-background-color: #2C2C2C;
+    -fx-border-color: transparent transparent #3A3A3A transparent;
+    -fx-text-fill: #B0B0B0;
+
+}
+
+/* Tab hover effect */
+.tab:hover {
+    -fx-background-color: #3A3A3A;
+    -fx-text-fill: #E0E0E0;
+}
+
+/* Selected tab */
+.tab:selected {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #6200EE #6200EE transparent #6200EE;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Tab content area */
+.tab-content-area {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #2C2C2C;
+}
+
+.toggle-button {
+    -fx-background-color: #BB86FC; /* For consistency: Matches the pastel tone of light's accent */
+    -fx-text-fill: black;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #9b6bdc;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #9b6bdc;
+    -fx-text-fill: black;
+}

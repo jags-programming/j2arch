@@ -1,0 +1,31 @@
+<configuration>
+
+    <!-- Define log file location -->
+  
+    <property name="LOG_PATH" value="./logs/application.log"/>
+
+
+
+    <!-- File Appender (Logs INFO and Above for All Packages) -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+     <!-- Logger for com.pjsoft.uml (Logs INFO and Above to File Only) -->
+    <logger name="com.pjsoft.uml" level="debug" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- Root Logger (Logs INFO and Above to File Only) -->
+    <root level="debug">
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Optional: Override Logging Levels for Specific Packages -->
+    <logger name="org.springframework" level="warn"/>
+
+</configuration>
