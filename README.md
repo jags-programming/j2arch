@@ -91,7 +91,7 @@ README.md
 └───templates
     ├───htmldoc
     └───javadoc
-
+```
 ## Installation
 ### Prerequisites
 - **Java 23**
