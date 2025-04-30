@@ -105,10 +105,11 @@ mvn clean package
 Run the CLI application using:
 ```sh
 mvn exec:java
-
+```
 Run the GUI application using:
+```sh
 mvn javafx:run
-
+```
 
 ## Contributing
 Contributions are welcome! To contribute:
