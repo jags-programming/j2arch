@@ -6,20 +6,51 @@ import java.util.List;
 /**
  * Scenario
  * 
- * Represents a single sequence diagram. A scenario consists of an entry class,
- * a starting method, and a sequence of interactions (caller-callee relationships)
- * that form the sequence diagram.
+ * Represents a single sequence diagram. A scenario consists of:
+ * - An entry class: The starting point of the sequence diagram.
+ * - A starting method: The method in the entry class that initiates the sequence.
+ * - A sequence of interactions: Caller-callee relationships that form the sequence diagram.
+ * 
+ * Responsibilities:
+ * - Stores the entry class, starting method, and interactions for a sequence diagram.
+ * - Provides methods to add interactions and retrieve scenario details.
+ * - Converts the scenario into PlantUML syntax for diagram generation.
+ * 
+ * Dependencies:
+ * - {@link Interaction}: Represents a single interaction (caller-callee relationship) in the sequence diagram.
+ * 
+ * Limitations:
+ * - Assumes that all interactions are valid and complete.
+ * - Does not validate the correctness of the generated PlantUML syntax.
+ * 
+ * Thread Safety:
+ * - This class is not thread-safe. Concurrent modifications to the interactions list may lead to unexpected behavior.
+ * 
+ * Usage Example:
+ * {@code
+ * Scenario scenario = new Scenario("MyClass", "myMethod");
+ * scenario.addInteraction(new Interaction("CallerClass", "callerMethod", "CalleeClass", "calleeMethod"));
+ * String plantUmlSyntax = scenario.toPlantUmlSyntax();
+ * System.out.println(plantUmlSyntax);
+ * }
+ * 
+ * @author PJSoft
+ * @version 2.2
+ * @since 1.0
  */
 public class Scenario {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Scenario.class);
-    private final String entryClass;
+    private final String entryClass; // The entry class of the scenario
     private final String startingMethod; // The method in the entry class that starts the scenario
     private final List<Interaction> interactions; // List of interactions in the scenario
 
     /**
      * Constructs a Scenario with the specified entry class and starting method.
      * 
-     * @param entryClass The name of the entry class.
+     * Responsibilities:
+     * - Initializes the entry class, starting method, and an empty list of interactions.
+     * 
+     * @param entryClass     The name of the entry class.
      * @param startingMethod The name of the method in the entry class that starts the scenario.
      */
     public Scenario(String entryClass, String startingMethod) {
@@ -31,8 +62,8 @@ public class Scenario {
     /**
      * Adds an interaction to the scenario.
      * 
-     * An interaction represents a caller-callee relationship between two classes
-     * and their respective methods.
+     * Responsibilities:
+     * - Adds a caller-callee relationship to the list of interactions.
      * 
      * @param interaction The interaction to add to the scenario.
      */
@@ -43,6 +74,9 @@ public class Scenario {
     /**
      * Retrieves all interactions in the scenario.
      * 
+     * Responsibilities:
+     * - Returns the list of interactions that form the sequence diagram.
+     * 
      * @return A list of interactions in the scenario.
      */
     public List<Interaction> getInteractions() {
@@ -52,7 +86,8 @@ public class Scenario {
     /**
      * Retrieves the entry class of the scenario.
      * 
-     * The entry class is the starting point of the sequence diagram.
+     * Responsibilities:
+     * - Returns the name of the entry class, which is the starting point of the sequence diagram.
      * 
      * @return The name of the entry class.
      */
@@ -63,8 +98,8 @@ public class Scenario {
     /**
      * Retrieves the starting method of the scenario.
      * 
-     * The starting method is the method in the entry class that initiates the
-     * sequence of interactions in the scenario.
+     * Responsibilities:
+     * - Returns the name of the starting method in the entry class that initiates the sequence.
      * 
      * @return The name of the starting method.
      */
@@ -75,9 +110,9 @@ public class Scenario {
     /**
      * Converts the scenario to PlantUML syntax.
      * 
-     * This method generates the PlantUML representation of the scenario, which
-     * can be used to create a sequence diagram. The syntax includes the title
-     * and all interactions in the scenario.
+     * Responsibilities:
+     * - Generates the PlantUML representation of the scenario.
+     * - Includes the title and all interactions in the sequence diagram.
      * 
      * @return A string containing the PlantUML syntax for the scenario.
      */

@@ -5,9 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import com.pjsoft.j2arch.uml.util.DiagramImageGenerator;
 import com.pjsoft.j2arch.uml.util.ScenarioBuilder;
-import com.pjsoft.j2arch.uml.config.ConfigurationManager;
-import com.pjsoft.j2arch.uml.model.CodeEntity;
+
+import com.pjsoft.j2arch.core.context.GenerationContext;
+import com.pjsoft.j2arch.core.model.CodeEntity;
 import com.pjsoft.j2arch.uml.model.Scenario;
 
 import net.sourceforge.plantuml.GeneratedImage;
@@ -19,56 +21,91 @@ import net.sourceforge.plantuml.SourceFileReader;
  * This service is responsible for generating sequence diagrams from the provided
  * CodeEntity objects. It handles the creation of PlantUML `.puml` files and the
  * generation of diagram images (e.g., `.png` or `.svg`) using the PlantUML library.
+ * 
+ * Responsibilities:
+ * - Identifies scenarios using the {@link ScenarioBuilder}.
+ * - Writes PlantUML syntax to `.puml` files for each scenario.
+ * - Generates diagram images (e.g., `.png`) from the `.puml` files.
+ * - Manages output directories for `.puml` files and generated images.
+ * 
+ * Dependencies:
+ * - {@link ScenarioBuilder}: Used to identify scenarios for sequence diagrams.
+ * - {@link DiagramImageGenerator}: Used to generate diagram images from `.puml` files.
+ * - {@link GenerationContext}: Provides configuration details for diagram generation.
+ * 
+ * Limitations:
+ * - Assumes that the provided CodeEntity objects are complete and accurate.
+ * - Requires valid output directories for `.puml` files and images.
+ * - Does not validate the correctness of the generated diagrams.
+ * 
+ * Thread Safety:
+ * - This class is not thread-safe as it relies on mutable state.
+ * 
+ * @author PJSoft
+ * @version 2.2
+ * @since 1.0
  */
 public class SequenceDiagramService {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SequenceDiagramService.class);
-    private final ConfigurationManager config;
 
     /**
-     * Constructs a SequenceDiagramService with the specified configuration manager.
+     * Constructs a SequenceDiagramService.
      * 
-     * @param config The configuration manager containing project-specific settings.
+     * Responsibilities:
+     * - Initializes the service for sequence diagram generation.
      */
-    public SequenceDiagramService(ConfigurationManager config) {
-        this.config = config;
+    public SequenceDiagramService() {
+        // No explicit initialization required for now
     }
 
     /**
      * Generates sequence diagrams based on the provided CodeEntity objects.
      * 
      * This method performs the following steps:
-     * 1. Identifies scenarios using the ScenarioBuilder.
+     * 1. Identifies scenarios using the {@link ScenarioBuilder}.
      * 2. Writes PlantUML syntax to `.puml` files for each scenario.
      * 3. Generates diagram images (e.g., `.png`) from the `.puml` files.
      * 
      * @param codeEntities The list of CodeEntity objects representing the parsed classes.
+     * @param context      The generation context containing configuration details.
      * @return The path to the output directory containing the generated diagrams.
+     * @throws IllegalArgumentException If no CodeEntity objects are provided.
      */
-    public String generateSequenceDiagram(List<CodeEntity> codeEntities) {
-        logger.info("Generating sequence diagram...");
+    public String generateSequenceDiagram(List<CodeEntity> codeEntities, GenerationContext context) {
+        if (codeEntities.isEmpty()) {
+            throw new IllegalArgumentException("No code entities provided for generating the sequence diagram. Please check input or configuration property.");
+        }
+        logger.debug("Generating sequence diagram...");
 
-        // Step 1: Retrieve the output directory
-        String outputDirectory = config.getProperty("output.directory");
+        // Step 1: Retrieve the output directory for `.puml` files
+        String outputDirectoryName = context.getPumlPath();
+        File outputDirectory = new File(outputDirectoryName);
 
         // Step 2: Generate scenarios using ScenarioBuilder
-        ScenarioBuilder scenarioBuilder = new ScenarioBuilder(config.getProperty("project.package"));
+        ScenarioBuilder scenarioBuilder = new ScenarioBuilder(context.getIncludePackage());
         List<Scenario> scenarios = scenarioBuilder.getScenarios(codeEntities);
 
-        // Step 3: Generate PlantUML syntax and write .puml files
+        // Step 3: Retrieve the output directory for images
+        String imageOutputDir = context.getImagesOutputDirectory();
+        File imageOutputDirectory = new File(imageOutputDir);
+
+        // Step 4: Generate PlantUML syntax and write `.puml` files
         for (Scenario scenario : scenarios) {
             try {
                 String plantUmlSyntax = scenario.toPlantUmlSyntax(); // Get PlantUML syntax from Scenario
-                String pumlFilePath = writePlantUmlToFile(plantUmlSyntax, outputDirectory, scenario.getEntryClass());
+                String pumlFilePath = writePlantUmlToFile(plantUmlSyntax, outputDirectory, scenario);
 
-                // Step 4: Generate diagram images from .puml files
-                generateDiagramImage(pumlFilePath);
+                // Step 5: Generate diagram images from `.puml` files
+                DiagramImageGenerator imageGenerator = new DiagramImageGenerator();
+                File pumlFile = new File(pumlFilePath);
+                imageGenerator.generateDiagramImage(pumlFile, imageOutputDirectory);
             } catch (IOException e) {
                 logger.error("Failed to process scenario: " + scenario.getEntryClass(), e);
             }
         }
 
-        logger.info("Sequence diagram generation completed.");
-        return outputDirectory; // Return the output directory path
+        logger.debug("Sequence diagram generation completed.");
+        return outputDirectoryName; // Return the output directory path
     }
 
     /**
@@ -76,33 +113,33 @@ public class SequenceDiagramService {
      * 
      * This method ensures that the output directory exists before writing the `.puml` file.
      * 
-     * @param plantUmlSyntax The PlantUML syntax to write.
+     * @param plantUmlSyntax  The PlantUML syntax to write.
      * @param outputDirectory The directory to write the `.puml` file to.
-     * @param fileName The name of the `.puml` file (without extension).
+     * @param scenario        The scenario for which the `.puml` file is being created.
      * @return The full path to the created `.puml` file.
      * @throws IOException If an error occurs while writing the file.
      */
-    private String writePlantUmlToFile(String plantUmlSyntax, String outputDirectory, String fileName) throws IOException {
+    private String writePlantUmlToFile(String plantUmlSyntax, File outputDirectory, Scenario scenario) throws IOException {
         // Ensure the output directory exists
-        File directory = new File(outputDirectory);
-        if (!directory.exists()) {
-            if (!directory.mkdirs()) {
+        if (!outputDirectory.exists()) {
+            if (!outputDirectory.mkdirs()) {
                 throw new IOException("Failed to create output directory: " + outputDirectory);
             }
         }
 
-        // Create the .puml file
-        File pumlFile = new File(directory, fileName + ".puml");
+        // Create the `.puml` file
+        String fileName = scenario.getEntryClass() + "_" + scenario.getStartingMethod();
+        File pumlFile = new File(outputDirectory, fileName + ".puml");
         try (FileWriter writer = new FileWriter(pumlFile)) {
             // Write the PlantUML syntax to the file
             writer.write(plantUmlSyntax);
-            logger.info("Successfully wrote PlantUML file: " + pumlFile.getAbsolutePath());
+            logger.debug("Successfully wrote PlantUML file: " + pumlFile.getAbsolutePath());
         } catch (IOException e) {
             logger.error("Failed to write PlantUML file: " + pumlFile.getAbsolutePath(), e);
             throw e; // Rethrow the exception to handle it in the calling method
         }
 
-        return pumlFile.getAbsolutePath(); // Return the full path to the .puml file
+        return pumlFile.getAbsolutePath(); // Return the full path to the `.puml` file
     }
 
     /**
@@ -131,10 +168,10 @@ public class SequenceDiagramService {
             }
 
             for (GeneratedImage image : generatedImages) {
-                logger.info("Generated diagram image: " + image.getPngFile().getAbsolutePath());
+                logger.debug("Generated diagram image: " + image.getPngFile().getAbsolutePath());
             }
 
-            logger.info("Diagram image generated successfully for: " + pumlFilePath);
+            logger.debug("Diagram image generated successfully for: " + pumlFilePath);
         } catch (IOException e) {
             throw new RuntimeException("Error generating diagram image for: " + pumlFilePath, e);
         }

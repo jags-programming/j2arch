@@ -1,0 +1,23 @@
+@startuml
+package "Core Modules" {
+    [Java-to-UML Diagram Generator] --> [JavaParserService]
+    [Java-to-UML Diagram Generator] --> [PlantUML]
+    [PUML to HTML Documentation Generator] --> [HTMLTemplateEngine]
+    [PUML to HTML Documentation Generator] --> [Java-to-UML Diagram Generator]
+    [JavaDoc Generator] --> [JavaDocGenerator]
+    [JavaDoc Generator] --> [DiagramIntegrator]
+    [JavaDoc Generator] --> [Java-to-UML Diagram Generator]
+}
+
+package "Supporting Modules" {
+    [Configuration Management] --> [Core Modules]
+    [Storage Management] --> [Core Modules]
+    [Diagram Image Preview] --> [Core Modules]
+}
+
+package "External Dependencies" {
+    [PlantUML] --> [Java-to-UML Diagram Generator]
+    [JavaParser] --> [JavaParserService]
+    [SLF4J] --> [Core Modules]
+}
+@enduml

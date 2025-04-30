@@ -1,12 +1,20 @@
 package com.pjsoft.j2arch.cli;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
 import java.util.Scanner;
 
+import com.pjsoft.j2arch.config.ConfigurationLoader;
+import com.pjsoft.j2arch.config.ContextFactory;
+import com.pjsoft.j2arch.config.DefaultContextFactory;
+import com.pjsoft.j2arch.core.util.ConfigurationValidator;
+import com.pjsoft.j2arch.core.util.PathResolver;
+import com.pjsoft.j2arch.core.util.ProgressTracker;
+import com.pjsoft.j2arch.core.util.ResourcePaths;
+import com.pjsoft.j2arch.core.util.ProgressTracker.UseCase;
 import com.pjsoft.j2arch.uml.UMLDiagramGenerator;
-import com.pjsoft.j2arch.uml.config.ConfigurationManager;
+import com.pjsoft.j2arch.uml.util.UMLGenerationContext;
 
 /**
  * Command-Line Interface (CLI) Application for UML Diagram Generation.
@@ -15,31 +23,24 @@ import com.pjsoft.j2arch.uml.config.ConfigurationManager;
  * It provides a command-line interface for users to configure settings, generate
  * UML diagrams, and handle errors gracefully.
  * 
- * Responsibilities:
+ * Features:
  * - Displays a user-friendly CLI for configuration and diagram generation.
- * - Handles user input for configuration choices (default, file-based, or custom).
+ * - Supports three configuration modes:
+ *   1. Default settings
+ *   2. File-based settings (loaded from a properties file)
+ *   3. Custom inputs (interactive user input)
+ * - Validates configuration settings before proceeding.
  * - Invokes the UML diagram generation process.
- * - Manages application lifecycle events, such as shutdown hooks and error handling.
+ * - Handles application lifecycle events, such as shutdown hooks and error handling.
  * 
- * Usage Example:
- * {@code
- * java -jar UMLDiagramGenerator.jar
- * }
- * 
- * Dependencies:
- * - {@link ConfigurationManager}
- * - {@link UMLDiagramGenerator}
- * - {@link Styler}
- * 
- * Thread Safety:
- * - This class is not thread-safe as it relies on mutable state and user input.
- * 
- * Limitations:
- * - Assumes that the user provides valid input for configuration settings.
- * - Requires a valid configuration file if file-based settings are chosen.
+ * Refactored Design:
+ * - Modularized configuration handling using `ContextFactory`.
+ * - Improved error handling and logging.
+ * - Added support for shutdown hooks to handle interruptions (e.g., Ctrl+C).
+ * - Enhanced user prompts and feedback for better usability.
  * 
  * @author PJSoft
- * @version 1.1
+ * @version 2.0
  * @since 1.0
  */
 public class CLIApplication {
@@ -47,30 +48,44 @@ public class CLIApplication {
     private static boolean ctrlPressed = false;
 
     /**
-     * The main entry point for the application.
+     * Main entry point for the CLI application.
      * 
      * Responsibilities:
-     * - Initializes the application and displays the CLI.
-     * - Handles user input for configuration and invokes the UML diagram generation process.
-     * - Manages application shutdown and error handling.
+     * - Initializes the application.
+     * - Loads configuration settings.
+     * - Handles user input for configuration choices.
+     * - Invokes the UML diagram generation process.
+     * - Manages application shutdown gracefully.
      * 
-     * @param args command-line arguments (not used in this application).
-     * @since 1.0
+     * @param args Command-line arguments (not used in this application).
      */
     public static void main(String[] args) {
         addShutdownHook(); // Add a shutdown hook to handle Ctrl+C (SIGINT)
 
         try {
             printBanner(); // Display ASCII banner
-            printApplicationTitle();
-            ConfigurationManager configManager = ConfigurationManager.getInstance();
-            printOptionsMessage(configManager);
+            printApplicationTitle(); // Display application title
+
+            // Load properties using ConfigurationLoader
+            Properties properties = ConfigurationLoader.loadConfiguration();
+
+            // Display options and collect user input
+            printOptionsMessage(properties);
             String configChoice = collectConfigurationChoice();
-            handleConfigurationChoice(configChoice, configManager);
-            configManager.validateConfig();
-            UMLDiagramGenerator diagramGenerator = new UMLDiagramGenerator(configManager);
-            diagramGenerator.generateDiagrams();
-            printSuccessMessage();
+
+            // Handle user choice and create contexts
+            ContextFactory factory = new DefaultContextFactory(properties);
+            UMLGenerationContext initialContext = factory.createUMLContext();
+            UMLGenerationContext umlContext = handleConfigurationChoice(configChoice, initialContext);
+
+            // Create a CLI-compatible ProgressTracker
+        ProgressTracker progressTracker = new ProgressTracker(UseCase.UML_DIAGRAM_GENERATION); // No GUI components
+
+            // Generate UML diagrams
+            UMLDiagramGenerator diagramGenerator = new UMLDiagramGenerator();
+            diagramGenerator.generateDiagrams(umlContext, progressTracker);
+
+            printSuccessMessage(); // Display success message
         } catch (java.util.NoSuchElementException e) {
             ctrlPressed = true;
             logger.info("Ctrl+C pressed"); // Suppress error caused by Ctrl+C
@@ -81,100 +96,136 @@ public class CLIApplication {
     }
 
     /**
-     * Collects the user's configuration choice from the CLI.
+     * Collects the user's configuration choice from the command line.
      * 
-     * Responsibilities:
-     * - Prompts the user to select a configuration option.
-     * - Returns the user's choice or a default value if no input is provided.
-     * 
-     * @return the user's configuration choice.
-     * @since 1.0
+     * @return The user's choice as a string ("1", "2", or "3").
      */
     private static String collectConfigurationChoice() {
         Scanner scanner = new Scanner(System.in);
         System.out.print(Styler.bold("Enter your choice (default 1): "));
         String choice = scanner.nextLine().trim();
-        if (choice.isEmpty()) {
-            choice = "1";
-        }
-        return choice;
+        return choice.isEmpty() ? "1" : choice;
     }
 
     /**
-     * Handles the user's configuration choice and loads the appropriate settings.
+     * Handles the user's configuration choice and creates the appropriate UMLGenerationContext.
      * 
-     * Responsibilities:
-     * - Loads default settings, file-based settings, or custom inputs based on the user's choice.
-     * 
-     * Preconditions:
-     * - The user's choice must be valid (1, 2, or 3).
-     * 
-     * Postconditions:
-     * - The configuration manager is updated with the selected settings.
-     * 
-     * @param configChoice the user's configuration choice.
-     * @param configManager the configuration manager to update.
-     * @throws IOException if file-based settings cannot be loaded.
-     * @since 1.0
+     * @param configChoice The user's choice ("1", "2", or "3").
+     * @param initialContext The initial context with default settings.
+     * @return The configured UMLGenerationContext.
+     * @throws IOException If an error occurs while loading file-based settings.
      */
-     static void handleConfigurationChoice(String configChoice, ConfigurationManager configManager)
-            throws IOException {
+    private static UMLGenerationContext handleConfigurationChoice(String configChoice, UMLGenerationContext initialContext) throws IOException {
+        UMLGenerationContext context = null;
         switch (configChoice) {
             case "1":
                 System.out.println(Styler.green("Using default settings..."));
-                configManager.loadDefaultConfig();
+                context = initialContext; // Default settings
                 break;
             case "2":
-                try {
-                    System.out.println(Styler.green("Loading settings from config/application.properties..."));
-                    configManager.loadFileConfig("config/application.properties");
-                    logger.info("Configuration loaded from file");
-                } catch (IOException e) {
-                    logger.error("Error loading configuration file", e);
-                    throw new IOException("Unable to load configuration from file. " + e.getMessage());
-                }
+
+            String customPropertiesFileName=null; // Once application will have file chooser to choose it will be populated
+            context = getContextFromFile(customPropertiesFileName);
                 break;
             case "3":
-                try {
-                    Map<String, String> customInputs = collectCustomInputs();
-                    configManager.loadCustomConfig(customInputs);
-                } catch (IllegalArgumentException e) {
-                    throw new IllegalArgumentException("Unable to load custom configuration. " + e.getMessage());
-                }
+                System.out.println(Styler.green("Entering custom configuration..."));
+                context = collectCustomUMLContext(initialContext); // Custom inputs
                 break;
             default:
                 System.out.println(Styler.red("Invalid choice. Exiting application."));
                 logger.warn("Invalid choice entered: " + configChoice);
                 System.exit(1);
         }
+
+        // Validate the context before returning
+        ConfigurationValidator.validateContext(context);
+        return context;
+    }
+
+    private static UMLGenerationContext getContextFromFile  (String customPropertiesFileName) throws IOException {
+        // Load properties using ConfigurationLoader
+        Properties fileProperties = ConfigurationLoader.loadProperties(customPropertiesFileName);
+
+     // Use DefaultContextFactory to create UMLGenerationContext
+     DefaultContextFactory contextFactory = new DefaultContextFactory(fileProperties);
+     return contextFactory.createUMLContext();
     }
 
     /**
-     * Collects custom configuration inputs from the user.
+     * Collects custom configuration inputs interactively from the user.
      * 
-     * Responsibilities:
-     * - Prompts the user for input directory, output directory, and diagram types.
-     * 
-     * @return a map containing the custom configuration inputs.
-     * @since 1.0
+     * @param initialContext The initial context with default settings.
+     * @return A new UMLGenerationContext based on user inputs.
      */
-    private static Map<String, String> collectCustomInputs() {
-        printMessage("Custom Configuration Inputs: ");
-        Map<String, String> customInputs = new HashMap<>();
-        customInputs.put("input.directory", promptForInput("Enter input directory (default: ./input):", "input.directory", "./input"));
-        customInputs.put("output.directory", promptForInput("Enter output directory (default: ./output):", "output.directory", "./output"));
-        customInputs.put("diagram.types", promptForInput("Enter diagram types (e.g., class, sequence):", "diagram.types", "class,sequence"));
-        customInputs.put("include.package", promptForInput("Enter package to include (default: all):", "include.package", ""));
-        return customInputs;
+    private static UMLGenerationContext collectCustomUMLContext(UMLGenerationContext initialContext) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter input directory (default: ./input): ");
+        String inputDirectory = scanner.nextLine().trim();
+        inputDirectory = inputDirectory.isEmpty() ? initialContext.getInputDirectory() : inputDirectory;
+
+        System.out.print("Enter output directory (default: ./umldoc): ");
+        String outputDirectory = scanner.nextLine().trim();
+        outputDirectory = outputDirectory.isEmpty() ? initialContext.getOutputDirectory() : outputDirectory;
+
+        System.out.print("Enter diagram types (comma-separated, e.g., class,sequence): ");
+        String diagramTypes = scanner.nextLine().trim();
+        diagramTypes = diagramTypes.isEmpty() ? initialContext.getDiagramTypes() : diagramTypes;
+
+        System.out.print("Enter package to include (default: all): ");
+        String includePackage = scanner.nextLine().trim();
+        includePackage = includePackage.isEmpty() ? initialContext.getIncludePackage() : includePackage;
+
+        String pumlPath = initialContext.getPumlPath();
+        String imagesOutputPath = initialContext.getImagesOutputDirectory();
+        String unifiedClassDiagram = initialContext.getUnifiedClassDiagram();
+        String libsDirPath = initialContext.getLibsDirPath();
+
+        // Create and return a new UMLGenerationContext
+        return new UMLGenerationContext(
+            inputDirectory,
+            outputDirectory,
+            diagramTypes,
+            includePackage,
+            pumlPath,
+            imagesOutputPath,
+            unifiedClassDiagram,
+            libsDirPath
+        );
     }
 
     /**
-     * Adds a shutdown hook to handle application termination events (e.g., Ctrl+C).
+     * Prints the available configuration options to the console.
      * 
-     * Responsibilities:
-     * - Logs a message and displays a user-friendly message when the application is interrupted.
-     * 
-     * @since 1.0
+     * @param properties The loaded properties to display default settings.
+     */
+    private static void printOptionsMessage(Properties properties) {
+        String defaultSettingsDisplay = properties.entrySet().stream()
+            .filter(entry -> 
+                "input.uml.directory".equals(entry.getKey()) || 
+                "output.uml.directory".equals(entry.getKey()))
+            .map(entry -> entry.getKey() + "=" + entry.getValue())
+            .reduce((key1, key2) -> key1 + ", " + key2)
+            .orElse("No relevant default settings available");
+
+        String[] lines = {
+            "Welcome to the UML Diagram Generator!",
+            "This tool helps you generate UML diagrams from Java source code.",
+            "This application requires some inputs for configuration settings.",
+            "How do you want to proceed?",
+            "1. Use default settings (pre-configured values for input, output, and diagram types).",
+            "   [e.g.: " + defaultSettingsDisplay + "]",
+            "2. Load settings from a configuration file (relative path: "+ ResourcePaths.CUSTOM_CONFIG_FILE+ ")",
+            "3. Enter custom inputs interactively (you will be prompted for each setting)."
+        };
+
+        for (String line : lines) {
+            System.out.println(Styler.green(line));
+        }
+    }
+
+    /**
+     * Adds a shutdown hook to handle application termination gracefully.
      */
     private static void addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -187,48 +238,8 @@ public class CLIApplication {
         }));
     }
 
-/**
- * Prompts the user for input with an optional default value.
- * 
- * Responsibilities:
- * - Displays a prompt message and collects user input.
- * - Returns the user's input or the default value if no input is provided.
- * - Handles special cases like "include.package" where an empty input is valid.
- * 
- * @param prompt the prompt message to display.
- * @param key the key identifying the configuration property (e.g., "include.package").
- * @param defaultValue the default value to use if no input is provided.
- * @return the user's input or the default value.
- * @since 1.0
- */
-private static String promptForInput(String prompt, String key, String defaultValue) {
-    Scanner scanner = new Scanner(System.in);
-    while (true) {
-        System.out.print(Styler.bold(prompt + " "));
-        String input = scanner.nextLine().trim();
-
-        // Special case for "include.package" to allow empty input
-        if ("include.package".equals(key)) {
-            return input.isEmpty() ? "" : input; // Return empty string if no input is provided
-        }
-
-        if (!input.isEmpty()) {
-            return input;
-        } else if (defaultValue != null && !defaultValue.isEmpty()) {
-            return defaultValue;
-        } else {
-            System.out.println(Styler.red("This field is required. Please enter a value."));
-        }
-    }
-}
-
     /**
-     * Prints an ASCII banner for the application.
-     * 
-     * Responsibilities:
-     * - Displays a visually appealing banner at the start of the application.
-     * 
-     * @since 1.0
+     * Prints the ASCII banner for the application.
      */
     private static void printBanner() {
         System.out.println(Styler.blue("""
@@ -242,12 +253,7 @@ private static String promptForInput(String prompt, String key, String defaultVa
     }
 
     /**
-     * Prints the application title in a styled format.
-     * 
-     * Responsibilities:
-     * - Displays the application title in a visually appealing format.
-     * 
-     * @since 1.0
+     * Prints the application title in stylized text.
      */
     private static void printApplicationTitle() {
         System.out.println(Styler.bold(""));
@@ -261,77 +267,17 @@ private static String promptForInput(String prompt, String key, String defaultVa
 
     /**
      * Prints a success message after UML diagrams are generated.
-     * 
-     * Responsibilities:
-     * - Displays a success message to the user.
-     * 
-     * @since 1.0
      */
     private static void printSuccessMessage() {
-        printMessage("Success");
         System.out.println(Styler.green("UML diagrams generated successfully!"));
-        System.out.println(Styler.green("Check the output directory for the generated diagrams."));
     }
 
     /**
-     * Prints an error message when an exception occurs.
+     * Prints an error message to the console.
      * 
-     * Responsibilities:
-     * - Displays an error message to the user.
-     * 
-     * @param message the error message to display.
-     * @since 1.0
+     * @param message The error message to display.
      */
     private static void printErrorMessage(String message) {
-        printMessage("Error");
-        System.err.println(Styler.red("An error occurred: " + message));
-    }
-
-    /**
-     * Prints the configuration options message to the user.
-     * 
-     * Responsibilities:
-     * - Displays the available configuration options in a styled format.
-     * 
-     * @param config the configuration manager containing default settings.
-     * @since 1.0
-     */
-    private static void printOptionsMessage(ConfigurationManager config) {
-        Map<String, String> defaultSettings = config.getDefaultSettings();
-        String defaultSettingsDisplay = defaultSettings.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .reduce((key1, key2) -> key1 + ", " + key2)
-                .orElse("No default settings available");
-
-        String[] lines = {
-                "Welcome to the UML Diagram Generator!",
-                "This tool helps you generate UML diagrams from Java source code.",
-                "This application requires some inputs for configuration settings.",
-                "How do you want to proceed?",
-                "1. Use default settings (pre-configured values for input, output, and diagram types).",
-                " [e.g.:" + defaultSettingsDisplay + "]",
-                "2. Load settings from a configuration file (config/application.properties).",
-                "3. Enter custom inputs interactively (you will be prompted for each setting)."
-        };
-
-        for (String line : lines) {
-            String styledLine = Styler.green(line);
-            System.out.println(styledLine);
-        }
-    }
-
-    /**
-     * Prints a styled message to the console.
-     * 
-     * Responsibilities:
-     * - Displays a message in a visually appealing format.
-     * 
-     * @param message the message to display.
-     * @since 1.0
-     */
-    private static void printMessage(String message) {
-        System.out.println(Styler.bold(""));
-        System.out.println(Styler.blue("  " + message));
-        System.out.println(Styler.bold(""));
+        System.err.println(Styler.red("Error: " + message));
     }
 }

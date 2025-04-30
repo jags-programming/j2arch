@@ -2,7 +2,7 @@ package com.pjsoft.j2arch.uml.service;
 
 import java.util.*;
 
-import com.pjsoft.j2arch.uml.config.ConfigurationManager;
+
 
 /**
  * Storage Service
@@ -10,10 +10,10 @@ import com.pjsoft.j2arch.uml.config.ConfigurationManager;
  * Manages storing UML diagrams.
  */
 public class StorageService {
-    private ConfigurationManager config;
+    //private ConfigurationManager config;
 
-    public StorageService(ConfigurationManager config) {
-        this.config = config;
+    public StorageService() {
+       
     }
 
     public void storeDiagram(String format, String outputPath) {

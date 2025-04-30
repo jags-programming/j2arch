@@ -1,0 +1,145 @@
+/* style_light.css */
+
+/* Light background */
+.root {
+    -fx-background-color: #FFFFFF;
+}
+
+/* Label color */
+.label,
+.radio-button,
+.custom-inputs-grid .label {
+    -fx-text-fill: #212121;
+}
+
+/* Button color scheme */
+.button,
+.custom-inputs-grid .button {
+    -fx-background-color: #6200EE;
+    -fx-text-fill: white;
+    
+    
+}
+
+.button:hover,
+.custom-inputs-grid .button:hover {
+    -fx-background-color: #3700B3;
+}
+
+.button:focused {
+    -fx-effect: dropshadow(three-pass-box, #6200EE, 5, 0.3, 0, 0);
+}
+
+/* Text field styling */
+.text-field,
+.custom-inputs-grid .text-field {
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #E0E0E0;
+   
+    -fx-text-fill: #212121;
+}
+
+.custom-inputs-grid .text-field:focused {
+    -fx-border-color: #6200EE;
+    -fx-effect: dropshadow(three-pass-box, #6200EE, 5, 0.3, 0, 0);
+}
+
+.custom-inputs-grid .text-field:hover {
+    -fx-border-color: #BDBDBD;
+}
+
+.custom-inputs-grid .text-field:focused:hover {
+    -fx-border-color: #6200EE;
+}
+
+.progress-indicator {
+    -fx-progress-color: #6200EE;
+}
+
+/* Titled pane styling */
+.custom-inputs-titled-pane {
+    -fx-background-color: #FAFAFA;
+    -fx-text-fill: #212121;
+    -fx-border-color: #E0E0E0;
+
+}
+
+.custom-inputs-titled-pane > .title {
+    -fx-background-color: #F0F0F0;
+    -fx-border-color: #E0E0E0;
+}
+
+.custom-inputs-titled-pane > .title > .text {
+    -fx-fill: #212121;
+    -fx-font-weight: bold;
+}
+
+.custom-inputs-titled-pane > .content {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E0;
+}
+
+#bannerLabel {
+    -fx-text-fill: #6200EE;
+    
+}
+
+.custom-inputs-grid {
+    -fx-background-color: transparent; /* For consistency: Defined across themes for layout styling */
+    -fx-text-fill: inherit;
+}
+/* === LIGHT THEME TAB ENHANCEMENTS === */
+
+/* TabPane container */
+.tab-pane {
+    -fx-background-color: #F0F0F0;
+    
+    
+}
+
+/* Tab headers (unselected) */
+.tab {
+    -fx-background-color: #E6E6E6;
+    -fx-border-color: transparent transparent #E0E0E0 transparent;
+
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    
+    
+}
+
+/* Tab hover state */
+.tab:hover {
+    -fx-background-color: #DCDCDC;
+}
+
+/* Tab selected */
+.tab:selected {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #6200EE #6200EE transparent #6200EE;
+   
+    -fx-text-fill: #6200EE;
+    
+}
+
+
+
+/* Tab content area */
+.tab-content-area {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E0E0E0;
+}
+    
+.toggle-button {
+    -fx-background-color: #6200EE; /* For consistency: Shared primary accent across light and dark themes */
+    -fx-text-fill: white;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #3700B3;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #3700B3;
+    -fx-text-fill: white;
+}

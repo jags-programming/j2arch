@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pjsoft</groupId>
-    <artifactId>uml-generator</artifactId>
+    <artifactId>j2arch</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>UML Diagram Generator</name>
-    <description>A Java-based tool to generate UML diagrams from source code.</description>
+    <name>j2arch</name>
+    <description>A Java-based tool to help architects generate various deliverables from code.</description>
 
     <properties>
         <maven.compiler.source>23</maven.compiler.source>

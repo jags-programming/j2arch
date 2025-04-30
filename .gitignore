@@ -22,8 +22,6 @@ Thumbs.db
 # Ignore /input directory
 input/
 
-# Ignore Documents directory
-Documents/
 
 # Ignore input
 /input
