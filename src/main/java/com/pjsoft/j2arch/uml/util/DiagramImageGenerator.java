@@ -60,15 +60,15 @@ public class DiagramImageGenerator {
      *                                  image generation or movement.
      */
     public void generateDiagramImage(File pumlFile, File outputDir) {
+               
         try {
-            logger.debug("Starting diagram generation for: {}", pumlFile);
-
+           
             // Validate the input .puml file
             validatePumlFile(pumlFile);
-
+            
             // Ensure the output directory exists and is writable
             ensureDirectoryExists(outputDir);
-
+            
             // Generate the diagram images
             List<GeneratedImage> generatedImages = generateImages(pumlFile);
 
@@ -79,7 +79,7 @@ public class DiagramImageGenerator {
         } catch (Exception e) {
             logger.error("Error during diagram generation for: {}", pumlFile, e);
             // Log the problematic .puml content for debugging
-            logPumlContentForDebugging(pumlFile); // Added for debugging problematic .puml files
+            //logPumlContentForDebugging(pumlFile); // Added for debugging problematic .puml files
             throw new RuntimeException("Failed to generate diagram for file: " + pumlFile, e);
         }
     }
@@ -91,8 +91,12 @@ public class DiagramImageGenerator {
      */
     private void logPumlContentForDebugging(File pumlFile) {
         try {
-            String pumlContent = new String(Files.readAllBytes(pumlFile.toPath()));
-            logger.debug("Problematic PUML Content:\n{}", pumlContent); // Logs the content of the problematic .puml file
+            if (!pumlFile.exists()) {
+                logger.error("PUML file does not exist: {}", pumlFile.getAbsolutePath());
+                return;
+            }
+            String pumlContent = Files.readString(pumlFile.toPath());
+            logger.debug("PUML Content>>>:\n{}", pumlContent); // Logs the content of the problematic .puml file
         } catch (IOException e) {
             logger.error("Failed to read PUML content for debugging: {}", pumlFile.getAbsolutePath(), e);
         }
@@ -191,17 +195,14 @@ public class DiagramImageGenerator {
      */
     private List<GeneratedImage> generateImages(File pumlFile) {
         try {
-           
             SourceFileReader reader = new SourceFileReader(pumlFile);
             List<GeneratedImage> generatedImages = reader.getGeneratedImages();
-
             if (generatedImages.isEmpty()) {
                 String errorMessage = "No diagram images were generated for: " + pumlFile.getAbsolutePath();
                 logger.error(errorMessage);
                 throw new RuntimeException(errorMessage);
             }
 
-            logger.debug("Generated {} diagram images for: {}", generatedImages.size(), pumlFile.getAbsolutePath());
             return generatedImages;
         } catch (IOException e) {
             logger.error("Error generating diagram image for: {}", pumlFile.getAbsolutePath(), e);

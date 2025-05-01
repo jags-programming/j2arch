@@ -20,6 +20,11 @@
         <appender-ref ref="FILE"/>
     </logger>
 
+    <!-- Set debug level for PlantUML -->
+    <logger name="net.sourceforge.plantuml" level="DEBUG" >
+        <appender-ref ref="FILE"/>
+    </logger>
+
     <!-- Root Logger (Logs INFO and Above to File Only) -->
     <root level="debug">
         <appender-ref ref="FILE"/>

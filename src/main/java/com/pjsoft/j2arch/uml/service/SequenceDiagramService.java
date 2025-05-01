@@ -10,6 +10,8 @@ import com.pjsoft.j2arch.uml.util.ScenarioBuilder;
 
 import com.pjsoft.j2arch.core.context.GenerationContext;
 import com.pjsoft.j2arch.core.model.CodeEntity;
+import com.pjsoft.j2arch.core.util.ProgressTracker;
+import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
 import com.pjsoft.j2arch.uml.model.Scenario;
 
 import net.sourceforge.plantuml.GeneratedImage;
@@ -71,7 +73,7 @@ public class SequenceDiagramService {
      * @return The path to the output directory containing the generated diagrams.
      * @throws IllegalArgumentException If no CodeEntity objects are provided.
      */
-    public String generateSequenceDiagram(List<CodeEntity> codeEntities, GenerationContext context) {
+    public String generateSequenceDiagram(List<CodeEntity> codeEntities, GenerationContext context,ProgressTracker progressTracker) {
         if (codeEntities.isEmpty()) {
             throw new IllegalArgumentException("No code entities provided for generating the sequence diagram. Please check input or configuration property.");
         }
@@ -84,7 +86,9 @@ public class SequenceDiagramService {
         // Step 2: Generate scenarios using ScenarioBuilder
         ScenarioBuilder scenarioBuilder = new ScenarioBuilder(context.getIncludePackage());
         List<Scenario> scenarios = scenarioBuilder.getScenarios(codeEntities);
-
+        
+        /// Update progress tracker
+        progressTracker.addTotalUnits(WorkUnitType.SEQUENCE_DIAGRAM, scenarios.size());
         // Step 3: Retrieve the output directory for images
         String imageOutputDir = context.getImagesOutputDirectory();
         File imageOutputDirectory = new File(imageOutputDir);
@@ -102,6 +106,8 @@ public class SequenceDiagramService {
             } catch (IOException e) {
                 logger.error("Failed to process scenario: " + scenario.getEntryClass(), e);
             }
+
+            progressTracker.addCompletedUnits(WorkUnitType.SEQUENCE_DIAGRAM, 1);
         }
 
         logger.debug("Sequence diagram generation completed.");

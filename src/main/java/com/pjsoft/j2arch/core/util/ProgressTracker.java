@@ -76,7 +76,7 @@ public class ProgressTracker {
     private static final int INDEX_PAGE_WEIGHT = 2;
 
     // Task weightage for UML diagram generation
-    private static final int SEQUENCE_DIAGRAM_WEIGHT = 3;
+    private static final int SEQUENCE_DIAGRAM_WEIGHT = 5;
     private static final int CLASS_DIAGRAM_WEIGHT = 5;
 
     /**
@@ -107,8 +107,10 @@ public class ProgressTracker {
      * 
      * @param units The number of units to add.
      */
-    private synchronized void addTotalUnits(int units) {
-        this.totalUnits += units;
+    public synchronized void addTotalUnits(WorkUnitType type, int units) {
+        int weightedUnits = applyWeight(type, units);
+        this.totalUnits += weightedUnits;
+       updateProgress();
     }
 
     /**
@@ -168,6 +170,7 @@ public class ProgressTracker {
      * @param directoryCount The total number of directories to process.
      */
     public synchronized void initializeTaskCounts(int totalFiles, int directoryCount) {
+        System.out.println("Initializing task counts...");
         int fileParsingUnits = totalFiles * FILE_PARSING_WEIGHT;
 
         if (useCase == UseCase.JAVA_DOC_GENERATION) {
@@ -179,7 +182,7 @@ public class ProgressTracker {
         } else if (useCase == UseCase.UML_DIAGRAM_GENERATION) {
             int classDiagramUnits = CLASS_DIAGRAM_WEIGHT;
             int sequenceDiagramUnits = SEQUENCE_DIAGRAM_WEIGHT;
-            this.totalUnits = fileParsingUnits + classDiagramUnits + sequenceDiagramUnits;
+            this.totalUnits = fileParsingUnits ;//+ classDiagramUnits + sequenceDiagramUnits;
         }
     }
 
@@ -189,12 +192,15 @@ public class ProgressTracker {
      * @param totalFiles     The total number of files to process.
      * @param diagramTypes   The number of diagram types to generate.
      */
+    /** 
     public synchronized void initializeTaskCountsForUML(int totalFiles, int diagramTypes) {
+        System.out.println("Initializing task counts for UML generation...");
         int fileParsingUnits = totalFiles * FILE_PARSING_WEIGHT;
-        int diagramGenerationUnits = diagramTypes * CLASS_DOC_WEIGHT;
+        int diagramGenerationUnits = diagramTypes * CLASS_DIAGRAM_WEIGHT;
 
         this.totalUnits = fileParsingUnits + diagramGenerationUnits;
     }
+        */
 
     /**
      * Updates the progress bar or CLI progress based on completed units.

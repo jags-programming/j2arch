@@ -3,11 +3,13 @@ package com.pjsoft.j2arch.uml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pjsoft.j2arch.core.model.CodeEntity;
+import com.pjsoft.j2arch.core.model.PackageEntity;
 import com.pjsoft.j2arch.core.util.ProgressTracker;
 import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
 import com.pjsoft.j2arch.uml.service.ClassDiagramService;
@@ -80,6 +82,7 @@ public class UMLDiagramGenerator {
 
             // Analyze the project and extract parsed data
             List<CodeEntity> parsedData = projectAnalyzer.analyzeProject(context, progressTracker);
+            Map<String, PackageEntity> packageEntities = projectAnalyzer.analyzeProjectForPackages(context, progressTracker);
             progressTracker.onStatusUpdate("Project analysis completed.");
 
             // Get the types of diagrams to generate from the context
@@ -91,19 +94,19 @@ public class UMLDiagramGenerator {
                     case "class":
                         logger.debug("Generating class diagram...");
                         progressTracker.onStatusUpdate("Class diagram generation started ....");
-                        String classDiagramPath = classDiagramService.generateUnifiedClassDiagram(parsedData, context);
-
+                        //String classDiagramPath = classDiagramService.generateUnifiedClassDiagram(parsedData, context);
+                        classDiagramService.generateClassDiagramByPackage(packageEntities, context, progressTracker);
                         progressTracker.onStatusUpdate("Class diagram generated.");
-                        progressTracker.addCompletedUnits(WorkUnitType.CLASS_DIAGRAM, 1);
+                        //progressTracker.addCompletedUnits(WorkUnitType.CLASS_DIAGRAM, 1);
                         break;
 
                     case "sequence":
                         logger.debug("Generating sequence diagram...");
                         progressTracker.onStatusUpdate("Sequence diagram generation started ....");
-                        String sequenceDiagramPath = sequenceDiagramService.generateSequenceDiagram(parsedData, context);
+                        String sequenceDiagramPath = sequenceDiagramService.generateSequenceDiagram(parsedData, context, progressTracker);
 
                         progressTracker.onStatusUpdate("Sequence diagram generated.");
-                        progressTracker.addCompletedUnits(WorkUnitType.SEQUENCE_DIAGRAM, 1);
+                        //progressTracker.addCompletedUnits(WorkUnitType.SEQUENCE_DIAGRAM, 1);
                         break;
 
                     default:
