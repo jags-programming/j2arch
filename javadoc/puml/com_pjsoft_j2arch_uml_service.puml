@@ -1,0 +1,8 @@
+@startuml
+package com.pjsoft.j2arch.uml.service {
+    com.pjsoft.j2arch.uml.service.ClassDiagramService
+    com.pjsoft.j2arch.uml.service.PackageDiagramService
+    com.pjsoft.j2arch.uml.service.SequenceDiagramService
+    com.pjsoft.j2arch.uml.service.StorageService
+}
+@enduml

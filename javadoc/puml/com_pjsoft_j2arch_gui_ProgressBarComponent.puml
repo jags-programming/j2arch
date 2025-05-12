@@ -1,0 +1,12 @@
+@startuml
+skinparam linetype Ortho
+class ProgressBarComponent {
+    ProgressBar progressBar
+    Label statusLabel
+    public ProgressBar getProgressBar()
+    public Label getStatusLabel()
+    public void reset()
+    public void updateProgress(double progress)
+    public void updateStatus(String message)
+}
+@enduml

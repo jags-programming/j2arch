@@ -1,0 +1,144 @@
+@startuml
+skinparam linetype Ortho
+package gui {
+class J2ArchGUI {
+    org.slf4j.Logger logger
+    public void main(String[] args)
+    public void start(Stage primaryStage)
+}
+J2ArchGUI --> ConfigurationLoader : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> UmlGenTab : caller-callee
+J2ArchGUI --> PreviewTab : caller-callee
+J2ArchGUI --> Puml2HtmlDocGenTab : caller-callee
+J2ArchGUI --> JavaDocGenTab : caller-callee
+J2ArchGUI --> UmlGenTab : caller-callee
+class JavaDocGenTab {
+    JavaDocGenerationContext initialContext
+    TextField inputDirField
+    org.slf4j.Logger logger
+    TextField outputDirField
+    ProgressBarComponent progressBarComponent
+    private void addGenerateButton(GridPane grid)
+    private void addInputDirectorySection(GridPane grid, Stage primaryStage)
+    private void addOutputDirectorySection(GridPane grid, Stage primaryStage)
+    private void addProgressBarComponent(GridPane grid)
+    private JavaDocGenerationContext createUpdatedContext(ProgressTracker progressTracker)
+    private void handleGenerateAction()
+    private GridPane initializeLayout(Stage primaryStage)
+}
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> ProgressBarComponent : caller-callee
+JavaDocGenTab --> ConfigurationValidator : caller-callee
+JavaDocGenTab --> JavaDocGenerator : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab -- UseCase : association
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+class PreviewTab {
+    BorderPane layout
+    org.slf4j.Logger logger
+    UMLGenerationContext umlContext
+    private void displayImage(File file, ImageView imageView)
+    public BorderPane getLayout()
+    private void handleBrowse(Stage primaryStage, TextField pathField, List<File> imageFiles, ImageView imageView, Scale scale, Button leftButton, Button rightButton, int[] currentIndex)
+    private void handleLeftNavigation(List<File> imageFiles, ImageView imageView, Scale scale, int[] currentIndex, Button leftButton, Button rightButton)
+    private void handleRightNavigation(List<File> imageFiles, ImageView imageView, Scale scale, int[] currentIndex, Button leftButton, Button rightButton)
+    private void handleZoomIn(Scale scale)
+    private void handleZoomOut(Scale scale)
+    private void loadOutputDirectory(List<File> imageFiles, TextField pathField, ImageView imageView, Button leftButton, Button rightButton, int[] currentIndex, Scale scale)
+    private void resetImageView(ImageView imageView, Scale scale)
+    private void updateNavigationButtons(Button leftButton, Button rightButton, int currentIndex, int totalImages)
+}
+PreviewTab --> UMLGenerationContext : caller-callee
+class ProgressBarComponent {
+    ProgressBar progressBar
+    Label statusLabel
+    public ProgressBar getProgressBar()
+    public Label getStatusLabel()
+    public void reset()
+    public void updateProgress(double progress)
+    public void updateStatus(String message)
+}
+class Puml2HtmlDocGenTab {
+    HtmlGenerationContext htmlContext
+    org.slf4j.Logger logger
+}
+class UmlGenTab {
+    ToggleGroup configOptionsGroup
+    VBox customInputsBox
+    RadioButton customSettingsOption
+    RadioButton defaultSettingsOption
+    TextField diagramTypesField
+    RadioButton fileSettingsOption
+    GUIStyleContext guiStyleContext
+    TextField includePackageField
+    TextField inputDirField
+    VBox layout
+    org.slf4j.Logger logger
+    TextField outputDirField
+    ProgressBarComponent progressBarComponent
+    Scene scene
+    private VBox createConfigurationOptionsBox()
+    private TitledPane createCustomInputsPane(Stage primaryStage)
+    private Button createDirectoryButton(String label, TextField targetField, Stage stage)
+    private Button createGenerateButton(UMLGenerationContext context)
+    private RadioButton createThemeRadio(String label, ToggleGroup group, String stylePath)
+    private HBox createTopRow()
+    private UMLGenerationContext getContextFromCustomInputs(UMLGenerationContext initialContext)
+     UMLGenerationContext getContextFromFile(String propertiesFile)
+    public VBox getLayout()
+    private void handleGenerateAction(UMLGenerationContext context)
+    private void selectDefaultTheme(RadioButton lightTheme, RadioButton darkTheme, RadioButton pastelTheme)
+    public void setScene(Scene scene)
+    private void setStartupStyle(Scene scene)
+    private void setStyle(Scene scene, String stylePath)
+    private void updateCustomInputsVisibility()
+}
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> ProgressBarComponent : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ConfigurationValidator : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> UMLDiagramGenerator : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab -- UseCase : association
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStylePathResolver : caller-callee
+UmlGenTab --> GUIStylePathResolver : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> ConfigurationLoader : caller-callee
+UmlGenTab --> DefaultContextFactory : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+}
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+skinparam linetype Ortho
+class JavaDocGenTab {
+    JavaDocGenerationContext initialContext
+    TextField inputDirField
+    org.slf4j.Logger logger
+    TextField outputDirField
+    ProgressBarComponent progressBarComponent
+    private void addGenerateButton(GridPane grid)
+    private void addInputDirectorySection(GridPane grid, Stage primaryStage)
+    private void addOutputDirectorySection(GridPane grid, Stage primaryStage)
+    private void addProgressBarComponent(GridPane grid)
+    private JavaDocGenerationContext createUpdatedContext(ProgressTracker progressTracker)
+    private void handleGenerateAction()
+    private GridPane initializeLayout(Stage primaryStage)
+}
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> ProgressBarComponent : caller-callee
+JavaDocGenTab --> ConfigurationValidator : caller-callee
+JavaDocGenTab --> JavaDocGenerator : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab -- UseCase : association
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> JavaDocGenerationContext : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+JavaDocGenTab --> ProgressTracker : caller-callee
+@enduml

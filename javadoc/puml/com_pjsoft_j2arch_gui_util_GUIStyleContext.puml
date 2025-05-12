@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype Ortho
+class GUIStyleContext {
+    String commonStylePath
+    String darkThemePath
+    String defaultStylePath
+    String lightThemePath
+    String pastelThemePath
+    public String getCommonStylePath()
+    public String getDarkThemePath()
+    public String getDefaultStylePath()
+    public String getLightThemePath()
+    public String getPastelThemePath()
+}
+@enduml

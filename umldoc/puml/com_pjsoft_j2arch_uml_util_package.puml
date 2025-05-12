@@ -1,0 +1,89 @@
+@startuml
+skinparam linetype Ortho
+package util {
+class DiagramImageGenerator {
+    org.slf4j.Logger logger
+    private void ensureDirectoryExists(File directory)
+    public void generateDiagramImage(File pumlFile, File outputDir)
+    private List<GeneratedImage> generateImages(File pumlFile)
+    private void logPumlContentForDebugging(File pumlFile)
+    private void moveGeneratedImages(List<GeneratedImage> generatedImages, File outputDir)
+    private void validatePumlFile(File pumlFile)
+}
+class FileHandler {
+    public String createTempDirectory(String prefix)
+    public String createTempFile(String prefix, String suffix)
+    public boolean deleteTempFileOrDirectory(String path)
+    public String readFile(String filePath)
+    public boolean validateDirectory(String directoryPath)
+    public void writeFile(String filePath, String content)
+}
+class ProjectAnalyzer {
+    Logger logger
+    public void analyzeForDuplicates(GenerationContext context, ProgressTracker progressTracker)
+    public List<CodeEntity> analyzeProject(GenerationContext context, ProgressTracker progressTracker)
+    public Map<String,PackageEntity> analyzeProjectForPackages(GenerationContext context, ProgressTracker progressTracker)
+    public List<String> collectJavaFiles(GenerationContext context, ProgressTracker progressTracker)
+    public void configureSymbolSolver(GenerationContext context)
+    public List<String> findDuplicateFileNames(List<String> filePaths)
+}
+ProjectAnalyzer --> GenerationContext : caller-callee
+ProjectAnalyzer --> SymbolSolverConfig : caller-callee
+ProjectAnalyzer --> GenerationContext : caller-callee
+ProjectAnalyzer --> JavaParserService : caller-callee
+ProjectAnalyzer --> JavaParserService : caller-callee
+ProjectAnalyzer --> ProgressTracker : caller-callee
+ProjectAnalyzer --> ProgressTracker : caller-callee
+class ScenarioBuilder {
+    org.slf4j.Logger logger
+    String projectPackage
+    private void buildScenarioFromMethod(CodeEntity entryClass, MethodEntity startingMethod, Scenario scenario, Set<String> visited, List<CodeEntity> codeEntities)
+    private CodeEntity findCodeEntityByName(List<CodeEntity> codeEntities, String name)
+    private List<String> getMethodParameterTypes(CodeEntity codeEntity, String methodName)
+    public List<Scenario> getScenarios(List<CodeEntity> codeEntities)
+    private List<Scenario> getScenariosByEntryClass(CodeEntity entryClass, List<CodeEntity> codeEntities)
+    private List<CodeEntity> identifyEntryClasses(List<CodeEntity> codeEntities)
+}
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> Scenario : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder -- RelationshipType : association
+ScenarioBuilder -- Relative : association
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+class UMLGenerationContext {
+    String diagramTypes
+    String imagesOutputDirectory
+    String includePackage
+    String inputDirectory
+    String libsDirPath
+    String outputDirectory
+    String pumlPath
+    String unifiedClassDiagram
+    public String getDiagramTypes()
+    public String getImagesOutputDirectory()
+    public String getIncludePackage()
+    public String getInputDirectory()
+    public String getLibsDirPath()
+    public String getOutputDirectory()
+    public String getPumlPath()
+    public String getUnifiedClassDiagram()
+}
+}
+@enduml

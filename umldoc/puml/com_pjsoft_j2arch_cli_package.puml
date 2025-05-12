@@ -1,0 +1,19 @@
+@startuml
+skinparam linetype Ortho
+package cli {
+class Styler {
+    String BLUE
+    String BOLD
+    String GREEN
+    String RED
+    String RESET
+    String YELLOW
+    public String blue(String text)
+    public String bold(String text)
+    public String green(String text)
+    public String red(String text)
+    public String style(String text, String styles)
+    public String yellow(String text)
+}
+}
+@enduml

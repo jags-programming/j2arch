@@ -1,0 +1,4 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.JavaDocGenTab::addOutputDirectorySection
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : addOutputDirectorySection calls getOutputDirectory
+@enduml

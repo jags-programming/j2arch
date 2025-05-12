@@ -1,0 +1,7 @@
+@startuml
+skinparam linetype Ortho
+class Puml2HtmlDocGenTab {
+    HtmlGenerationContext htmlContext
+    org.slf4j.Logger logger
+}
+@enduml

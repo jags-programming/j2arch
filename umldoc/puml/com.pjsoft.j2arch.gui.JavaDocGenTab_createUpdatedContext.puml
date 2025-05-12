@@ -1,0 +1,13 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.JavaDocGenTab::createUpdatedContext
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getInputDirectory
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getOutputDirectory
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getIndexTemplateFile
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getClassTemplateFile
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getPackageTemplateFile
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getStyleSourceFile
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getIncludePackage
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext : createUpdatedContext calls getLibsDirPath
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : createUpdatedContext calls onStatusUpdate
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : createUpdatedContext calls onStatusUpdate
+@enduml

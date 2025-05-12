@@ -1,0 +1,10 @@
+@startuml
+package com.pjsoft.j2arch.core.strategy {
+    com.pjsoft.j2arch.core.strategy.ConsoleStrategy
+    com.pjsoft.j2arch.core.strategy.EntryPointDetector
+    com.pjsoft.j2arch.core.strategy.EntryPointStrategy
+    com.pjsoft.j2arch.core.strategy.GuiStrategy
+    com.pjsoft.j2arch.core.strategy.LibraryStrategy
+    com.pjsoft.j2arch.core.strategy.WebStrategy
+}
+@enduml

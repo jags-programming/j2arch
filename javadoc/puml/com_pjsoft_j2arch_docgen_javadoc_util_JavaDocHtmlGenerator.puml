@@ -1,0 +1,8 @@
+@startuml
+skinparam linetype Ortho
+class JavaDocHtmlGenerator {
+    public String generateHtml(String templatePath, Map<String,String> placeholders)
+    private String loadTemplate(String templatePath)
+    public void writeHtmlFile(String outputPath, String htmlContent)
+}
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+skinparam linetype Ortho
+class ScenarioBuilder {
+    org.slf4j.Logger logger
+    String projectPackage
+    private void buildScenarioFromMethod(CodeEntity entryClass, MethodEntity startingMethod, Scenario scenario, Set<String> visited, List<CodeEntity> codeEntities)
+    private CodeEntity findCodeEntityByName(List<CodeEntity> codeEntities, String name)
+    private List<String> getMethodParameterTypes(CodeEntity codeEntity, String methodName)
+    public List<Scenario> getScenarios(List<CodeEntity> codeEntities)
+    private List<Scenario> getScenariosByEntryClass(CodeEntity entryClass, List<CodeEntity> codeEntities)
+    private List<CodeEntity> identifyEntryClasses(List<CodeEntity> codeEntities)
+}
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> Scenario : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> MethodEntity : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder --> Relative : caller-callee
+ScenarioBuilder -- RelationshipType : association
+ScenarioBuilder -- Relative : association
+ScenarioBuilder --> CodeEntity : caller-callee
+ScenarioBuilder --> CodeEntity : caller-callee
+@enduml

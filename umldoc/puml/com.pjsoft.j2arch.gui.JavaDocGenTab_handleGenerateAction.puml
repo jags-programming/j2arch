@@ -1,0 +1,12 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.JavaDocGenTab::handleGenerateAction
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.ProgressBarComponent : handleGenerateAction calls reset
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : handleGenerateAction calls createUpdatedContext
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ConfigurationValidator : handleGenerateAction calls validateContext
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.docgen.javadoc.JavaDocGenerator : handleGenerateAction calls generateJavaDoc
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls markAllCompleted
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+skinparam linetype Ortho
+class WebStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+WebStrategy --> CodeBase : caller-callee
+@enduml

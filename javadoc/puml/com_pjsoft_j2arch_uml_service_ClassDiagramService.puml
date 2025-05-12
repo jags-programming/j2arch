@@ -1,0 +1,80 @@
+@startuml
+skinparam linetype Ortho
+class ClassDiagramService {
+    org.slf4j.Logger logger
+    public void generateClassDiagram(CodeEntity codeEntity, JavaDocGenerationContext context)
+    public void generateClassDiagramByPackage(Map<String,PackageEntity> packageEntities, UMLGenerationContext context, ProgressTracker progressTracker)
+    public String generateUnifiedClassDiagram(List<CodeEntity> codeEntities, UMLGenerationContext context)
+    private void generateUnifiedPumlFile(List<CodeEntity> codeEntities, UMLGenerationContext context)
+    private String simpleName(String fullyQualifiedName)
+    private void writeClassDiagram(CodeEntity codeEntity, BufferedWriter writer)
+}
+ClassDiagramService --> PathResolver : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> DiagramImageGenerator : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> FieldEntity : caller-callee
+ClassDiagramService --> FieldEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> Relative : caller-callee
+ClassDiagramService --> Relative : caller-callee
+ClassDiagramService --> JavaDocGenerationContext : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> JavaDocGenerationContext : caller-callee
+ClassDiagramService --> DiagramImageGenerator : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> ProgressTracker : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> DiagramImageGenerator : caller-callee
+ClassDiagramService --> PackageEntity : caller-callee
+ClassDiagramService --> ProgressTracker : caller-callee
+ClassDiagramService -- WorkUnitType : association
+ClassDiagramService -- WorkUnitType : association
+ClassDiagramService --> UMLGenerationContext : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> FieldEntity : caller-callee
+ClassDiagramService --> FieldEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> MethodEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+ClassDiagramService --> Relative : caller-callee
+ClassDiagramService --> Relative : caller-callee
+ClassDiagramService --> CodeEntity : caller-callee
+@enduml

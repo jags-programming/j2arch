@@ -1,0 +1,70 @@
+@startuml
+skinparam linetype Ortho
+package config {
+class ConfigurationLoader {
+    Logger logger
+    public Properties loadConfiguration()
+    public Properties loadProperties(String propertiesFile)
+    private boolean loadPropertiesFromClasspath(Properties properties, String resource)
+    private boolean loadPropertiesFromFile(Properties properties, File file)
+}
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+class ContextFactory {
+     GUIStyleContext createGUIStyleContext()
+     HtmlGenerationContext createHTMLContext()
+     JavaDocGenerationContext createJavaDocContext()
+     UMLGenerationContext createUMLContext()
+}
+class DefaultContextFactory {
+    Properties properties
+    public GUIStyleContext createGUIStyleContext()
+    public HtmlGenerationContext createHTMLContext()
+    public JavaDocGenerationContext createJavaDocContext()
+    public UMLGenerationContext createUMLContext()
+    public UMLGenerationContext getContextFromFile(String propertiesFile)
+}
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory --> ConfigurationLoader : caller-callee
+}
+@enduml

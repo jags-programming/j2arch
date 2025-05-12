@@ -1,0 +1,6 @@
+@startuml
+package com.pjsoft.j2arch.uml.model {
+    com.pjsoft.j2arch.uml.model.Interaction
+    com.pjsoft.j2arch.uml.model.Scenario
+}
+@enduml

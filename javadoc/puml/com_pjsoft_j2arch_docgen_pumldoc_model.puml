@@ -1,0 +1,6 @@
+@startuml
+package com.pjsoft.j2arch.docgen.pumldoc.model {
+    com.pjsoft.j2arch.docgen.pumldoc.model.DiagramInfo
+    com.pjsoft.j2arch.docgen.pumldoc.model.DiagramResult
+}
+@enduml

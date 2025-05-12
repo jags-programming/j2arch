@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.uml {
+    com.pjsoft.j2arch.uml.UMLDiagramGenerator
+}
+@enduml

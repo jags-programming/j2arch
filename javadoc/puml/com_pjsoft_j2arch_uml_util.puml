@@ -1,0 +1,9 @@
+@startuml
+package com.pjsoft.j2arch.uml.util {
+    com.pjsoft.j2arch.uml.util.DiagramImageGenerator
+    com.pjsoft.j2arch.uml.util.FileHandler
+    com.pjsoft.j2arch.uml.util.ProjectAnalyzer
+    com.pjsoft.j2arch.uml.util.ScenarioBuilder
+    com.pjsoft.j2arch.uml.util.UMLGenerationContext
+}
+@enduml

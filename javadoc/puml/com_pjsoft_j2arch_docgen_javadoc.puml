@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.docgen.javadoc {
+    com.pjsoft.j2arch.docgen.javadoc.JavaDocGenerator
+}
+@enduml

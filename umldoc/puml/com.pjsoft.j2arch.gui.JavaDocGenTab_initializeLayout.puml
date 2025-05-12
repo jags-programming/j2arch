@@ -1,0 +1,7 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.JavaDocGenTab::initializeLayout
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : initializeLayout calls addInputDirectorySection
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : initializeLayout calls addOutputDirectorySection
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : initializeLayout calls addProgressBarComponent
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : initializeLayout calls addGenerateButton
+@enduml

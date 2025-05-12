@@ -1,0 +1,37 @@
+@startuml
+skinparam linetype Ortho
+package util {
+class HtmlGenerationContext {
+    String diagramTemplateFile
+    String imagesOutputDirectory
+    String indexTemplateFile
+    String inputDirectory
+    String outputDirectory
+    String styleOutputFile
+    String styleSourceFile
+    public String getDiagramTemplateFile()
+    public String getImagesOutputDirectory()
+    public String getIndexTemplateFile()
+    public String getInputDirectory()
+    public String getOutputDirectory()
+    public String getStyleOutputFile()
+    public String getStyleSourceFile()
+}
+class HtmlGenerator {
+    org.slf4j.Logger logger
+    public void copyCssFile(String outputDir, String cssTemplateFilePath, String cssDestinationPath)
+    public void generateDiagramPage(DiagramInfo info, String outputDir, String template)
+    public void generateIndexFile(Map<String,DiagramInfo> diagramInfoMap, String outputDir, String docTitle, String indextemplateFile, ProgressTracker progressTracker)
+    public String loadTemplate(String templateFilePath)
+}
+HtmlGenerator --> ProgressTracker : caller-callee
+HtmlGenerator --> ProgressTracker : caller-callee
+HtmlGenerator -- WorkUnitType : association
+HtmlGenerator -- WorkUnitType : association
+HtmlGenerator --> DiagramInfo : caller-callee
+HtmlGenerator --> DiagramInfo : caller-callee
+HtmlGenerator --> DiagramInfo : caller-callee
+HtmlGenerator --> DiagramInfo : caller-callee
+HtmlGenerator --> DiagramInfo : caller-callee
+}
+@enduml

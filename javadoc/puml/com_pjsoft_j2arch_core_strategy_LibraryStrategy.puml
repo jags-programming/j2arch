@@ -1,0 +1,8 @@
+@startuml
+skinparam linetype Ortho
+class LibraryStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+LibraryStrategy --> CodeBase : caller-callee
+@enduml

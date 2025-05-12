@@ -1,0 +1,36 @@
+@startuml
+skinparam linetype Ortho
+package util {
+class JavaDocGenerationContext {
+    String classTemplateFile
+    String htmlDirectory
+    String imagesOutputDirectory
+    String includePackage
+    String indexTemplateFile
+    String inputDirectory
+    String libsDirPath
+    String outputDirectory
+    String packageTemplateFile
+    String pumlPath
+    String styleOutputFile
+    String styleSourceFile
+    public String getClassTemplateFile()
+    public String getHtmlDirectory()
+    public String getImagesOutputDirectory()
+    public String getIncludePackage()
+    public String getIndexTemplateFile()
+    public String getInputDirectory()
+    public String getLibsDirPath()
+    public String getOutputDirectory()
+    public String getPackageTemplateFile()
+    public String getPumlPath()
+    public String getStyleOutputFile()
+    public String getStyleSourceFile()
+}
+class JavaDocHtmlGenerator {
+    public String generateHtml(String templatePath, Map<String,String> placeholders)
+    private String loadTemplate(String templatePath)
+    public void writeHtmlFile(String outputPath, String htmlContent)
+}
+}
+@enduml

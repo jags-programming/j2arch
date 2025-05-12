@@ -1,0 +1,33 @@
+@startuml
+skinparam linetype Ortho
+class ConfigurationValidator {
+    Logger logger
+    public void validateContext(UMLGenerationContext context)
+    public void validateDirectory(String directoryPath)
+    public void validateFileExists(String filePath)
+    public void validateFileInClasspath(String filePath)
+    public void validateOrCreateDirectory(String directoryPath)
+}
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> PathResolver : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator -- DirectoryConstants : association
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator -- DirectoryConstants : association
+@enduml

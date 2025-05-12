@@ -1,0 +1,19 @@
+@startuml
+skinparam linetype Ortho
+class ProjectAnalyzer {
+    Logger logger
+    public void analyzeForDuplicates(GenerationContext context, ProgressTracker progressTracker)
+    public List<CodeEntity> analyzeProject(GenerationContext context, ProgressTracker progressTracker)
+    public Map<String,PackageEntity> analyzeProjectForPackages(GenerationContext context, ProgressTracker progressTracker)
+    public List<String> collectJavaFiles(GenerationContext context, ProgressTracker progressTracker)
+    public void configureSymbolSolver(GenerationContext context)
+    public List<String> findDuplicateFileNames(List<String> filePaths)
+}
+ProjectAnalyzer --> GenerationContext : caller-callee
+ProjectAnalyzer --> SymbolSolverConfig : caller-callee
+ProjectAnalyzer --> GenerationContext : caller-callee
+ProjectAnalyzer --> JavaParserService : caller-callee
+ProjectAnalyzer --> JavaParserService : caller-callee
+ProjectAnalyzer --> ProgressTracker : caller-callee
+ProjectAnalyzer --> ProgressTracker : caller-callee
+@enduml

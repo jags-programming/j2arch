@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype Ortho
+class Relative {
+    CodeEntity calleeEntity
+    String calleeMethod
+    MethodEntity calleeMethodEntity
+    String callerMethod
+    MethodEntity callerMethodEntity
+    String details
+    org.slf4j.Logger logger
+    RelationshipType relationshipType
+    private String generateDetails()
+    public CodeEntity getCalleeEntity()
+    public String getCalleeMethod()
+    public MethodEntity getCalleeMethodEntity()
+    public String getCallerMethod()
+    public MethodEntity getCallerMethodEntity()
+    public String getDetails()
+    public RelationshipType getRelationshipType()
+    public void setCalleeEntity(CodeEntity calleeEntity)
+    public void setCalleeMethod(String calleeMethod)
+    public void setCalleeMethodEntity(MethodEntity calleeMethodEntity)
+    public void setCallerMethod(String callerMethod)
+    public void setCallerMethodEntity(MethodEntity callerMethodEntity)
+    public void setDetails(String details)
+    public void setRelationshipType(RelationshipType relationshipType)
+    public String toPlantUmlSyntax(String sourceClassName)
+    public String toString()
+}
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+@enduml

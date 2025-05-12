@@ -1,0 +1,37 @@
+@startuml
+skinparam linetype Ortho
+package strategy {
+class ConsoleStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+ConsoleStrategy --> CodeBase : caller-callee
+class EntryPointDetector {
+    List<EntryPointStrategy> strategies
+    public void detectAndTagEntryPoints(List<CodeEntity> codeEntities)
+}
+EntryPointDetector --> EntryPointStrategy : caller-callee
+EntryPointDetector --> CodeEntity : caller-callee
+EntryPointDetector --> CodeEntity : caller-callee
+EntryPointDetector --> EntryPointStrategy : caller-callee
+class EntryPointStrategy {
+     List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+     boolean isApplicableToType(String applicationType)
+}
+class GuiStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+GuiStrategy --> CodeBase : caller-callee
+class LibraryStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+LibraryStrategy --> CodeBase : caller-callee
+class WebStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+WebStrategy --> CodeBase : caller-callee
+}
+@enduml

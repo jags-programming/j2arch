@@ -1,0 +1,8 @@
+@startuml
+skinparam linetype Ortho
+class GuiStrategy {
+    public List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+    public boolean isApplicableToType(String applicationType)
+}
+GuiStrategy --> CodeBase : caller-callee
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype Ortho
+class ResourcePaths {
+    String CUSTOM_CONFIGFILE_PROPERTY
+    String CUSTOM_CONFIG_FILE
+    String DEFAULT_CONFIG_RESOURCE
+    String TEMPLATE_HTML_DOC_DIAGRAM
+    String TEMPLATE_HTML_DOC_INDEX
+    String TEMPLATE_JAVADOC_CLASS
+    String TEMPLATE_JAVADOC_INDEX
+    String TEMPLATE_JAVADOC_PACKAGE
+    String TEMPLATE_STYLE_HTML_DOC
+    String TEMPLATE_STYLE_JAVADOC
+}
+@enduml

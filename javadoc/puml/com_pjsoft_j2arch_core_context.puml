@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.core.context {
+    com.pjsoft.j2arch.core.context.GenerationContext
+}
+@enduml

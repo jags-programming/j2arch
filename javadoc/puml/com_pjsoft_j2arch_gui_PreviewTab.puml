@@ -1,0 +1,19 @@
+@startuml
+skinparam linetype Ortho
+class PreviewTab {
+    BorderPane layout
+    org.slf4j.Logger logger
+    UMLGenerationContext umlContext
+    private void displayImage(File file, ImageView imageView)
+    public BorderPane getLayout()
+    private void handleBrowse(Stage primaryStage, TextField pathField, List<File> imageFiles, ImageView imageView, Scale scale, Button leftButton, Button rightButton, int[] currentIndex)
+    private void handleLeftNavigation(List<File> imageFiles, ImageView imageView, Scale scale, int[] currentIndex, Button leftButton, Button rightButton)
+    private void handleRightNavigation(List<File> imageFiles, ImageView imageView, Scale scale, int[] currentIndex, Button leftButton, Button rightButton)
+    private void handleZoomIn(Scale scale)
+    private void handleZoomOut(Scale scale)
+    private void loadOutputDirectory(List<File> imageFiles, TextField pathField, ImageView imageView, Button leftButton, Button rightButton, int[] currentIndex, Scale scale)
+    private void resetImageView(ImageView imageView, Scale scale)
+    private void updateNavigationButtons(Button leftButton, Button rightButton, int currentIndex, int totalImages)
+}
+PreviewTab --> UMLGenerationContext : caller-callee
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.gui.util {
+    com.pjsoft.j2arch.gui.util.GUIStyleContext
+}
+@enduml

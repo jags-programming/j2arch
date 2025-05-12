@@ -1,0 +1,4 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::createThemeRadio
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : createThemeRadio calls setStyle
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+skinparam linetype Ortho
+class PackageEntity {
+    List<CodeEntity> classes
+    String name
+    String packageDiagram
+    List<PackageEntity> relatedPackages
+    public void addClass(CodeEntity codeEntity)
+    public void addRelatedPackage(PackageEntity packageEntity)
+    public List<CodeEntity> getClasses()
+    public String getName()
+    public String getPackageDiagram()
+    public List<PackageEntity> getRelatedPackages()
+    public void setPackageDiagram(String packageDiagram)
+    public String toString()
+}
+@enduml

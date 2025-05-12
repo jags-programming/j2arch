@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.cli {
+    com.pjsoft.j2arch.cli.Styler
+}
+@enduml

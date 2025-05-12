@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype Ortho
+class DirectoryConstants {
+    String DEFAULT_INPUT_DIR
+    String DEFAULT_OUTPUT_HTMLDOC_DIR
+    String DEFAULT_OUTPUT_JAVADOC_DIR
+    String DEFAULT_OUTPUT_UMLDOC_DIR
+    String DEFAULT_UNIFIED_CLASS_DIAGRAM
+    String HTML_DIR
+    String IMAGES_DIR
+    String LIBS_DIR
+    String PUML_DIR
+    String STYLES_DIR
+}
+@enduml

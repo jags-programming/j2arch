@@ -1,0 +1,27 @@
+@startuml
+skinparam linetype Ortho
+class MethodEntity {
+    List<String> annotations
+    List<MethodEntity> constructors
+    String name
+    List<String> parameters
+    String returnType
+    String visibility
+    public void addAnnotation(String annotation)
+    public void addConstructor(MethodEntity constructor)
+    public void addParameter(String paramType)
+    public int compareTo(MethodEntity other)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public List<MethodEntity> getConstructors()
+    public String getName()
+    public List<String> getParameters()
+    public String getReturnType()
+    public String getVisibility()
+    public boolean hasAnnotation(String annotation)
+    public boolean hasParameterType(String parameterType)
+    public int hashCode()
+    public void setParameters(List<String> parameters)
+    public void setVisibility(String visibility)
+}
+@enduml

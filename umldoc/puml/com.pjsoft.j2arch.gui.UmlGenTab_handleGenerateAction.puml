@@ -1,0 +1,14 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::handleGenerateAction
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.ProgressBarComponent : handleGenerateAction calls reset
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : handleGenerateAction calls getContextFromFile
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : handleGenerateAction calls getContextFromCustomInputs
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ConfigurationValidator : handleGenerateAction calls validateContext
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.UMLDiagramGenerator : handleGenerateAction calls generateDiagrams
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls markAllCompleted
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.ProgressTracker : handleGenerateAction calls onStatusUpdate
+@enduml

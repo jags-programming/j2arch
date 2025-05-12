@@ -1,0 +1,19 @@
+@startuml
+skinparam linetype Ortho
+class HtmlGenerationContext {
+    String diagramTemplateFile
+    String imagesOutputDirectory
+    String indexTemplateFile
+    String inputDirectory
+    String outputDirectory
+    String styleOutputFile
+    String styleSourceFile
+    public String getDiagramTemplateFile()
+    public String getImagesOutputDirectory()
+    public String getIndexTemplateFile()
+    public String getInputDirectory()
+    public String getOutputDirectory()
+    public String getStyleOutputFile()
+    public String getStyleSourceFile()
+}
+@enduml

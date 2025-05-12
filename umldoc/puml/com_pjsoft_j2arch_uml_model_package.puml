@@ -1,0 +1,30 @@
+@startuml
+skinparam linetype Ortho
+package model {
+class Interaction {
+    String calleeClass
+    String calleeMethod
+    String callerClass
+    String callerMethod
+    public String getCalleeClass()
+    public String getCalleeMethod()
+    public String getCallerClass()
+    public String getCallerMethod()
+}
+class Scenario {
+    String entryClass
+    List<Interaction> interactions
+    org.slf4j.Logger logger
+    String startingMethod
+    public void addInteraction(Interaction interaction)
+    public String getEntryClass()
+    public List<Interaction> getInteractions()
+    public String getStartingMethod()
+    public String toPlantUmlSyntax()
+}
+Scenario --> Interaction : caller-callee
+Scenario --> Interaction : caller-callee
+Scenario --> Interaction : caller-callee
+Scenario --> Interaction : caller-callee
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+skinparam linetype Ortho
+class FileHandler {
+    public String createTempDirectory(String prefix)
+    public String createTempFile(String prefix, String suffix)
+    public boolean deleteTempFileOrDirectory(String path)
+    public String readFile(String filePath)
+    public boolean validateDirectory(String directoryPath)
+    public void writeFile(String filePath, String content)
+}
+@enduml

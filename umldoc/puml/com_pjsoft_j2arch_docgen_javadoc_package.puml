@@ -1,0 +1,48 @@
+@startuml
+skinparam linetype Ortho
+package javadoc {
+class JavaDocGenerator {
+    org.slf4j.Logger logger
+    private void copyCssToOutputDirectory(JavaDocGenerationContext context)
+    private void generateClassDocumentation(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context, ProgressTracker progressTracker)
+    private void generateIndexDocumentation(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context)
+    public void generateJavaDoc(JavaDocGenerationContext context, ProgressTracker progressTracker)
+    private void generatePackageDocumentation(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context, ProgressTracker progressTracker)
+}
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProjectAnalyzer : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> PackageDiagramService : caller-callee
+JavaDocGenerator --> JavaDocPackagePageGenerator : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator --> PackageEntity : caller-callee
+JavaDocGenerator --> ClassDiagramService : caller-callee
+JavaDocGenerator --> JavaDocClassPageGenerator : caller-callee
+JavaDocGenerator --> ProgressTracker : caller-callee
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator -- WorkUnitType : association
+JavaDocGenerator --> JavaDocIndexPageGenerator : caller-callee
+JavaDocGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocGenerator --> JavaDocGenerationContext : caller-callee
+}
+@enduml

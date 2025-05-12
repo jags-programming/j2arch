@@ -1,0 +1,181 @@
+@startuml
+skinparam linetype Ortho
+package util {
+class ConfigurationValidator {
+    Logger logger
+    public void validateContext(UMLGenerationContext context)
+    public void validateDirectory(String directoryPath)
+    public void validateFileExists(String filePath)
+    public void validateFileInClasspath(String filePath)
+    public void validateOrCreateDirectory(String directoryPath)
+}
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> UMLGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> PathResolver : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator --> HtmlGenerationContext : caller-callee
+ConfigurationValidator -- DirectoryConstants : association
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator --> JavaDocGenerationContext : caller-callee
+ConfigurationValidator -- DirectoryConstants : association
+class DirectoryConstants {
+    String DEFAULT_INPUT_DIR
+    String DEFAULT_OUTPUT_HTMLDOC_DIR
+    String DEFAULT_OUTPUT_JAVADOC_DIR
+    String DEFAULT_OUTPUT_UMLDOC_DIR
+    String DEFAULT_UNIFIED_CLASS_DIAGRAM
+    String HTML_DIR
+    String IMAGES_DIR
+    String LIBS_DIR
+    String PUML_DIR
+    String STYLES_DIR
+}
+class GUIStylePathResolver {
+    org.slf4j.Logger logger
+    public String resolveStylePath(String stylePath)
+}
+class JavaParserService {
+    org.slf4j.Logger logger
+    ThreadLocal<List<String>> unresolvedSymbols
+    private void addUnresolvedSymbol(String symbol)
+    private void extractFieldAccessRelationships(MethodDeclaration method, CodeEntity codeEntity, GenerationContext context)
+    private void extractFieldsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private void extractMethodsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private String extractPackageName(String fullyQualifiedName)
+    private void extractParentRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private boolean isIrrelevantEntity(String entityName, GenerationContext context)
+    private boolean isLibraryEntity(String entityName)
+    private boolean isProjectEntity(String entityName, GenerationContext context)
+    private void logRelationships(CodeEntity codeEntity)
+    private void logUnresolvedSymbols()
+    public List<CodeEntity> parseFiles(List<String> files, GenerationContext context, ProgressTracker progressTracker)
+    public Map<String,PackageEntity> parsePackages(List<String> files, GenerationContext context, ProgressTracker progressTracker)
+    private String resolveCalleeClassName(MethodCallExpr call, CodeEntity codeEntity)
+    private List<String> resolveCalleeMethodParameters(MethodCallExpr call)
+}
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> SymbolSolverConfig : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> EntryPointDetector : caller-callee
+JavaParserService -- WorkUnitType : association
+JavaParserService -- WorkUnitType : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> FieldEntity : caller-callee
+JavaParserService --> FieldEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> Relative : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> Relative : caller-callee
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+class PathResolver {
+    public String resolvePath(String baseOutputDir, String subDir)
+}
+class ProgressListener {
+     void onProgressUpdate(double progress)
+     void onStatusUpdate(String message)
+}
+class ProgressTracker {
+    int CLASS_DIAGRAM_WEIGHT
+    int CLASS_DOC_WEIGHT
+    int CSS_WEIGHT
+    int FILE_PARSING_WEIGHT
+    int INDEX_PAGE_WEIGHT
+    int PACKAGE_DOC_WEIGHT
+    int PUML2HTML_INDEX_WEIGHT
+    int PUML2HTML_PAGE_WEIGHT
+    int SEQUENCE_DIAGRAM_WEIGHT
+    int completedUnits
+    boolean isCLI
+    ProgressBarComponent progressBarComponent
+    int totalUnits
+    UseCase useCase
+    public void addCompletedUnits(WorkUnitType type, int units)
+    public void addTotalUnits(WorkUnitType type, int units)
+    private int applyWeight(WorkUnitType type, int units)
+    public void initializeTaskCounts(int totalFiles, int directoryCount)
+    public void markAllCompleted()
+    public void onStatusUpdate(String message)
+    private void updateProgress()
+}
+ProgressTracker -- UseCase : association
+ProgressTracker -- UseCase : association
+ProgressTracker -- UseCase : association
+ProgressTracker --> ProgressBarComponent : caller-callee
+ProgressTracker --> ProgressBarComponent : caller-callee
+ProgressTracker --> ProgressBarComponent : caller-callee
+class ResourcePaths {
+    String CUSTOM_CONFIGFILE_PROPERTY
+    String CUSTOM_CONFIG_FILE
+    String DEFAULT_CONFIG_RESOURCE
+    String TEMPLATE_HTML_DOC_DIAGRAM
+    String TEMPLATE_HTML_DOC_INDEX
+    String TEMPLATE_JAVADOC_CLASS
+    String TEMPLATE_JAVADOC_INDEX
+    String TEMPLATE_JAVADOC_PACKAGE
+    String TEMPLATE_STYLE_HTML_DOC
+    String TEMPLATE_STYLE_JAVADOC
+}
+class StyleConstants {
+    String DEFAULT_GUI_COMMON_STYLE
+    String DEFAULT_GUI_DARK_STYLE
+    String DEFAULT_GUI_DEFAULT_STYLE
+    String DEFAULT_GUI_LIGHT_STYLE
+    String DEFAULT_GUI_PASTEL_STYLE
+    String OUTPUT_HTMLDOC_STYLE
+    String OUTPUT_JAVADOC_STYLE
+}
+class SymbolSolverConfig {
+    org.slf4j.Logger logger
+    private void addExternalLibraries(CombinedTypeSolver combinedTypeSolver, String libsDirPath)
+    public void configureSymbolSolver(String inputSourceRootPath, GenerationContext context)
+}
+SymbolSolverConfig --> GenerationContext : caller-callee
+}
+@enduml

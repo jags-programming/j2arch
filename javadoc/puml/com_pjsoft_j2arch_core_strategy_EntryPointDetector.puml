@@ -1,0 +1,11 @@
+@startuml
+skinparam linetype Ortho
+class EntryPointDetector {
+    List<EntryPointStrategy> strategies
+    public void detectAndTagEntryPoints(List<CodeEntity> codeEntities)
+}
+EntryPointDetector --> EntryPointStrategy : caller-callee
+EntryPointDetector --> CodeEntity : caller-callee
+EntryPointDetector --> CodeEntity : caller-callee
+EntryPointDetector --> EntryPointStrategy : caller-callee
+@enduml

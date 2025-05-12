@@ -1,0 +1,13 @@
+@startuml
+skinparam linetype Ortho
+class DiagramInfo {
+    String description
+    String id
+    String imagePath
+    String title
+    public String getDescription()
+    public String getId()
+    public String getImagePath()
+    public String getTitle()
+}
+@enduml

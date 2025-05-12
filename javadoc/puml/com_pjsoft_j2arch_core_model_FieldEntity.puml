@@ -1,0 +1,20 @@
+@startuml
+skinparam linetype Ortho
+class FieldEntity {
+    List<String> annotations
+    String name
+    String type
+    String visibility
+    public void addAnnotation(String annotation)
+    public int compareTo(FieldEntity other)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public String getName()
+    public String getType()
+    public String getVisibility()
+    public int hashCode()
+    public void setName(String name)
+    public void setType(String type)
+    public void setVisibility(String visibility)
+}
+@enduml

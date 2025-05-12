@@ -1,0 +1,7 @@
+@startuml
+package com.pjsoft.j2arch.config {
+    com.pjsoft.j2arch.config.ConfigurationLoader
+    com.pjsoft.j2arch.config.ContextFactory
+    com.pjsoft.j2arch.config.DefaultContextFactory
+}
+@enduml

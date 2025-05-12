@@ -1,0 +1,6 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.PreviewTab::handleLeftNavigation
+com.pjsoft.j2arch.gui.PreviewTab -> com.pjsoft.j2arch.gui.PreviewTab : handleLeftNavigation calls resetImageView
+com.pjsoft.j2arch.gui.PreviewTab -> com.pjsoft.j2arch.gui.PreviewTab : handleLeftNavigation calls displayImage
+com.pjsoft.j2arch.gui.PreviewTab -> com.pjsoft.j2arch.gui.PreviewTab : handleLeftNavigation calls updateNavigationButtons
+@enduml

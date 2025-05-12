@@ -1,0 +1,7 @@
+@startuml
+skinparam linetype Ortho
+class GUIStylePathResolver {
+    org.slf4j.Logger logger
+    public String resolveStylePath(String stylePath)
+}
+@enduml

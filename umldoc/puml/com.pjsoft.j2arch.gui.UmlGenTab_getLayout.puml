@@ -1,0 +1,3 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::getLayout
+@enduml

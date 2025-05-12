@@ -1,0 +1,12 @@
+@startuml
+skinparam linetype Ortho
+class StyleConstants {
+    String DEFAULT_GUI_COMMON_STYLE
+    String DEFAULT_GUI_DARK_STYLE
+    String DEFAULT_GUI_DEFAULT_STYLE
+    String DEFAULT_GUI_LIGHT_STYLE
+    String DEFAULT_GUI_PASTEL_STYLE
+    String OUTPUT_HTMLDOC_STYLE
+    String OUTPUT_JAVADOC_STYLE
+}
+@enduml

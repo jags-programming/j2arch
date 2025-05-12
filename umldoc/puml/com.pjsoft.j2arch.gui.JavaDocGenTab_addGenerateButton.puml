@@ -1,0 +1,4 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.JavaDocGenTab::addGenerateButton
+com.pjsoft.j2arch.gui.JavaDocGenTab -> com.pjsoft.j2arch.gui.JavaDocGenTab : addGenerateButton calls handleGenerateAction
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+skinparam linetype Ortho
+class DiagramImageGenerator {
+    org.slf4j.Logger logger
+    private void ensureDirectoryExists(File directory)
+    public void generateDiagramImage(File pumlFile, File outputDir)
+    private List<GeneratedImage> generateImages(File pumlFile)
+    private void logPumlContentForDebugging(File pumlFile)
+    private void moveGeneratedImages(List<GeneratedImage> generatedImages, File outputDir)
+    private void validatePumlFile(File pumlFile)
+}
+@enduml

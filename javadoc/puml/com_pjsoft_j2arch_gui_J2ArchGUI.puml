@@ -1,0 +1,18 @@
+@startuml
+skinparam linetype Ortho
+class J2ArchGUI {
+    org.slf4j.Logger logger
+    public void main(String[] args)
+    public void start(Stage primaryStage)
+}
+J2ArchGUI --> ConfigurationLoader : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> ContextFactory : caller-callee
+J2ArchGUI --> UmlGenTab : caller-callee
+J2ArchGUI --> PreviewTab : caller-callee
+J2ArchGUI --> Puml2HtmlDocGenTab : caller-callee
+J2ArchGUI --> JavaDocGenTab : caller-callee
+J2ArchGUI --> UmlGenTab : caller-callee
+@enduml

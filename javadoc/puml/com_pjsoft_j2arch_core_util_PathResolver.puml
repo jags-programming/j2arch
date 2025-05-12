@@ -1,0 +1,6 @@
+@startuml
+skinparam linetype Ortho
+class PathResolver {
+    public String resolvePath(String baseOutputDir, String subDir)
+}
+@enduml

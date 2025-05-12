@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype Ortho
+class ConfigurationLoader {
+    Logger logger
+    public Properties loadConfiguration()
+    public Properties loadProperties(String propertiesFile)
+    private boolean loadPropertiesFromClasspath(Properties properties, String resource)
+    private boolean loadPropertiesFromFile(Properties properties, File file)
+}
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+ConfigurationLoader -- ResourcePaths : association
+@enduml

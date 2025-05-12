@@ -1,0 +1,21 @@
+@startuml
+skinparam linetype Ortho
+class PackageDiagramService {
+    Logger logger
+    public void generatePackageDiagram(PackageEntity packageEntity, JavaDocGenerationContext context)
+}
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> JavaDocGenerationContext : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> CodeEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> JavaDocGenerationContext : caller-callee
+PackageDiagramService --> DiagramImageGenerator : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+PackageDiagramService --> PackageEntity : caller-callee
+@enduml

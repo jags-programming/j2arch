@@ -1,0 +1,9 @@
+@startuml
+skinparam linetype Ortho
+class SymbolSolverConfig {
+    org.slf4j.Logger logger
+    private void addExternalLibraries(CombinedTypeSolver combinedTypeSolver, String libsDirPath)
+    public void configureSymbolSolver(String inputSourceRootPath, GenerationContext context)
+}
+SymbolSolverConfig --> GenerationContext : caller-callee
+@enduml

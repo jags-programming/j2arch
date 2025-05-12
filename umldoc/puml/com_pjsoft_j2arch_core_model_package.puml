@@ -1,0 +1,145 @@
+@startuml
+skinparam linetype Ortho
+package model {
+class CodeBase {
+    List<CodeEntity> classes
+    public Optional<CodeEntity> findClassByName(String name)
+    public List<CodeEntity> getClasses()
+}
+class CodeEntity {
+    List<String> annotations
+    String classDiagram
+    List<MethodEntity> constructors
+    String entryPointType
+    Set<FieldEntity> fields
+    boolean isEntryPoint
+    Logger logger
+    Set<MethodEntity> methods
+    String name
+    List<Relative> relatives
+    long serialVersionUID
+    public void addAnnotation(String annotation)
+    public void addConstructor(MethodEntity constructor)
+    public CodeEntity addField(FieldEntity field)
+    public CodeEntity addMethod(MethodEntity method)
+    public CodeEntity addRelative(Relative relative)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public String getClassDiagram()
+    public List<MethodEntity> getConstructors()
+    public String getEntryPointType()
+    public Set<FieldEntity> getFields()
+    public Set<MethodEntity> getMethods()
+    public String getName()
+    public List<Relative> getRelatives()
+    public List<Relative> getRelativesByRelationshipType(Relative.RelationshipType relationshipType)
+    public boolean hasAnyAnnotation(List<String> annotationList)
+    public boolean hasMainMethod()
+    public int hashCode()
+    public boolean isEntryPoint()
+    public boolean removeField(FieldEntity field)
+    public boolean removeMethod(MethodEntity method)
+    public void setClassDiagram(String classDiagram)
+    public void setEntryPoint(boolean isEntryPoint)
+    public void setEntryPointType(String entryPointType)
+    public String toString()
+}
+CodeEntity --> Relative : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+class FieldEntity {
+    List<String> annotations
+    String name
+    String type
+    String visibility
+    public void addAnnotation(String annotation)
+    public int compareTo(FieldEntity other)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public String getName()
+    public String getType()
+    public String getVisibility()
+    public int hashCode()
+    public void setName(String name)
+    public void setType(String type)
+    public void setVisibility(String visibility)
+}
+class MethodEntity {
+    List<String> annotations
+    List<MethodEntity> constructors
+    String name
+    List<String> parameters
+    String returnType
+    String visibility
+    public void addAnnotation(String annotation)
+    public void addConstructor(MethodEntity constructor)
+    public void addParameter(String paramType)
+    public int compareTo(MethodEntity other)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public List<MethodEntity> getConstructors()
+    public String getName()
+    public List<String> getParameters()
+    public String getReturnType()
+    public String getVisibility()
+    public boolean hasAnnotation(String annotation)
+    public boolean hasParameterType(String parameterType)
+    public int hashCode()
+    public void setParameters(List<String> parameters)
+    public void setVisibility(String visibility)
+}
+class PackageEntity {
+    List<CodeEntity> classes
+    String name
+    String packageDiagram
+    List<PackageEntity> relatedPackages
+    public void addClass(CodeEntity codeEntity)
+    public void addRelatedPackage(PackageEntity packageEntity)
+    public List<CodeEntity> getClasses()
+    public String getName()
+    public String getPackageDiagram()
+    public List<PackageEntity> getRelatedPackages()
+    public void setPackageDiagram(String packageDiagram)
+    public String toString()
+}
+class Relative {
+    CodeEntity calleeEntity
+    String calleeMethod
+    MethodEntity calleeMethodEntity
+    String callerMethod
+    MethodEntity callerMethodEntity
+    String details
+    org.slf4j.Logger logger
+    RelationshipType relationshipType
+    private String generateDetails()
+    public CodeEntity getCalleeEntity()
+    public String getCalleeMethod()
+    public MethodEntity getCalleeMethodEntity()
+    public String getCallerMethod()
+    public MethodEntity getCallerMethodEntity()
+    public String getDetails()
+    public RelationshipType getRelationshipType()
+    public void setCalleeEntity(CodeEntity calleeEntity)
+    public void setCalleeMethod(String calleeMethod)
+    public void setCalleeMethodEntity(MethodEntity calleeMethodEntity)
+    public void setCallerMethod(String callerMethod)
+    public void setCallerMethodEntity(MethodEntity callerMethodEntity)
+    public void setDetails(String details)
+    public void setRelationshipType(RelationshipType relationshipType)
+    public String toPlantUmlSyntax(String sourceClassName)
+    public String toString()
+}
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+Relative --> CodeEntity : caller-callee
+}
+@enduml

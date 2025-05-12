@@ -1,0 +1,13 @@
+@startuml
+skinparam linetype Ortho
+class Interaction {
+    String calleeClass
+    String calleeMethod
+    String callerClass
+    String callerMethod
+    public String getCalleeClass()
+    public String getCalleeMethod()
+    public String getCallerClass()
+    public String getCallerMethod()
+}
+@enduml

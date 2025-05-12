@@ -1,0 +1,50 @@
+@startuml
+skinparam linetype Ortho
+class DefaultContextFactory {
+    Properties properties
+    public GUIStyleContext createGUIStyleContext()
+    public HtmlGenerationContext createHTMLContext()
+    public JavaDocGenerationContext createJavaDocContext()
+    public UMLGenerationContext createUMLContext()
+    public UMLGenerationContext getContextFromFile(String propertiesFile)
+}
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory --> PathResolver : caller-callee
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- DirectoryConstants : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory -- ResourcePaths : association
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory --> GUIStylePathResolver : caller-callee
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory -- StyleConstants : association
+DefaultContextFactory --> ConfigurationLoader : caller-callee
+@enduml

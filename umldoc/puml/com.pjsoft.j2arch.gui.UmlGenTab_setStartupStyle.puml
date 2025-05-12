@@ -1,0 +1,7 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::setStartupStyle
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : setStartupStyle calls getDefaultStylePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : setStartupStyle calls setStyle
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : setStartupStyle calls getDarkThemePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : setStartupStyle calls setStyle
+@enduml

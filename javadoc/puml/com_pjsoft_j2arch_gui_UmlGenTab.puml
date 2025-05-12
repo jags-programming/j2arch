@@ -1,0 +1,63 @@
+@startuml
+skinparam linetype Ortho
+class UmlGenTab {
+    ToggleGroup configOptionsGroup
+    VBox customInputsBox
+    RadioButton customSettingsOption
+    RadioButton defaultSettingsOption
+    TextField diagramTypesField
+    RadioButton fileSettingsOption
+    GUIStyleContext guiStyleContext
+    TextField includePackageField
+    TextField inputDirField
+    VBox layout
+    org.slf4j.Logger logger
+    TextField outputDirField
+    ProgressBarComponent progressBarComponent
+    Scene scene
+    private VBox createConfigurationOptionsBox()
+    private TitledPane createCustomInputsPane(Stage primaryStage)
+    private Button createDirectoryButton(String label, TextField targetField, Stage stage)
+    private Button createGenerateButton(UMLGenerationContext context)
+    private RadioButton createThemeRadio(String label, ToggleGroup group, String stylePath)
+    private HBox createTopRow()
+    private UMLGenerationContext getContextFromCustomInputs(UMLGenerationContext initialContext)
+     UMLGenerationContext getContextFromFile(String propertiesFile)
+    public VBox getLayout()
+    private void handleGenerateAction(UMLGenerationContext context)
+    private void selectDefaultTheme(RadioButton lightTheme, RadioButton darkTheme, RadioButton pastelTheme)
+    public void setScene(Scene scene)
+    private void setStartupStyle(Scene scene)
+    private void setStyle(Scene scene, String stylePath)
+    private void updateCustomInputsVisibility()
+}
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> ProgressBarComponent : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ConfigurationValidator : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> UMLDiagramGenerator : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab --> ProgressTracker : caller-callee
+UmlGenTab -- UseCase : association
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStylePathResolver : caller-callee
+UmlGenTab --> GUIStylePathResolver : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> GUIStyleContext : caller-callee
+UmlGenTab --> ConfigurationLoader : caller-callee
+UmlGenTab --> DefaultContextFactory : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+UmlGenTab --> UMLGenerationContext : caller-callee
+@enduml

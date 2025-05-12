@@ -1,0 +1,7 @@
+@startuml
+skinparam linetype Ortho
+class ProgressListener {
+     void onProgressUpdate(double progress)
+     void onStatusUpdate(String message)
+}
+@enduml

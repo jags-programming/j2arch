@@ -1,0 +1,24 @@
+@startuml
+skinparam linetype Ortho
+package uml {
+class UMLDiagramGenerator {
+    ClassDiagramService classDiagramService
+    Logger logger
+    ProjectAnalyzer projectAnalyzer
+    SequenceDiagramService sequenceDiagramService
+    StorageService storageService
+    public void generateDiagrams(UMLGenerationContext context, ProgressTracker progressTracker)
+}
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+UMLDiagramGenerator --> ProjectAnalyzer : caller-callee
+UMLDiagramGenerator --> ProjectAnalyzer : caller-callee
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+UMLDiagramGenerator --> UMLGenerationContext : caller-callee
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+UMLDiagramGenerator --> ClassDiagramService : caller-callee
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+UMLDiagramGenerator --> SequenceDiagramService : caller-callee
+UMLDiagramGenerator --> ProgressTracker : caller-callee
+}
+@enduml

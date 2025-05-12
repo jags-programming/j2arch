@@ -1,0 +1,27 @@
+@startuml
+skinparam linetype Ortho
+package model {
+class DiagramInfo {
+    String description
+    String id
+    String imagePath
+    String title
+    public String getDescription()
+    public String getId()
+    public String getImagePath()
+    public String getTitle()
+}
+class DiagramResult {
+    String baseFilename
+    DiagramInfo diagramInfo
+    String filename
+    String message
+    boolean success
+    public String getBaseFilename()
+    public DiagramInfo getDiagramInfo()
+    public String getFilename()
+    public String getMessage()
+    public boolean isSuccess()
+}
+}
+@enduml

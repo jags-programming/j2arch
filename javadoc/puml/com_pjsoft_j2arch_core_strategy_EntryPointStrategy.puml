@@ -1,0 +1,7 @@
+@startuml
+skinparam linetype Ortho
+class EntryPointStrategy {
+     List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
+     boolean isApplicableToType(String applicationType)
+}
+@enduml

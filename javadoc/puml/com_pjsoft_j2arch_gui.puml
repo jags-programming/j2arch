@@ -1,0 +1,10 @@
+@startuml
+package com.pjsoft.j2arch.gui {
+    com.pjsoft.j2arch.gui.J2ArchGUI
+    com.pjsoft.j2arch.gui.JavaDocGenTab
+    com.pjsoft.j2arch.gui.PreviewTab
+    com.pjsoft.j2arch.gui.ProgressBarComponent
+    com.pjsoft.j2arch.gui.Puml2HtmlDocGenTab
+    com.pjsoft.j2arch.gui.UmlGenTab
+}
+@enduml

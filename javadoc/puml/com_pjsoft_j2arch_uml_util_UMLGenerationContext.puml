@@ -1,0 +1,21 @@
+@startuml
+skinparam linetype Ortho
+class UMLGenerationContext {
+    String diagramTypes
+    String imagesOutputDirectory
+    String includePackage
+    String inputDirectory
+    String libsDirPath
+    String outputDirectory
+    String pumlPath
+    String unifiedClassDiagram
+    public String getDiagramTypes()
+    public String getImagesOutputDirectory()
+    public String getIncludePackage()
+    public String getInputDirectory()
+    public String getLibsDirPath()
+    public String getOutputDirectory()
+    public String getPumlPath()
+    public String getUnifiedClassDiagram()
+}
+@enduml

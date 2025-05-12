@@ -1,0 +1,70 @@
+@startuml
+skinparam linetype Ortho
+class JavaParserService {
+    org.slf4j.Logger logger
+    ThreadLocal<List<String>> unresolvedSymbols
+    private void addUnresolvedSymbol(String symbol)
+    private void extractFieldAccessRelationships(MethodDeclaration method, CodeEntity codeEntity, GenerationContext context)
+    private void extractFieldsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private void extractMethodsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private String extractPackageName(String fullyQualifiedName)
+    private void extractParentRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity, GenerationContext context)
+    private boolean isIrrelevantEntity(String entityName, GenerationContext context)
+    private boolean isLibraryEntity(String entityName)
+    private boolean isProjectEntity(String entityName, GenerationContext context)
+    private void logRelationships(CodeEntity codeEntity)
+    private void logUnresolvedSymbols()
+    public List<CodeEntity> parseFiles(List<String> files, GenerationContext context, ProgressTracker progressTracker)
+    public Map<String,PackageEntity> parsePackages(List<String> files, GenerationContext context, ProgressTracker progressTracker)
+    private String resolveCalleeClassName(MethodCallExpr call, CodeEntity codeEntity)
+    private List<String> resolveCalleeMethodParameters(MethodCallExpr call)
+}
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> SymbolSolverConfig : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> ProgressTracker : caller-callee
+JavaParserService --> EntryPointDetector : caller-callee
+JavaParserService -- WorkUnitType : association
+JavaParserService -- WorkUnitType : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> MethodEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> FieldEntity : caller-callee
+JavaParserService --> FieldEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService -- RelationshipType : association
+JavaParserService -- Relative : association
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> Relative : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+JavaParserService --> Relative : caller-callee
+JavaParserService --> GenerationContext : caller-callee
+JavaParserService --> CodeEntity : caller-callee
+@enduml

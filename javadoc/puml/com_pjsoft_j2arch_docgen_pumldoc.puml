@@ -1,0 +1,5 @@
+@startuml
+package com.pjsoft.j2arch.docgen.pumldoc {
+    com.pjsoft.j2arch.docgen.pumldoc.Puml2HtmlDocGenerator
+}
+@enduml

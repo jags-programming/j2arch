@@ -1,0 +1,21 @@
+@startuml
+skinparam linetype Ortho
+class SequenceDiagramService {
+    org.slf4j.Logger logger
+    public String generateSequenceDiagram(List<CodeEntity> codeEntities, GenerationContext context, ProgressTracker progressTracker)
+    private String writePlantUmlToFile(String plantUmlSyntax, File outputDirectory, Scenario scenario)
+}
+SequenceDiagramService --> GenerationContext : caller-callee
+SequenceDiagramService --> GenerationContext : caller-callee
+SequenceDiagramService --> ScenarioBuilder : caller-callee
+SequenceDiagramService --> ProgressTracker : caller-callee
+SequenceDiagramService --> GenerationContext : caller-callee
+SequenceDiagramService --> Scenario : caller-callee
+SequenceDiagramService --> DiagramImageGenerator : caller-callee
+SequenceDiagramService --> Scenario : caller-callee
+SequenceDiagramService --> ProgressTracker : caller-callee
+SequenceDiagramService -- WorkUnitType : association
+SequenceDiagramService -- WorkUnitType : association
+SequenceDiagramService --> Scenario : caller-callee
+SequenceDiagramService --> Scenario : caller-callee
+@enduml

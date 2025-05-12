@@ -1,0 +1,10 @@
+@startuml
+package com.pjsoft.j2arch.core.model {
+    com.pjsoft.j2arch.core.model.CodeBase
+    com.pjsoft.j2arch.core.model.CodeEntity
+    com.pjsoft.j2arch.core.model.FieldEntity
+    com.pjsoft.j2arch.core.model.MethodEntity
+    com.pjsoft.j2arch.core.model.PackageEntity
+    com.pjsoft.j2arch.core.model.Relative
+}
+@enduml

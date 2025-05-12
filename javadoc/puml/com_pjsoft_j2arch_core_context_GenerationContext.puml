@@ -1,0 +1,11 @@
+@startuml
+skinparam linetype Ortho
+class GenerationContext {
+     String getImagesOutputDirectory()
+     String getIncludePackage()
+     String getInputDirectory()
+     String getLibsDirPath()
+     String getOutputDirectory()
+     String getPumlPath()
+}
+@enduml

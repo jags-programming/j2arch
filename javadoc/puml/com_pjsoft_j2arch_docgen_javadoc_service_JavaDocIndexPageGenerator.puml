@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype Ortho
+class JavaDocIndexPageGenerator {
+    org.slf4j.Logger logger
+    public void generateIndexPage(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context)
+    private Map<String,String> preparePlaceholders(Map<String,PackageEntity> packageEntities)
+}
+JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+@enduml

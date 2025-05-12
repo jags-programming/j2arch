@@ -1,0 +1,6 @@
+@startuml
+skinparam linetype Ortho
+class StorageService {
+    public void storeDiagram(String format, String outputPath)
+}
+@enduml

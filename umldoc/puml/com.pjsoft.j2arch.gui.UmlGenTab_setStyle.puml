@@ -1,0 +1,6 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::setStyle
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.GUIStylePathResolver : setStyle calls resolveStylePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.core.util.GUIStylePathResolver : setStyle calls resolveStylePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : setStyle calls getCommonStylePath
+@enduml

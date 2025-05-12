@@ -1,0 +1,10 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::createTopRow
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : createTopRow calls createThemeRadio
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : createTopRow calls getLightThemePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : createTopRow calls createThemeRadio
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : createTopRow calls getDarkThemePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : createTopRow calls createThemeRadio
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.util.GUIStyleContext : createTopRow calls getPastelThemePath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.gui.UmlGenTab : createTopRow calls selectDefaultTheme
+@enduml

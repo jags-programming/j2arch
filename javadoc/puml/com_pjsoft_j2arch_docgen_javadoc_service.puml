@@ -1,0 +1,7 @@
+@startuml
+package com.pjsoft.j2arch.docgen.javadoc.service {
+    com.pjsoft.j2arch.docgen.javadoc.service.JavaDocClassPageGenerator
+    com.pjsoft.j2arch.docgen.javadoc.service.JavaDocIndexPageGenerator
+    com.pjsoft.j2arch.docgen.javadoc.service.JavaDocPackagePageGenerator
+}
+@enduml

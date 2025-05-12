@@ -1,0 +1,52 @@
+@startuml
+skinparam linetype Ortho
+class CodeEntity {
+    List<String> annotations
+    String classDiagram
+    List<MethodEntity> constructors
+    String entryPointType
+    Set<FieldEntity> fields
+    boolean isEntryPoint
+    Logger logger
+    Set<MethodEntity> methods
+    String name
+    List<Relative> relatives
+    long serialVersionUID
+    public void addAnnotation(String annotation)
+    public void addConstructor(MethodEntity constructor)
+    public CodeEntity addField(FieldEntity field)
+    public CodeEntity addMethod(MethodEntity method)
+    public CodeEntity addRelative(Relative relative)
+    public boolean equals(Object obj)
+    public List<String> getAnnotations()
+    public String getClassDiagram()
+    public List<MethodEntity> getConstructors()
+    public String getEntryPointType()
+    public Set<FieldEntity> getFields()
+    public Set<MethodEntity> getMethods()
+    public String getName()
+    public List<Relative> getRelatives()
+    public List<Relative> getRelativesByRelationshipType(Relative.RelationshipType relationshipType)
+    public boolean hasAnyAnnotation(List<String> annotationList)
+    public boolean hasMainMethod()
+    public int hashCode()
+    public boolean isEntryPoint()
+    public boolean removeField(FieldEntity field)
+    public boolean removeMethod(MethodEntity method)
+    public void setClassDiagram(String classDiagram)
+    public void setEntryPoint(boolean isEntryPoint)
+    public void setEntryPointType(String entryPointType)
+    public String toString()
+}
+CodeEntity --> Relative : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+CodeEntity --> MethodEntity : caller-callee
+CodeEntity --> FieldEntity : caller-callee
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+skinparam linetype Ortho
+package service {
+class JavaDocClassPageGenerator {
+    org.slf4j.Logger logger
+    public void generateClassPage(CodeEntity codeEntity, JavaDocGenerationContext context)
+    private Map<String,String> preparePlaceholders(CodeEntity codeEntity)
+}
+JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> MethodEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> FieldEntity : caller-callee
+JavaDocClassPageGenerator --> FieldEntity : caller-callee
+JavaDocClassPageGenerator --> FieldEntity : caller-callee
+JavaDocClassPageGenerator --> FieldEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> Relative : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> Relative : caller-callee
+JavaDocClassPageGenerator --> Relative : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+JavaDocClassPageGenerator --> CodeEntity : caller-callee
+class JavaDocIndexPageGenerator {
+    org.slf4j.Logger logger
+    public void generateIndexPage(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context)
+    private Map<String,String> preparePlaceholders(Map<String,PackageEntity> packageEntities)
+}
+JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+JavaDocIndexPageGenerator --> PackageEntity : caller-callee
+class JavaDocPackagePageGenerator {
+    org.slf4j.Logger logger
+    public void generatePackagePage(PackageEntity packageEntity, JavaDocGenerationContext context)
+    private Map<String,String> preparePlaceholders(PackageEntity packageEntity, JavaDocGenerationContext context)
+}
+JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> CodeEntity : caller-callee
+JavaDocPackagePageGenerator --> CodeEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> PackageEntity : caller-callee
+JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
+}
+@enduml

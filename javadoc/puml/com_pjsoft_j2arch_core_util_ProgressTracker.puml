@@ -1,0 +1,32 @@
+@startuml
+skinparam linetype Ortho
+class ProgressTracker {
+    int CLASS_DIAGRAM_WEIGHT
+    int CLASS_DOC_WEIGHT
+    int CSS_WEIGHT
+    int FILE_PARSING_WEIGHT
+    int INDEX_PAGE_WEIGHT
+    int PACKAGE_DOC_WEIGHT
+    int PUML2HTML_INDEX_WEIGHT
+    int PUML2HTML_PAGE_WEIGHT
+    int SEQUENCE_DIAGRAM_WEIGHT
+    int completedUnits
+    boolean isCLI
+    ProgressBarComponent progressBarComponent
+    int totalUnits
+    UseCase useCase
+    public void addCompletedUnits(WorkUnitType type, int units)
+    public void addTotalUnits(WorkUnitType type, int units)
+    private int applyWeight(WorkUnitType type, int units)
+    public void initializeTaskCounts(int totalFiles, int directoryCount)
+    public void markAllCompleted()
+    public void onStatusUpdate(String message)
+    private void updateProgress()
+}
+ProgressTracker -- UseCase : association
+ProgressTracker -- UseCase : association
+ProgressTracker -- UseCase : association
+ProgressTracker --> ProgressBarComponent : caller-callee
+ProgressTracker --> ProgressBarComponent : caller-callee
+ProgressTracker --> ProgressBarComponent : caller-callee
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+skinparam linetype Ortho
+class CodeBase {
+    List<CodeEntity> classes
+    public Optional<CodeEntity> findClassByName(String name)
+    public List<CodeEntity> getClasses()
+}
+@enduml

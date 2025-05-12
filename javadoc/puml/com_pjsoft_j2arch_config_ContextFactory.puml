@@ -1,0 +1,9 @@
+@startuml
+skinparam linetype Ortho
+class ContextFactory {
+     GUIStyleContext createGUIStyleContext()
+     HtmlGenerationContext createHTMLContext()
+     JavaDocGenerationContext createJavaDocContext()
+     UMLGenerationContext createUMLContext()
+}
+@enduml

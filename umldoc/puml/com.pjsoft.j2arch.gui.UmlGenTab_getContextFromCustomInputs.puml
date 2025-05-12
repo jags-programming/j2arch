@@ -1,0 +1,8 @@
+@startuml
+title Sequence Diagram for com.pjsoft.j2arch.gui.UmlGenTab::getContextFromCustomInputs
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.util.UMLGenerationContext : getContextFromCustomInputs calls getDiagramTypes
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.util.UMLGenerationContext : getContextFromCustomInputs calls getPumlPath
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.util.UMLGenerationContext : getContextFromCustomInputs calls getImagesOutputDirectory
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.util.UMLGenerationContext : getContextFromCustomInputs calls getUnifiedClassDiagram
+com.pjsoft.j2arch.gui.UmlGenTab -> com.pjsoft.j2arch.uml.util.UMLGenerationContext : getContextFromCustomInputs calls getLibsDirPath
+@enduml
