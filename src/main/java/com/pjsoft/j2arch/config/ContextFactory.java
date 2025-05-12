@@ -1,7 +1,7 @@
 package com.pjsoft.j2arch.config;
 
 import com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext;
-import com.pjsoft.j2arch.docgen.pumldoc.util.HTMLGenerationContext;
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerationContext;
 import com.pjsoft.j2arch.gui.util.GUIStyleContext;
 import com.pjsoft.j2arch.uml.util.UMLGenerationContext;
 
@@ -93,7 +93,7 @@ public interface ContextFactory {
      * @return A {@link HTMLGenerationContext} initialized with default settings.
      * @since 1.0
      */
-    HTMLGenerationContext createHTMLContext();
+    HtmlGenerationContext createHTMLContext();
 
     /**
      * Creates an HTMLGenerationContext using custom inputs.
@@ -106,7 +106,7 @@ public interface ContextFactory {
      * @return A {@link HTMLGenerationContext} initialized with the specified inputs.
      * @since 1.0
      */
-    HTMLGenerationContext createHTMLContext(String inputDirectory, String outputDirectory, String diagramTemplateFile,
+    HtmlGenerationContext createHTMLContext(String inputDirectory, String outputDirectory, String diagramTemplateFile,
                                             String indexTemplateFile, String styleSourceFile);
 
     /**

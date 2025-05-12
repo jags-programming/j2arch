@@ -7,20 +7,24 @@ import java.util.Objects;
 /**
  * Represents a method within a Java class.
  * 
- * This class encapsulates the details of a method, including its name, return type,
- * parameters, visibility, annotations, and constructors. It provides functionality
+ * This class encapsulates the details of a method, including its name, return
+ * type,
+ * parameters, visibility, annotations, and constructors. It provides
+ * functionality
  * for adding parameters, annotations, and constructors, comparing methods, and
  * generating hash codes for use in collections.
  * 
  * Responsibilities:
- * - Encapsulates the details of a method, such as name, return type, parameters, visibility, and annotations.
+ * - Encapsulates the details of a method, such as name, return type,
+ * parameters, visibility, and annotations.
  * - Supports comparison of methods for sorting.
  * - Provides equality and hash code implementations for use in collections.
  * - Allows adding constructors and annotations to the method.
  * 
  * Limitations:
  * - Assumes that the method name and return type are non-null.
- * - Does not support advanced method features such as generic types or method-level annotations with parameters.
+ * - Does not support advanced method features such as generic types or
+ * method-level annotations with parameters.
  * 
  * Thread Safety:
  * - This class is not thread-safe as it maintains mutable state.
@@ -44,13 +48,14 @@ public class MethodEntity implements Comparable<MethodEntity> {
     private String returnType; // The return type of the method
     private List<String> parameters; // The list of parameter types
     private String visibility; // The visibility of the method (e.g., public, private)
-    private final List<MethodEntity> constructors = new ArrayList<>(); // List of constructors associated with the method
+    private final List<MethodEntity> constructors = new ArrayList<>(); // List of constructors associated with the
+                                                                       // method
     private final List<String> annotations = new ArrayList<>(); // List of annotations applied to the method
 
     /**
      * Constructs a new MethodEntity with the specified name and return type.
      * 
-     * @param name the name of the method.
+     * @param name       the name of the method.
      * @param returnType the return type of the method.
      * @since 1.0
      */
@@ -143,7 +148,8 @@ public class MethodEntity implements Comparable<MethodEntity> {
     /**
      * Adds a constructor to the method.
      * 
-     * @param constructor the {@link MethodEntity} representing the constructor to add.
+     * @param constructor the {@link MethodEntity} representing the constructor to
+     *                    add.
      * @since 1.1
      */
     public void addConstructor(MethodEntity constructor) {
@@ -180,7 +186,8 @@ public class MethodEntity implements Comparable<MethodEntity> {
      * The comparison is based on the method name.
      * 
      * @param other the other method to compare with.
-     * @return a negative integer, zero, or a positive integer as this method is less
+     * @return a negative integer, zero, or a positive integer as this method is
+     *         less
      *         than, equal to, or greater than the specified method.
      * @since 1.0
      */
@@ -198,6 +205,7 @@ public class MethodEntity implements Comparable<MethodEntity> {
      * @return {@code true} if the methods are equal, {@code false} otherwise.
      * @since 1.0
      */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -205,7 +213,9 @@ public class MethodEntity implements Comparable<MethodEntity> {
         if (obj == null || getClass() != obj.getClass())
             return false;
         MethodEntity that = (MethodEntity) obj;
-        return name.equals(that.name) && returnType.equals(that.returnType);
+        return name.equals(that.name) &&
+                returnType.equals(that.returnType) &&
+                parameters.equals(that.parameters); // Include parameter types
     }
 
     /**
@@ -216,8 +226,17 @@ public class MethodEntity implements Comparable<MethodEntity> {
      * @return the hash code for this method.
      * @since 1.0
      */
+
     @Override
     public int hashCode() {
-        return Objects.hash(name, returnType);
+        return Objects.hash(name, returnType, parameters); // Include parameter types
+    }
+
+    public boolean hasParameterType(String parameterType) {
+        return parameters != null && parameters.contains(parameterType);
+    }
+
+    public boolean hasAnnotation(String annotation) {
+        return annotations.contains(annotation);
     }
 }

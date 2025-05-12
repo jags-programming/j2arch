@@ -107,6 +107,7 @@ public class FileHandler {
      * @param directoryPath the path to the directory.
      * @return a list of `.java` file paths.
      */
+    /**
     public List<String> collectJavaFiles(String directoryPath) {
         List<String> javaFiles = new ArrayList<>();
         File directory = new File(directoryPath);
@@ -121,7 +122,8 @@ public class FileHandler {
         }
         return javaFiles;
     }
-
+    */
+    
     /**
      * Creates a temporary file.
      * 

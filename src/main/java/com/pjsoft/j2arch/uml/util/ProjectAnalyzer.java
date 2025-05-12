@@ -136,10 +136,6 @@ public class ProjectAnalyzer {
         AtomicInteger directoryCount = new AtomicInteger(0);
 
         collectJavaFiles(directory, files, directoryCount);
-
-        // Initialize progress tracker for units
-        progressTracker.initializeTaskCounts(files.size(), directoryCount.get());
-        progressTracker.onStatusUpdate("Total files to parse: " + files.size());
         return files;
     }
 

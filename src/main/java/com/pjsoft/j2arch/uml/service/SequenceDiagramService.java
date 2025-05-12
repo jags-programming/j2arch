@@ -105,9 +105,11 @@ public class SequenceDiagramService {
                 imageGenerator.generateDiagramImage(pumlFile, imageOutputDirectory);
             } catch (IOException e) {
                 logger.error("Failed to process scenario: " + scenario.getEntryClass(), e);
+            } finally{
+                progressTracker.addCompletedUnits(WorkUnitType.SEQUENCE_DIAGRAM, 1);
             }
 
-            progressTracker.addCompletedUnits(WorkUnitType.SEQUENCE_DIAGRAM, 1);
+            
         }
 
         logger.debug("Sequence diagram generation completed.");
@@ -148,38 +150,5 @@ public class SequenceDiagramService {
         return pumlFile.getAbsolutePath(); // Return the full path to the `.puml` file
     }
 
-    /**
-     * Generates a diagram image (e.g., `.png` or `.svg`) from a `.puml` file.
-     * 
-     * This method uses the PlantUML library's SourceFileReader to generate the diagram
-     * image. If the `.puml` file does not exist or no images are generated, an exception
-     * is thrown.
-     * 
-     * @param pumlFilePath The full path to the `.puml` file.
-     * @throws RuntimeException If an error occurs while generating the diagram image.
-     */
-    private void generateDiagramImage(String pumlFilePath) {
-        try {
-            File pumlFile = new File(pumlFilePath);
-            if (!pumlFile.exists()) {
-                throw new IllegalArgumentException("PUML file not found at: " + pumlFilePath);
-            }
-
-            // Use PlantUML's SourceFileReader to generate the diagram
-            SourceFileReader reader = new SourceFileReader(pumlFile);
-            List<GeneratedImage> generatedImages = reader.getGeneratedImages();
-
-            if (generatedImages.isEmpty()) {
-                throw new RuntimeException("No diagram images were generated for: " + pumlFilePath);
-            }
-
-            for (GeneratedImage image : generatedImages) {
-                logger.debug("Generated diagram image: " + image.getPngFile().getAbsolutePath());
-            }
-
-            logger.debug("Diagram image generated successfully for: " + pumlFilePath);
-        } catch (IOException e) {
-            throw new RuntimeException("Error generating diagram image for: " + pumlFilePath, e);
-        }
-    }
+   
 }

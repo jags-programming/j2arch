@@ -17,10 +17,12 @@ import java.util.regex.Pattern;
 
 import com.pjsoft.j2arch.core.util.DirectoryConstants;
 import com.pjsoft.j2arch.core.util.PathResolver;
+import com.pjsoft.j2arch.core.util.ProgressTracker;
+import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
 import com.pjsoft.j2arch.docgen.pumldoc.model.DiagramInfo;
 import com.pjsoft.j2arch.docgen.pumldoc.model.DiagramResult;
-import com.pjsoft.j2arch.docgen.pumldoc.util.HTMLGenerationContext;
-import com.pjsoft.j2arch.docgen.pumldoc.util.PumlHtmlGenerator;
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerationContext;
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerator;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -44,7 +46,7 @@ import net.sourceforge.plantuml.SourceFileReader;
  * Dependencies:
  * - {@link HTMLGenerationContext}: Provides configuration details for input/output directories,
  *   templates, and stylesheets.
- * - {@link PumlHtmlGenerator}: Utility class for generating HTML pages and copying stylesheets.
+ * - {@link HtmlGenerator}: Utility class for generating HTML pages and copying stylesheets.
  * - {@link DiagramInfo} and {@link DiagramResult}: Models for storing diagram metadata and results.
  * - PlantUML library: Used for generating diagrams from .puml files.
  * 
@@ -69,8 +71,8 @@ import net.sourceforge.plantuml.SourceFileReader;
  * Since: 1.0
  */
 
-public class PUML2HTMLDocGenerator {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PUML2HTMLDocGenerator.class);
+public class Puml2HtmlDocGenerator {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Puml2HtmlDocGenerator.class);
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors();
 
 /**
@@ -91,7 +93,7 @@ public class PUML2HTMLDocGenerator {
  * - Assumes that the input directory contains valid .puml files.
  * - Does not handle advanced error recovery for invalid .puml syntax or missing templates.
  */
-    public void generateHtmlDocumentation(String docTitle, HTMLGenerationContext context) throws IOException {
+    public void generateHtmlDocumentation(String docTitle, HtmlGenerationContext context, ProgressTracker progressTracker) throws IOException {
 
         try {
 
@@ -103,7 +105,7 @@ public class PUML2HTMLDocGenerator {
             String indexTemplateFile = context.getIndexTemplateFile();
             String cssTemplateFile = context.getStyleSourceFile();
             String cssOutputFile = context.getStyleOutputFile();
-            PumlHtmlGenerator.copyCssFile(outputDir, cssTemplateFile, cssOutputFile);
+            HtmlGenerator.copyCssFile(outputDir, cssTemplateFile, cssOutputFile);
 
             List<File> pumlFiles = findPumlFiles(inputDir);
             if (pumlFiles.isEmpty()) {
@@ -112,12 +114,12 @@ public class PUML2HTMLDocGenerator {
             }
 
             Map<String, DiagramInfo> diagramInfoMap = processFilesAndGenerateDocs(pumlFiles, outputDir,
-                    diagramTemplateFile);
-            PumlHtmlGenerator.generateIndexFile(diagramInfoMap, outputDir, docTitle, indexTemplateFile);
-
+                    diagramTemplateFile, progressTracker);
+            HtmlGenerator.generateIndexFile(diagramInfoMap, outputDir, docTitle, indexTemplateFile, progressTracker);
+            progressTracker.markAllCompleted();
         } catch (Exception e) {
 
-            logger.error("Error processing PlantUML files:", e.getMessage());
+            logger.error("Error processing PlantUML files: {}", e.getMessage());
 
         }
     }
@@ -173,29 +175,34 @@ public class PUML2HTMLDocGenerator {
  * - Ensures thread safety for shared resources like logging and file operations.
  */
     private Map<String, DiagramInfo> processFilesAndGenerateDocs(List<File> files, String outputDir,
-            String diagTemplate) {
+            String diagTemplate, ProgressTracker progressTracker) {
+                int numberOfFiles = files.size();
+                progressTracker.addTotalUnits(WorkUnitType.PUML2HTML_PAGE, numberOfFiles);
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
         List<Callable<DiagramResult>> tasks = new ArrayList<>();
         for (File file : files) {
-            tasks.add(() -> processFile(file, outputDir));
+            tasks.add(() -> processFile(file, outputDir, progressTracker));
         }
         Map<String, DiagramInfo> diagramInfoMap = new HashMap<>();
         try {
             List<Future<DiagramResult>> results = executor.invokeAll(tasks);
             int successCount = 0;
             int failureCount = 0;
-            String diagramTemplate = PumlHtmlGenerator.loadTemplate(diagTemplate);
+            String diagramTemplate = HtmlGenerator.loadTemplate(diagTemplate);
+            progressTracker.addTotalUnits(WorkUnitType.PUML2HTML_PAGE, numberOfFiles);
             for (Future<DiagramResult> future : results) {
                 DiagramResult result = future.get();
                 if (result.isSuccess()) {
                     successCount++;
                     
                     diagramInfoMap.put(result.getBaseFilename(), result.getDiagramInfo());
-                    PumlHtmlGenerator.generateDiagramPage(result.getDiagramInfo(), outputDir, diagramTemplate);
+                    HtmlGenerator.generateDiagramPage(result.getDiagramInfo(), outputDir, diagramTemplate);
                 } else {
                     failureCount++;
                     logger.error("✗ " + result.getFilename() + " - " + result.getMessage());
                 }
+
+                progressTracker.addCompletedUnits(WorkUnitType.PUML2HTML_PAGE, 1);
             }
             logger.info("Processing of puml file complete!");
             logger.info("Successfully processed: " + successCount + " files");
@@ -227,7 +234,7 @@ public class PUML2HTMLDocGenerator {
  * - Does not handle advanced error recovery for invalid `.puml` syntax.
  * - Relies on the PlantUML library for diagram generation.
  */
-    private DiagramResult processFile(File inputFile, String outputDir) {
+    private DiagramResult processFile(File inputFile, String outputDir, ProgressTracker progressTracker) {
 
         String pumlFilename = inputFile.getName();
         String baseFilename = pumlFilename.substring(0, pumlFilename.lastIndexOf('.'));
@@ -246,10 +253,13 @@ public class PUML2HTMLDocGenerator {
 
             String relativeImagePath = PathResolver.resolvePath(DirectoryConstants.IMAGES_DIR, imageName);
             DiagramInfo diagramInfo = new DiagramInfo(baseFilename, title, description, relativeImagePath);
+            
             return new DiagramResult(pumlFilename, baseFilename, true, diagrams.size() + " diagram(s) generated",
                     diagramInfo);
         } catch (Exception e) {
             return new DiagramResult(pumlFilename, baseFilename, false, e.getMessage(), null);
+        }finally{
+            progressTracker.addCompletedUnits(WorkUnitType.PUML2HTML_PAGE, 1);
         }
     }
 

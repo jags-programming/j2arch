@@ -26,9 +26,9 @@ import com.pjsoft.j2arch.uml.model.Scenario;
  * - {@link CodeEntity}: Represents a class or interface in the codebase.
  * - {@link MethodEntity}: Represents a method in a class or interface.
  * - {@link Relative}: Represents relationships between code entities (e.g.,
- *   caller-callee relationships).
+ * caller-callee relationships).
  * - {@link Scenario}: Represents a sequence diagram for a specific entry class
- *   and method.
+ * and method.
  * - {@link Interaction}: Represents a single interaction in a sequence diagram.
  * 
  * Limitations:
@@ -65,31 +65,16 @@ public class ScenarioBuilder {
      * @return A list of entry classes.
      * @throws IllegalArgumentException If the codeEntities list is null.
      */
+
     private List<CodeEntity> identifyEntryClasses(List<CodeEntity> codeEntities) {
         if (codeEntities == null) {
             throw new IllegalArgumentException("CodeEntities cannot be null");
         }
 
-        Map<String, Boolean> calleeMap = new HashMap<>();
-
-        // Mark all classes that are callees
-        for (CodeEntity codeEntity : codeEntities) {
-            for (Relative relative : codeEntity.getRelatives()) {
-                if (relative.getRelationshipType() == Relative.RelationshipType.CALLER_CALLEE) {
-                    calleeMap.put(relative.getCalleeEntity().getName(), true);
-                }
-            }
-        }
-
-        // Collect classes that are not callees
-        List<CodeEntity> entryClasses = new ArrayList<>();
-        for (CodeEntity codeEntity : codeEntities) {
-            if (!calleeMap.containsKey(codeEntity.getName())) {
-                entryClasses.add(codeEntity);
-            }
-        }
-
-        return entryClasses;
+        // Collect classes already flagged as entry points
+        return codeEntities.stream()
+                .filter(CodeEntity::isEntryPoint)
+                .toList();
     }
 
     /**
@@ -106,6 +91,7 @@ public class ScenarioBuilder {
      * @throws IllegalArgumentException If the codeEntities list is null.
      */
     public List<Scenario> getScenarios(List<CodeEntity> codeEntities) {
+
         if (codeEntities == null) {
             throw new IllegalArgumentException("CodeEntities cannot be null");
         }
@@ -154,8 +140,9 @@ public class ScenarioBuilder {
             Set<String> visited = new HashSet<>(); // To avoid cycles
 
             // Build the scenario starting from this method
-            buildScenarioFromMethod(entryClass, method.getName(), scenario, visited, codeEntities);
-
+            // buildScenarioFromMethod(entryClass, method.getName(), scenario, visited,
+            // codeEntities);
+            buildScenarioFromMethod(entryClass, method, scenario, visited, codeEntities);
             // Add the built scenario to the list
             scenarios.add(scenario);
         }
@@ -163,32 +150,15 @@ public class ScenarioBuilder {
         return scenarios;
     }
 
-    /**
-     * Recursively builds a scenario starting from a specific method of an entry
-     * class.
-     * 
-     * This method traverses the caller-callee relationships recursively, adding
-     * interactions to the same scenario. It uses a visited set to avoid cycles in
-     * the relationship graph. The method dynamically looks up the full CodeEntity
-     * for each callee using the provided list of CodeEntity objects, ensuring that
-     * all relationships are available for traversal.
-     * 
-     * @param entryClass     The entry class to start the scenario.
-     * @param startingMethod The method in the entry class that starts the scenario.
-     * @param scenario       The scenario to build.
-     * @param visited        A set of visited classes and methods to avoid cycles.
-     * @param codeEntities   The list of all CodeEntity objects, used to dynamically
-     *                       look up callees.
-     * @throws IllegalArgumentException If any of the arguments are null.
-     */
-    private void buildScenarioFromMethod(CodeEntity entryClass, String startingMethod, Scenario scenario,
+
+    private void buildScenarioFromMethod(CodeEntity entryClass, MethodEntity startingMethod, Scenario scenario,
             Set<String> visited, List<CodeEntity> codeEntities) {
         if (entryClass == null || startingMethod == null || scenario == null) {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
 
         // Create a unique key for the current class and method to track visited nodes
-        String visitedKey = entryClass.getName() + "::" + startingMethod;
+        String visitedKey = entryClass.getName() + "::" + startingMethod.getName();
         if (visited.contains(visitedKey)) {
             return; // Avoid cycles
         }
@@ -200,7 +170,8 @@ public class ScenarioBuilder {
 
         for (Relative relative : callerCalleeRelatives) {
             // Check if the relationship starts from the given method
-            if (relative.getCallerMethod().equals(startingMethod)) {
+            if (relative.getCallerMethodEntity().equals(startingMethod)) {
+
                 // Look up the full CodeEntity for the callee
                 CodeEntity calleeEntity = findCodeEntityByName(codeEntities, relative.getCalleeEntity().getName());
                 if (calleeEntity == null) {
@@ -211,15 +182,34 @@ public class ScenarioBuilder {
                 // Add the interaction to the scenario
                 scenario.addInteraction(new Interaction(
                         entryClass.getName(),
-                        relative.getCallerMethod(),
+                        startingMethod.getName(),
                         calleeEntity.getName(),
-                        relative.getCalleeMethod()));
+                        relative.getCalleeMethodEntity().getName()));
 
                 // Recursively build the scenario for the callee
-                buildScenarioFromMethod(calleeEntity, relative.getCalleeMethod(), scenario, visited, codeEntities);
+                buildScenarioFromMethod(calleeEntity, relative.getCalleeMethodEntity(), scenario, visited,
+                        codeEntities);
             }
         }
+    }
 
+    /**
+     * Retrieves the list of parameter types for a specified method in the given
+     * code entity.
+     *
+     * @param codeEntity the code entity containing the methods to search
+     * @param methodName the name of the method whose parameter types are to be
+     *                   retrieved
+     * @return a list of parameter types for the specified method, or an empty list
+     *         if the method
+     *         is not found or has no parameters
+     */
+    private List<String> getMethodParameterTypes(CodeEntity codeEntity, String methodName) {
+        return codeEntity.getMethods().stream()
+                .filter(m -> m.getName().equals(methodName))
+                .map(MethodEntity::getParameters)
+                .findFirst()
+                .orElse(Collections.emptyList());
     }
 
     /**

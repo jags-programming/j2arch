@@ -10,12 +10,14 @@ import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.pjsoft.j2arch.docgen.pumldoc.PUML2HTMLDocGenerator;
+import com.pjsoft.j2arch.core.util.ProgressTracker;
+import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
+import com.pjsoft.j2arch.docgen.pumldoc.Puml2HtmlDocGenerator;
 import com.pjsoft.j2arch.docgen.pumldoc.model.DiagramInfo;
 import com.pjsoft.j2arch.uml.service.ClassDiagramService;
 
 /**
- * PumlHtmlGenerator
+ * HtmlGenerator
  * 
  * A utility class for generating HTML files for PlantUML diagrams. This class provides
  * methods to generate an index file linking all diagrams and individual HTML pages for
@@ -29,7 +31,7 @@ import com.pjsoft.j2arch.uml.service.ClassDiagramService;
  * 
  * Dependencies:
  * - {@link DiagramInfo}: Represents metadata about a diagram.
- * - {@link PUML2HTMLDocGenerator}: Provides access to resources for templates and CSS.
+ * - {@link Puml2HtmlDocGenerator}: Provides access to resources for templates and CSS.
  * 
  * Limitations:
  * - Assumes that the provided templates and CSS files exist and are accessible.
@@ -43,20 +45,20 @@ import com.pjsoft.j2arch.uml.service.ClassDiagramService;
  * Map<String, DiagramInfo> diagramInfoMap = ...;
  * String outputDir = "/path/to/output";
  * String docTitle = "My Documentation";
- * PumlHtmlGenerator.generateIndexFile(diagramInfoMap, outputDir, docTitle, "/templates/index.html");
+ * HtmlGenerator.generateIndexFile(diagramInfoMap, outputDir, docTitle, "/templates/index.html");
  * }
  * 
  * Author: PJSoft
  * Version: 2.2
  * Since: 1.0
  */
-public class PumlHtmlGenerator {
+public class HtmlGenerator {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ClassDiagramService.class);
 
     /**
-     * Default constructor for PumlHtmlGenerator.
+     * Default constructor for HtmlGenerator.
      */
-    public PumlHtmlGenerator() {
+    public HtmlGenerator() {
         // Default constructor
     }
 
@@ -76,7 +78,8 @@ public class PumlHtmlGenerator {
      * @param indextemplateFile The path to the index HTML template file.
      * @throws IOException If an I/O error occurs during file operations.
      */
-    public static void generateIndexFile(Map<String, DiagramInfo> diagramInfoMap, String outputDir, String docTitle, String indextemplateFile) throws IOException {
+    public static void generateIndexFile(Map<String, DiagramInfo> diagramInfoMap, String outputDir, String docTitle, String indextemplateFile, ProgressTracker progressTracker) throws IOException {
+        progressTracker.addTotalUnits(WorkUnitType.PUML2HTML_Index, diagramInfoMap.size());
         // Load index template
         String indexTemplate = loadTemplate(indextemplateFile);
         
@@ -113,6 +116,7 @@ public class PumlHtmlGenerator {
                           .append(diagram.getTitle())
                           .append("\" class=\"diagram-img\"></a>\n")
                           .append("</div>\n");
+                          progressTracker.addCompletedUnits(WorkUnitType.PUML2HTML_Index, 1);
                 });
         
         // Replace placeholders in template
@@ -166,7 +170,7 @@ public class PumlHtmlGenerator {
      * @throws IOException If an I/O error occurs while loading the template.
      */
     public static String loadTemplate(String templateFilePath) throws IOException {
-        try (InputStream is = PUML2HTMLDocGenerator.class.getResourceAsStream(templateFilePath);
+        try (InputStream is = Puml2HtmlDocGenerator.class.getResourceAsStream(templateFilePath);
              Scanner scanner = new Scanner(is, "UTF-8")) {
             return scanner.useDelimiter("\\A").next();
         } catch (Exception e) {
@@ -188,7 +192,7 @@ public class PumlHtmlGenerator {
      */
     public static void copyCssFile(String outputDir, String cssTemplateFilePath, String cssDestinationPath) throws IOException {
         // Copy CSS from resources to output directory
-        try (InputStream cssStream = PUML2HTMLDocGenerator.class.getResourceAsStream(cssTemplateFilePath)) {
+        try (InputStream cssStream = Puml2HtmlDocGenerator.class.getResourceAsStream(cssTemplateFilePath)) {
             if (cssStream == null) {
                 throw new IOException("CSS template not found in resources: " + cssTemplateFilePath);
             }

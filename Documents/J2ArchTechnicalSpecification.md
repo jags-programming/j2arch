@@ -44,14 +44,17 @@ This module parses Java source code and generates UML diagrams to visualize clas
   - Supports class diagrams and sequence diagrams.
 - **PlantUML Integration**:
   - Uses PlantUML to generate diagrams in PNG, SVG, and `.puml` formats.
+- **ProjectAnalyzer**:
+  - Collects Java source files and avoids redundant file collection for class and sequence diagrams.
 
 #### Workflow
-1. Parse Java source files using `JavaParserService`.
-2. Extract metadata and relationships.
-3. Generate UML diagrams using `UMLDiagramGenerator` and PlantUML.
+1. Collect Java source files using `ProjectAnalyzer`.
+2. Parse files and extract metadata using `JavaParserService`.
+3. Generate UML diagrams (class and sequence diagrams) using `UMLDiagramGenerator` and PlantUML.
 
 #### Output
 - Class diagrams and sequence diagrams in PNG, SVG, and `.puml` formats.
+- Sequence diagrams accurately handle overloaded methods by differentiating based on parameter types.
 
 ---
 
@@ -63,15 +66,17 @@ This module converts PlantUML files into HTML documentation for easy sharing and
 #### Components
 - **PUMLParser**:
   - Parses `.puml` files to extract diagram information.
-- **HTMLTemplateEngine**:
+- **HtmlGenerator**:
   - Generates HTML pages using predefined or user-defined templates.
+  - Handles CSS file copying and template loading.
 - **StylesheetManager**:
   - Manages CSS styles for consistent formatting.
 
 #### Workflow
 1. Parse `.puml` files using `PUMLParser`.
-2. Generate HTML pages using `HTMLTemplateEngine`.
+2. Generate HTML pages using `HtmlGenerator`.
 3. Apply styles using `StylesheetManager`.
+4. Track progress using `ProgressTracker` during file processing and HTML generation.
 
 #### Output
 - HTML documentation with embedded UML diagrams.
@@ -188,9 +193,6 @@ This module handles data storage, supporting in-memory, persistent, and cloud st
 ### 5.1 Input and Output
 - **Input**: Java source files, `.puml` files, configuration files.
 - **Output**: UML diagrams, HTML documentation, JavaDoc.
-
-### 5.2 Data Flow Diagram
-(Include a diagram showing the flow of data through the system.)
 
 ---
 

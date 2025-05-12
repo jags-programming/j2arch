@@ -7,7 +7,7 @@ import com.pjsoft.j2arch.config.ContextFactory;
 import com.pjsoft.j2arch.config.DefaultContextFactory;
 import com.pjsoft.j2arch.gui.util.GUIStyleContext;
 import com.pjsoft.j2arch.uml.util.UMLGenerationContext;
-import com.pjsoft.j2arch.docgen.pumldoc.util.HTMLGenerationContext;
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerationContext;
 import com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext;
 
 import javafx.application.Application;
@@ -52,8 +52,8 @@ import javafx.stage.Stage;
  * @version 2.2
  * @since 1.0
  */
-public class UMLGeneratorGUI extends Application {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(UMLGeneratorGUI.class);
+public class J2ArchGUI extends Application {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(J2ArchGUI.class);
 
     /**
      * Starts the JavaFX application.
@@ -76,15 +76,15 @@ public class UMLGeneratorGUI extends Application {
             ContextFactory factory = new DefaultContextFactory(properties);
             GUIStyleContext guiStyleContext = factory.createGUIStyleContext();
             UMLGenerationContext umlContext = factory.createUMLContext();
-            HTMLGenerationContext htmlContext = factory.createHTMLContext();
+            HtmlGenerationContext htmlContext = factory.createHTMLContext();
             JavaDocGenerationContext javaDocContext = factory.createJavaDocContext();
 
             // Create TabPane
             TabPane tabPane = new TabPane();
 
             // Add Configuration Tab
-            ConfigurationTab configurationTab = new ConfigurationTab(primaryStage, guiStyleContext, umlContext);
-            Tab configTabUI = new Tab("Configuration", configurationTab.getLayout());
+            UmlGenTab umlGenTab = new UmlGenTab(primaryStage, guiStyleContext, umlContext);
+            Tab configTabUI = new Tab("UML Generator", umlGenTab.getLayout());
             configTabUI.setClosable(false);
 
             // Add Preview Tab
@@ -93,7 +93,7 @@ public class UMLGeneratorGUI extends Application {
             previewTabUI.setClosable(false);
 
             // Add HTML DocGen Tab
-            HtmlDocGenTab htmlDocGenTab = new HtmlDocGenTab(primaryStage, htmlContext);
+            Puml2HtmlDocGenTab htmlDocGenTab = new Puml2HtmlDocGenTab(primaryStage, htmlContext);
             Tab htmlDocGenTabUI = new Tab("HTML DocGen", htmlDocGenTab.getContent());
             htmlDocGenTabUI.setClosable(false);
 
@@ -107,7 +107,7 @@ public class UMLGeneratorGUI extends Application {
 
             // Set up Scene and Stage
             Scene scene = new Scene(tabPane, 800, 600);
-            configurationTab.setScene(scene);
+            umlGenTab.setScene(scene);
 
             primaryStage.setTitle("PJ Java2UML Diagram Generator");
             primaryStage.setScene(scene);

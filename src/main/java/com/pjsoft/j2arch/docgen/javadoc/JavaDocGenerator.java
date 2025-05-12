@@ -101,12 +101,14 @@ public class JavaDocGenerator {
             progressTracker.onStatusUpdate("Class level documentation completed");
 
             // Step 4: Generate the index page
+            progressTracker.addTotalUnits(WorkUnitType.INDEX_PAGE, 1);
             progressTracker.onStatusUpdate("Generating index page...");
             generateIndexDocumentation(packageEntities, context);
             progressTracker.onStatusUpdate("Index page generated");
             progressTracker.addCompletedUnits(WorkUnitType.INDEX_PAGE, 1);
 
             // Step 5: Copy CSS to the output directory
+            progressTracker.addTotalUnits(WorkUnitType.CSS, 1);
             progressTracker.onStatusUpdate("Copying CSS to output directory...");
             copyCssToOutputDirectory(context);
             progressTracker.onStatusUpdate("CSS file copied to destination");
@@ -137,7 +139,7 @@ public class JavaDocGenerator {
         JavaDocPackagePageGenerator packagePageGenerator = new JavaDocPackagePageGenerator();
 
         Collection<PackageEntity> packages = packageEntities.values();
-
+        progressTracker.addTotalUnits(WorkUnitType.PACKAGE_DOC, packages.size());
         for (PackageEntity packageEntity : packages) {
             // Step 1: Generate package diagram
             packageDiagramService.generatePackageDiagram(packageEntity, context);
@@ -171,7 +173,7 @@ public class JavaDocGenerator {
         JavaDocClassPageGenerator classPageGenerator = new JavaDocClassPageGenerator();
 
         Collection<PackageEntity> packages = packageEntities.values();
-
+        progressTracker.addTotalUnits(WorkUnitType.CLASS_DOC, packages.size());
         for (PackageEntity packageEntity : packages) {
             for (var codeEntity : packageEntity.getClasses()) {
                 // Step 1: Generate class diagram
@@ -180,9 +182,10 @@ public class JavaDocGenerator {
                 // Step 2: Generate class page
                 classPageGenerator.generateClassPage(codeEntity, context);
 
-                // Update progress tracker
-                progressTracker.addCompletedUnits(WorkUnitType.CLASS_DOC, 1);
+                
             }
+            // Update progress tracker
+            progressTracker.addCompletedUnits(WorkUnitType.CLASS_DOC, 1);
         }
 
         logger.info("Class documentation generation completed.");
