@@ -6,8 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-import com.pjsoft.j2arch.uml.service.ClassDiagramService;
-
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.SourceFileReader;
 

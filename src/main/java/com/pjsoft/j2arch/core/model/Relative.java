@@ -9,12 +9,14 @@ package com.pjsoft.j2arch.core.model;
  * syntax for diagram generation.
  * 
  * Responsibilities:
- * - Encapsulates the details of a relationship, including its type, source, and target.
+ * - Encapsulates the details of a relationship, including its type, source, and
+ * target.
  * - Supports relationships involving methods (e.g., caller-callee).
  * - Converts relationships into PlantUML syntax for diagram generation.
  * 
  * Limitations:
- * - Assumes that the source and target entities are valid and have fully qualified names.
+ * - Assumes that the source and target entities are valid and have fully
+ * qualified names.
  * - Does not validate the correctness of the relationship type or entities.
  * 
  * Usage Example:
@@ -44,9 +46,9 @@ public class Relative {
      */
     public enum RelationshipType {
         CALLER_CALLEE, // Represents a method call relationship
-        INHERITANCE,   // Represents a parent-child relationship (class inheritance)
+        INHERITANCE, // Represents a parent-child relationship (class inheritance)
         IMPLEMENTATION, // Represents interface implementation
-        ASSOCIATION    // Represents an association relationship
+        ASSOCIATION // Represents an association relationship
     }
 
     private RelationshipType relationshipType; // The type of relationship
@@ -54,6 +56,25 @@ public class Relative {
     private String calleeMethod; // The method being called in the callee (if applicable)
     private String callerMethod; // The method in the current class initiating the relationship (if applicable)
     private String details = ""; // Additional details about the relationship
+
+    private MethodEntity callerMethodEntity;
+    private MethodEntity calleeMethodEntity;
+
+    public MethodEntity getCallerMethodEntity() {
+        return callerMethodEntity;
+    }
+
+    public void setCallerMethodEntity(MethodEntity callerMethodEntity) {
+        this.callerMethodEntity = callerMethodEntity;
+    }
+
+    public MethodEntity getCalleeMethodEntity() {
+        return calleeMethodEntity;
+    }
+
+    public void setCalleeMethodEntity(MethodEntity calleeMethodEntity) {
+        this.calleeMethodEntity = calleeMethodEntity;
+    }
 
     /**
      * Gets additional details about the relationship.
@@ -78,8 +99,9 @@ public class Relative {
     /**
      * Constructs a new Relative object for relationships without methods.
      * 
-     * @param relationshipType the type of the relationship (e.g., INHERITANCE, ASSOCIATION).
-     * @param calleeEntity the target entity of the relationship.
+     * @param relationshipType the type of the relationship (e.g., INHERITANCE,
+     *                         ASSOCIATION).
+     * @param calleeEntity     the target entity of the relationship.
      * @since 1.0
      */
     public Relative(RelationshipType relationshipType, CodeEntity calleeEntity) {
@@ -91,9 +113,10 @@ public class Relative {
      * Constructs a new Relative object for relationships involving methods.
      * 
      * @param relationshipType the type of the relationship (e.g., CALLER_CALLEE).
-     * @param calleeEntity the target entity of the relationship.
-     * @param calleeMethod the method being called in the target entity.
-     * @param callerMethod the method in the source entity initiating the relationship.
+     * @param calleeEntity     the target entity of the relationship.
+     * @param calleeMethod     the method being called in the target entity.
+     * @param callerMethod     the method in the source entity initiating the
+     *                         relationship.
      * @since 1.0
      */
     public Relative(RelationshipType relationshipType, CodeEntity calleeEntity, String calleeMethod,
@@ -103,6 +126,23 @@ public class Relative {
         this.calleeMethod = calleeMethod;
         this.callerMethod = callerMethod;
         this.details = generateDetails();
+    }
+
+    /**
+     * Constructs a new Relative object with the specified relationship type, callee entity,
+     * callee method entity, and caller method entity.
+     *
+     * @param relationshipType The type of relationship between the entities.
+     * @param calleeEntity The code entity being called.
+     * @param calleeMethodEntity The method entity being called.
+     * @param callerMethodEntity The method entity making the call.
+     */
+    public Relative(Relative.RelationshipType relationshipType, CodeEntity calleeEntity,
+            MethodEntity calleeMethodEntity, MethodEntity callerMethodEntity) {
+        this.relationshipType = relationshipType;
+        this.calleeEntity = calleeEntity;
+        this.calleeMethodEntity = calleeMethodEntity;
+        this.callerMethodEntity = callerMethodEntity;
     }
 
     /**
@@ -121,7 +161,7 @@ public class Relative {
                 return "Field: " + (calleeMethod != null ? calleeMethod : "Unknown");
             case CALLER_CALLEE:
                 return "Called Method: " + (calleeMethod != null ? calleeMethod : "Unknown") +
-                       " from " + (callerMethod != null ? callerMethod : "Unknown");
+                        " from " + (callerMethod != null ? callerMethod : "Unknown");
             default:
                 return "No additional details available";
         }

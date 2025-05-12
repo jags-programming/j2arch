@@ -7,8 +7,10 @@ import com.pjsoft.j2arch.gui.ProgressBarComponent;
 /**
  * ProgressTracker
  * 
- * Tracks the progress of various tasks in the application, such as Javadoc generation,
- * UML diagram generation, and HTML documentation generation. This class supports both
+ * Tracks the progress of various tasks in the application, such as Javadoc
+ * generation,
+ * UML diagram generation, and HTML documentation generation. This class
+ * supports both
  * CLI-based and GUI-based progress tracking.
  * 
  * Responsibilities:
@@ -19,10 +21,12 @@ import com.pjsoft.j2arch.gui.ProgressBarComponent;
  * 
  * Dependencies:
  * - {@link ProgressBarComponent}: For updating the progress bar in the GUI.
- * - {@link Platform}: For updating GUI components on the JavaFX application thread.
+ * - {@link Platform}: For updating GUI components on the JavaFX application
+ * thread.
  * 
  * Limitations:
- * - Assumes that the total units of work are initialized before tracking progress.
+ * - Assumes that the total units of work are initialized before tracking
+ * progress.
  * - Not thread-safe for concurrent modifications outside synchronized methods.
  * 
  * Usage Example:
@@ -49,7 +53,9 @@ public class ProgressTracker {
         CLASS_DOC,
         INDEX_PAGE,
         SEQUENCE_DIAGRAM,
-        CLASS_DIAGRAM
+        CLASS_DIAGRAM,
+        PUML2HTML_PAGE,
+        PUML2HTML_Index
     }
 
     /**
@@ -79,10 +85,16 @@ public class ProgressTracker {
     private static final int SEQUENCE_DIAGRAM_WEIGHT = 5;
     private static final int CLASS_DIAGRAM_WEIGHT = 5;
 
+    // Task weightage for HTML documentation generation
+    private static final int PUML2HTML_PAGE_WEIGHT = 1;
+    private static final int PUML2HTML_INDEX_WEIGHT = 1;
+    // Add more weights as needed for other tasks
+
     /**
      * Constructor for GUI-based progress tracking.
      * 
-     * @param progressBarComponent The progress bar component for updating progress in the GUI.
+     * @param progressBarComponent The progress bar component for updating progress
+     *                             in the GUI.
      * @param useCase              The use case for progress tracking.
      */
     public ProgressTracker(ProgressBarComponent progressBarComponent, UseCase useCase) {
@@ -110,16 +122,6 @@ public class ProgressTracker {
     public synchronized void addTotalUnits(WorkUnitType type, int units) {
         int weightedUnits = applyWeight(type, units);
         this.totalUnits += weightedUnits;
-       updateProgress();
-    }
-
-    /**
-     * Adds completed work units and updates progress.
-     * 
-     * @param units The number of completed units to add.
-     */
-    private synchronized void addCompletedUnits(int units) {
-        this.completedUnits += units;
         updateProgress();
     }
 
@@ -158,19 +160,24 @@ public class ProgressTracker {
                 return units * CLASS_DIAGRAM_WEIGHT;
             case SEQUENCE_DIAGRAM:
                 return units * SEQUENCE_DIAGRAM_WEIGHT;
+            case PUML2HTML_PAGE:
+                return units * PUML2HTML_PAGE_WEIGHT;
+            case PUML2HTML_Index:
+                return units * PUML2HTML_INDEX_WEIGHT;
             default:
                 throw new IllegalArgumentException("Unknown work unit type: " + type);
         }
     }
 
     /**
-     * Initializes task counts and computes total units for Javadoc or UML generation.
+     * Initializes task counts and computes total units for Javadoc or UML
+     * generation.
      * 
-     * @param totalFiles    The total number of files to process.
+     * @param totalFiles     The total number of files to process.
      * @param directoryCount The total number of directories to process.
      */
     public synchronized void initializeTaskCounts(int totalFiles, int directoryCount) {
-        System.out.println("Initializing task counts...");
+        
         int fileParsingUnits = totalFiles * FILE_PARSING_WEIGHT;
 
         if (useCase == UseCase.JAVA_DOC_GENERATION) {
@@ -180,27 +187,13 @@ public class ProgressTracker {
             int indexPageUnits = INDEX_PAGE_WEIGHT;
             this.totalUnits = cssUnits + fileParsingUnits + packageDocUnits + classDocUnits + indexPageUnits;
         } else if (useCase == UseCase.UML_DIAGRAM_GENERATION) {
-            int classDiagramUnits = CLASS_DIAGRAM_WEIGHT;
-            int sequenceDiagramUnits = SEQUENCE_DIAGRAM_WEIGHT;
-            this.totalUnits = fileParsingUnits ;//+ classDiagramUnits + sequenceDiagramUnits;
+
+            this.totalUnits = fileParsingUnits;// + classDiagramUnits + sequenceDiagramUnits;
+        }else if (useCase == UseCase.HTML_DOC_GENERATION) {
+            this.totalUnits = fileParsingUnits;
         }
+        updateProgress();
     }
-
-    /**
-     * Initializes task counts for UML generation with specific diagram types.
-     * 
-     * @param totalFiles     The total number of files to process.
-     * @param diagramTypes   The number of diagram types to generate.
-     */
-    /** 
-    public synchronized void initializeTaskCountsForUML(int totalFiles, int diagramTypes) {
-        System.out.println("Initializing task counts for UML generation...");
-        int fileParsingUnits = totalFiles * FILE_PARSING_WEIGHT;
-        int diagramGenerationUnits = diagramTypes * CLASS_DIAGRAM_WEIGHT;
-
-        this.totalUnits = fileParsingUnits + diagramGenerationUnits;
-    }
-        */
 
     /**
      * Updates the progress bar or CLI progress based on completed units.

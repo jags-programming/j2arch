@@ -179,7 +179,7 @@
             <artifactId>javafx-maven-plugin</artifactId>
             <version>0.0.8</version>
             <configuration>
-                <mainClass>com.pjsoft.j2arch.gui.UMLGeneratorGUI</mainClass>
+                <mainClass>com.pjsoft.j2arch.gui.J2ArchGUI</mainClass>
             </configuration>
         </plugin>
         </plugins>

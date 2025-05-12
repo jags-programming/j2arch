@@ -67,8 +67,8 @@ import javafx.stage.Stage;
  * Version: 2.2
  * Since: 1.0
  */
-public class ConfigurationTab {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConfigurationTab.class);
+public class UmlGenTab {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(UmlGenTab.class);
 
     private final VBox layout; // Main layout of the tab
     private final ProgressBarComponent progressBarComponent = new ProgressBarComponent(); // Progress bar for tracking progress
@@ -99,7 +99,7 @@ public class ConfigurationTab {
      * @param guiStyleContext The context for GUI styling.
      * @param umlContext      The context for UML diagram generation.
      */
-    public ConfigurationTab(Stage primaryStage, GUIStyleContext guiStyleContext, UMLGenerationContext umlContext) {
+    public UmlGenTab(Stage primaryStage, GUIStyleContext guiStyleContext, UMLGenerationContext umlContext) {
         this.guiStyleContext = guiStyleContext;
 
         HBox topRow = createTopRow();

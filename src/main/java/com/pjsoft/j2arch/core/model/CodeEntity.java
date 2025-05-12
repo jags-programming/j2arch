@@ -56,6 +56,24 @@ public class CodeEntity implements Serializable {
     private final List<MethodEntity> constructors = new ArrayList<>(); // List of constructors
     private final List<String> annotations = new ArrayList<>(); // List of annotations
     private String classDiagram; // Path to the class diagram (optional)
+    private boolean isEntryPoint; // Indicates if this class is an entry point
+    private String entryPointType;
+    
+    public String getEntryPointType() {
+        return entryPointType;
+    }
+
+    public void setEntryPointType(String entryPointType) {
+        this.entryPointType = entryPointType;
+    }
+
+    public boolean isEntryPoint() {
+        return isEntryPoint;
+    }
+
+    public void setEntryPoint(boolean isEntryPoint) {
+        this.isEntryPoint = isEntryPoint;
+    }
 
     /**
      * Constructs a new CodeEntity with the specified name.
@@ -336,4 +354,16 @@ public class CodeEntity implements Serializable {
                 ", relatives=" + relatives.size() +
                 '}';
     }
+
+    public boolean hasMainMethod() {
+        return methods.stream()
+                .anyMatch(m -> m.getName().equals("main") && m.hasParameterType("String[]"));
+    }
+
+    public boolean hasAnyAnnotation(List<String> annotationList) {
+        return annotations.stream().anyMatch(annotationList::contains);
+    }
+
+  
+    
 }

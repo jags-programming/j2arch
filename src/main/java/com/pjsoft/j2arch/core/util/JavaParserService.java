@@ -23,28 +23,36 @@ import com.pjsoft.j2arch.core.model.FieldEntity;
 import com.pjsoft.j2arch.core.model.MethodEntity;
 import com.pjsoft.j2arch.core.model.PackageEntity;
 import com.pjsoft.j2arch.core.model.Relative;
+import com.pjsoft.j2arch.core.strategy.ConsoleStrategy;
+import com.pjsoft.j2arch.core.strategy.EntryPointDetector;
+import com.pjsoft.j2arch.core.strategy.EntryPointStrategy;
+import com.pjsoft.j2arch.core.strategy.GuiStrategy;
+import com.pjsoft.j2arch.core.strategy.LibraryStrategy;
+import com.pjsoft.j2arch.core.strategy.WebStrategy;
 import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
 
 /**
  * JavaParserService
  * 
- * A service class for parsing Java source files and extracting structural and 
+ * A service class for parsing Java source files and extracting structural and
  * behavioral metadata to support code analysis or UML diagram generation.
  * 
- * This class utilizes JavaParser with JavaSymbolSolver for deep parsing of 
- * Java source code, extracting class declarations, method calls, inheritance 
- * hierarchies, field access, and annotations. It also supports filtering 
+ * This class utilizes JavaParser with JavaSymbolSolver for deep parsing of
+ * Java source code, extracting class declarations, method calls, inheritance
+ * hierarchies, field access, and annotations. It also supports filtering
  * classes based on a configured package scope.
  * 
  * Responsibilities:
  * - Parse Java source files to extract class-level metadata.
- * - Extract relationships such as inheritance, method calls, and field associations.
+ * - Extract relationships such as inheritance, method calls, and field
+ * associations.
  * - Resolve types and symbols using JavaSymbolSolver.
  * - Filter classes based on the "include.package" configuration property.
  * - Track unresolved symbols during parsing for debugging purposes.
  * 
  * Features:
- * - Supports extracting annotations, constructors, methods, fields, and relationships.
+ * - Supports extracting annotations, constructors, methods, fields, and
+ * relationships.
  * - Groups parsed classes into packages for further processing.
  * - Tracks progress using a {@link ProgressTracker}.
  * 
@@ -54,14 +62,14 @@ import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
  * - JavaParser library: For parsing Java source files.
  * 
  * Thread Safety:
- * - This class is not thread-safe as it relies on mutable state and uses 
- *   {@link ThreadLocal} for unresolved symbols.
+ * - This class is not thread-safe as it relies on mutable state and uses
+ * {@link ThreadLocal} for unresolved symbols.
  * 
  * Limitations:
  * - Assumes that the input files are valid `.java` files.
  * - Requires a valid configuration file with the input directory specified.
- * - Filters classes based on the "include.package" property. If not set, all 
- *   classes are included.
+ * - Filters classes based on the "include.package" property. If not set, all
+ * classes are included.
  * - Does not validate the correctness of the extracted relationships.
  * 
  * Usage Example:
@@ -93,29 +101,33 @@ public class JavaParserService {
      * - The input directory must be correctly set in the {@link GenerationContext}.
      * 
      * Postconditions:
-     * - A list of {@link CodeEntity} objects is returned, representing parsed classes.
+     * - A list of {@link CodeEntity} objects is returned, representing parsed
+     * classes.
      * - Unresolved symbols are logged for debugging purposes.
      * - Progress is tracked using the {@link ProgressTracker}.
      * 
-     * @param files          the list of file paths to parse.
-     * @param context        the {@link GenerationContext} containing configuration and context data.
+     * @param files           the list of file paths to parse.
+     * @param context         the {@link GenerationContext} containing configuration
+     *                        and context data.
      * @param progressTracker the {@link ProgressTracker} to track parsing progress.
      * @return a list of {@link CodeEntity} objects representing parsed classes.
      * @throws IOException if a file cannot be read or parsed.
      * @since 1.0
      */
     public List<CodeEntity> parseFiles(List<String> files, GenerationContext context, ProgressTracker progressTracker) {
+        int numberOfFiles = files.size();
         String inputDir = context.getInputDirectory();
         SymbolSolverConfig.configureSymbolSolver(inputDir, context); // Configure SymbolSolver
         List<CodeEntity> parsedEntities = new ArrayList<>();
         logger.info("Starting project analysis...");
-        logger.info("Total files to parse: {}", files.size());
-
+        logger.info("Total files to parse: {}", numberOfFiles);
+        progressTracker.onStatusUpdate("Number of files to parse: "+numberOfFiles);
+        progressTracker.onStatusUpdate("File parsing starts...");
+        progressTracker.addTotalUnits(WorkUnitType.FILE_PARSING, numberOfFiles);
         for (String filePath : files) {
             try {
                 File file = new File(filePath);
                 CompilationUnit compilationUnit = StaticJavaParser.parse(file);
-               
 
                 Optional<ClassOrInterfaceDeclaration> classDeclaration = compilationUnit
                         .findFirst(ClassOrInterfaceDeclaration.class);
@@ -158,21 +170,31 @@ public class JavaParserService {
             } catch (IOException e) {
                 logger.error("Error parsing file: {}", filePath, e);
             } catch (Exception e) {
-            logger.error("Error parsing file: {} - {}", filePath, e.getMessage());
-            logger.debug("Stack trace:", e);
-        } finally {
-            // Update progress tracker after processing each file
-            progressTracker.addCompletedUnits(WorkUnitType.FILE_PARSING, 1);
-                         
-        }
-            // Update progress tracker after processing each file
-        //progressTracker.addCompletedUnits(WorkUnitType.FILE_PARSING,1);
+                logger.error("Error parsing file: {} - {}", filePath, e.getMessage());
+                logger.debug("Stack trace:", e);
+            } finally {
+                // Update progress tracker after processing each file
+                progressTracker.addCompletedUnits(WorkUnitType.FILE_PARSING, 1);
+
+            }
+         
 
         }
 
+        progressTracker.onStatusUpdate("File parsing completed.");
         // Log unresolved symbols after parsing all files
         logUnresolvedSymbols();
 
+        // Apply EntryPointDetector
+        List<EntryPointStrategy> strategies = List.of(
+                new ConsoleStrategy(),
+                new WebStrategy(),
+                new GuiStrategy(),
+                new LibraryStrategy());
+        EntryPointDetector detector = new EntryPointDetector(strategies);
+        
+        detector.detectAndTagEntryPoints(parsedEntities);
+       
         return parsedEntities;
     }
 
@@ -180,14 +202,17 @@ public class JavaParserService {
      * Extracts parent relationships (e.g., inheritance) from a class declaration.
      * 
      * Responsibilities:
-     * - Resolves the parent types (extended classes) of the given class declaration.
-     * - Adds an inheritance relationship to the {@link CodeEntity} for each resolved parent.
+     * - Resolves the parent types (extended classes) of the given class
+     * declaration.
+     * - Adds an inheritance relationship to the {@link CodeEntity} for each
+     * resolved parent.
      * - Skips irrelevant parent types based on the project context.
      * 
      * Preconditions:
      * - The class declaration must not be null.
      * - The {@link CodeEntity} must represent the class being analyzed.
-     * - The {@link GenerationContext} must provide the necessary configuration for filtering.
+     * - The {@link GenerationContext} must provide the necessary configuration for
+     * filtering.
      * 
      * Postconditions:
      * - Inheritance relationships are added to the {@link CodeEntity}.
@@ -195,7 +220,8 @@ public class JavaParserService {
      * 
      * @param classDecl  the class or interface declaration.
      * @param codeEntity the {@link CodeEntity} representing the class.
-     * @param context    the {@link GenerationContext} containing configuration and context data.
+     * @param context    the {@link GenerationContext} containing configuration and
+     *                   context data.
      * @since 1.0
      */
     private void extractParentRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity,
@@ -223,19 +249,25 @@ public class JavaParserService {
     }
 
     /**
-     * Extracts methods and their relationships (e.g., method calls and field accesses) 
+     * Extracts methods and their relationships (e.g., method calls and field
+     * accesses)
      * from a class declaration.
      * 
      * Responsibilities:
-     * - Extracts constructors and their metadata, including visibility, annotations, and parameters.
-     * - Extracts methods and their metadata, including visibility, annotations, return types, and parameters.
-     * - Identifies method call relationships and adds caller-callee relationships to the {@link CodeEntity}.
-     * - Identifies field access relationships within methods and adds association relationships to the {@link CodeEntity}.
+     * - Extracts constructors and their metadata, including visibility,
+     * annotations, and parameters.
+     * - Extracts methods and their metadata, including visibility, annotations,
+     * return types, and parameters.
+     * - Identifies method call relationships and adds caller-callee relationships
+     * to the {@link CodeEntity}.
+     * - Identifies field access relationships within methods and adds association
+     * relationships to the {@link CodeEntity}.
      * 
      * Preconditions:
      * - The class declaration must not be null.
      * - The {@link CodeEntity} must represent the class being analyzed.
-     * - The {@link GenerationContext} must provide the necessary configuration for filtering.
+     * - The {@link GenerationContext} must provide the necessary configuration for
+     * filtering.
      * 
      * Postconditions:
      * - Constructors and methods are added to the {@link CodeEntity}.
@@ -245,7 +277,8 @@ public class JavaParserService {
      * 
      * @param classDecl  the class or interface declaration.
      * @param codeEntity the {@link CodeEntity} representing the class.
-     * @param context    the {@link GenerationContext} containing configuration and context data.
+     * @param context    the {@link GenerationContext} containing configuration and
+     *                   context data.
      * @since 1.0
      */
     private void extractMethodsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity,
@@ -297,14 +330,21 @@ public class JavaParserService {
 
             codeEntity.addMethod(methodEntity);
 
+            // Extract Caller Callee relatives and fill code entity with relatives.
             method.findAll(MethodCallExpr.class).forEach(call -> {
                 String calleeClassName = resolveCalleeClassName(call, codeEntity);
                 if (calleeClassName == null || isIrrelevantEntity(calleeClassName, context)) {
                     return;
                 }
                 String calleeMethodName = call.getNameAsString();
+
+                // Create MethodEntity for the callee method
+                MethodEntity calleeMethodEntity = new MethodEntity(calleeMethodName, ""); // Return type unknown here
+                calleeMethodEntity.setParameters(resolveCalleeMethodParameters(call));
+
+                // Create Relative with caller and callee MethodEntity
                 Relative calleeRelative = new Relative(Relative.RelationshipType.CALLER_CALLEE,
-                        new CodeEntity(calleeClassName), calleeMethodName, method.getNameAsString());
+                        new CodeEntity(calleeClassName), calleeMethodEntity, methodEntity);
                 codeEntity.addRelative(calleeRelative);
             });
 
@@ -313,23 +353,45 @@ public class JavaParserService {
         }
     }
 
+    private List<String> resolveCalleeMethodParameters(MethodCallExpr call) {
+        List<String> parameterTypes = new ArrayList<>();
+        call.getArguments().forEach(arg -> {
+            try {
+                ResolvedType resolvedType = arg.calculateResolvedType();
+                parameterTypes.add(resolvedType.describe());
+            } catch (Exception e) {
+                logger.warn("Failed to resolve parameter type for argument: {}", arg, e);
+                parameterTypes.add("Unknown");
+            }
+        });
+        return parameterTypes;
+    }
+
     /**
      * Extracts fields and relationships from a given class declaration and updates
      * the provided CodeEntity with the extracted information.
      *
-     * @param classDecl   The class or interface declaration to process.
-     * @param codeEntity  The CodeEntity object to populate with field and relationship data.
-     * @param context     The GenerationContext containing project-specific metadata.
+     * @param classDecl  The class or interface declaration to process.
+     * @param codeEntity The CodeEntity object to populate with field and
+     *                   relationship data.
+     * @param context    The GenerationContext containing project-specific metadata.
      *
-     * This method processes each field in the class declaration, extracting its name,
-     * type, visibility, and annotations. It adds the extracted field information to
-     * the provided CodeEntity. Additionally, it identifies relationships between the
-     * class and other entities in the project. If a field's type matches another
-     * project entity, an association relationship is created and added to the CodeEntity.
+     *                   This method processes each field in the class declaration,
+     *                   extracting its name,
+     *                   type, visibility, and annotations. It adds the extracted
+     *                   field information to
+     *                   the provided CodeEntity. Additionally, it identifies
+     *                   relationships between the
+     *                   class and other entities in the project. If a field's type
+     *                   matches another
+     *                   project entity, an association relationship is created and
+     *                   added to the CodeEntity.
      *
-     * Self-referencing fields (fields with the same type as the class) are skipped.
-     * Fields with types that do not belong to the project are also skipped for
-     * relationship processing.
+     *                   Self-referencing fields (fields with the same type as the
+     *                   class) are skipped.
+     *                   Fields with types that do not belong to the project are
+     *                   also skipped for
+     *                   relationship processing.
      */
     private void extractFieldsAndRelationships(ClassOrInterfaceDeclaration classDecl, CodeEntity codeEntity,
             GenerationContext context) {
@@ -370,21 +432,25 @@ public class JavaParserService {
      * Responsibilities:
      * - Identifies field accesses within the method body.
      * - Resolves the class name of the accessed field's scope.
-     * - Adds association relationships to the {@link CodeEntity} for relevant field accesses.
+     * - Adds association relationships to the {@link CodeEntity} for relevant field
+     * accesses.
      * - Skips self-referencing field accesses and irrelevant entities.
      * 
      * Preconditions:
      * - The method declaration must not be null.
      * - The {@link CodeEntity} must represent the class being analyzed.
-     * - The {@link GenerationContext} must provide the necessary configuration for filtering.
+     * - The {@link GenerationContext} must provide the necessary configuration for
+     * filtering.
      * 
      * Postconditions:
-     * - Association relationships are added to the {@link CodeEntity} for each relevant field access.
+     * - Association relationships are added to the {@link CodeEntity} for each
+     * relevant field access.
      * - Irrelevant or unresolved field accesses are logged and skipped.
      * 
      * @param method     the method declaration to analyze.
      * @param codeEntity the {@link CodeEntity} representing the class.
-     * @param context    the {@link GenerationContext} containing configuration and context data.
+     * @param context    the {@link GenerationContext} containing configuration and
+     *                   context data.
      * @since 1.0
      */
     private void extractFieldAccessRelationships(MethodDeclaration method, CodeEntity codeEntity,
@@ -436,8 +502,10 @@ public class JavaParserService {
      * 
      * Responsibilities:
      * - Resolves the type of the scope of the method call expression.
-     * - Returns the fully qualified name of the resolved type if it is a reference type.
-     * - Handles unresolved symbols by logging and adding them to the unresolved symbols list.
+     * - Returns the fully qualified name of the resolved type if it is a reference
+     * type.
+     * - Handles unresolved symbols by logging and adding them to the unresolved
+     * symbols list.
      * - Returns "Unknown" if the type cannot be resolved.
      * - Defaults to the name of the calling class if the scope is not present.
      * 
@@ -446,12 +514,14 @@ public class JavaParserService {
      * - The {@link CodeEntity} must represent the calling class.
      * 
      * Postconditions:
-     * - The fully qualified name of the callee class is returned, or "Unknown" if it cannot be resolved.
+     * - The fully qualified name of the callee class is returned, or "Unknown" if
+     * it cannot be resolved.
      * - Unresolved symbols are logged and added to the unresolved symbols list.
      * 
      * @param call       the method call expression to analyze.
      * @param codeEntity the {@link CodeEntity} representing the calling class.
-     * @return the fully qualified name of the callee class, or "Unknown" if it cannot be resolved.
+     * @return the fully qualified name of the callee class, or "Unknown" if it
+     *         cannot be resolved.
      * @since 1.0
      */
     private String resolveCalleeClassName(MethodCallExpr call, CodeEntity codeEntity) {
@@ -487,23 +557,25 @@ public class JavaParserService {
         }
     }
 
-
     /**
      * Determines if an entity is irrelevant for UML diagram generation.
      * 
      * Responsibilities:
-     * - Checks if the entity belongs to a library or does not belong to the project.
+     * - Checks if the entity belongs to a library or does not belong to the
+     * project.
      * - Combines checks for library entities and non-project entities.
      * 
      * Preconditions:
      * - The entity name must not be null.
-     * - The {@link GenerationContext} must provide the necessary configuration for filtering.
+     * - The {@link GenerationContext} must provide the necessary configuration for
+     * filtering.
      * 
      * Postconditions:
      * - Returns {@code true} if the entity is irrelevant, {@code false} otherwise.
      * 
      * @param entityName the name of the entity.
-     * @param context    the {@link GenerationContext} containing configuration and context data.
+     * @param context    the {@link GenerationContext} containing configuration and
+     *                   context data.
      * @return {@code true} if the entity is irrelevant, {@code false} otherwise.
      * @since 1.0
      */
@@ -515,24 +587,26 @@ public class JavaParserService {
      * Determines if an entity belongs to a library.
      * 
      * Responsibilities:
-     * - Checks if the entity name starts with common library prefixes such as "java.", "javax.", or "org.springframework.".
+     * - Checks if the entity name starts with common library prefixes such as
+     * "java.", "javax.", or "org.springframework.".
      * - Identifies entities that are part of standard libraries or frameworks.
      * 
      * Preconditions:
      * - The entity name must not be null.
      * 
      * Postconditions:
-     * - Returns {@code true} if the entity belongs to a library, {@code false} otherwise.
+     * - Returns {@code true} if the entity belongs to a library, {@code false}
+     * otherwise.
      * 
      * @param entityName the name of the entity.
-     * @return {@code true} if the entity belongs to a library, {@code false} otherwise.
+     * @return {@code true} if the entity belongs to a library, {@code false}
+     *         otherwise.
      * @since 1.0
      */
     private boolean isLibraryEntity(String entityName) {
         return entityName.startsWith("java.") || entityName.startsWith("javax.")
                 || entityName.startsWith("org.springframework.");
     }
-
 
     /**
      * Determines if an entity belongs to the project.
@@ -568,30 +642,36 @@ public class JavaParserService {
         return entityName.startsWith(projectPackage);
     }
 
-     /**
-     * Parses a list of Java source files and groups the extracted {@link CodeEntity} objects into {@link PackageEntity} objects.
+    /**
+     * Parses a list of Java source files and groups the extracted
+     * {@link CodeEntity} objects into {@link PackageEntity} objects.
      * 
      * Responsibilities:
-     * - Parses the provided files to extract {@link CodeEntity} objects using the {@link #parseFiles} method.
+     * - Parses the provided files to extract {@link CodeEntity} objects using the
+     * {@link #parseFiles} method.
      * - Groups the extracted {@link CodeEntity} objects by their package names.
-     * - Creates a map of package names to {@link PackageEntity} objects, where each package contains its respective classes.
+     * - Creates a map of package names to {@link PackageEntity} objects, where each
+     * package contains its respective classes.
      * 
      * Preconditions:
      * - The input files must be valid `.java` files.
-     * - The {@link GenerationContext} must provide the necessary configuration for filtering.
+     * - The {@link GenerationContext} must provide the necessary configuration for
+     * filtering.
      * - The {@link ProgressTracker} must be initialized to track parsing progress.
      * 
      * Postconditions:
      * - Returns a map of package names to {@link PackageEntity} objects.
      * - Each {@link PackageEntity} contains the classes belonging to its package.
      * 
-     * @param files          The list of file paths to parse.
-     * @param context        The {@link GenerationContext} containing configuration and context data.
+     * @param files           The list of file paths to parse.
+     * @param context         The {@link GenerationContext} containing configuration
+     *                        and context data.
      * @param progressTracker The {@link ProgressTracker} to track parsing progress.
      * @return A map of package names to {@link PackageEntity} objects.
      * @since 1.0
      */
-    public Map<String, PackageEntity> parsePackages(List<String> files, GenerationContext context, ProgressTracker progressTracker) {
+    public Map<String, PackageEntity> parsePackages(List<String> files, GenerationContext context,
+            ProgressTracker progressTracker) {
         // Step 1: Parse files to extract CodeEntity objects
         List<CodeEntity> codeEntities = parseFiles(files, context, progressTracker);
 
@@ -606,12 +686,12 @@ public class JavaParserService {
         return packageMap;
     }
 
-
     /**
      * Extracts the package name from a fully qualified class name.
      * 
      * Responsibilities:
-     * - Identifies the last occurrence of the '.' character in the fully qualified name.
+     * - Identifies the last occurrence of the '.' character in the fully qualified
+     * name.
      * - Extracts the substring before the last '.' as the package name.
      * - Returns an empty string if no '.' is found, indicating a default package.
      * 
@@ -623,7 +703,8 @@ public class JavaParserService {
      * - If the class is in the default package, an empty string is returned.
      * 
      * @param fullyQualifiedName The fully qualified name of the class.
-     * @return The package name as a string, or an empty string if the class is in the default package.
+     * @return The package name as a string, or an empty string if the class is in
+     *         the default package.
      * @since 1.0
      */
     private String extractPackageName(String fullyQualifiedName) {
@@ -633,9 +714,9 @@ public class JavaParserService {
 
     /**
      * Logs any unresolved symbols encountered during parsing.
-     * If there are unresolved symbols, they are retrieved from the 
+     * If there are unresolved symbols, they are retrieved from the
      * thread-local storage and logged as warnings.
-     * This method helps in identifying symbols that could not be resolved 
+     * This method helps in identifying symbols that could not be resolved
      * during the parsing process.
      */
     private void logUnresolvedSymbols() {
@@ -650,7 +731,8 @@ public class JavaParserService {
     /**
      * Adds a symbol to the list of unresolved symbols.
      *
-     * @param symbol the name of the symbol to be added to the unresolved symbols list
+     * @param symbol the name of the symbol to be added to the unresolved symbols
+     *               list
      */
     private void addUnresolvedSymbol(String symbol) {
         unresolvedSymbols.get().add(symbol);

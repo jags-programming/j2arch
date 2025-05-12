@@ -2,7 +2,7 @@ package com.pjsoft.j2arch.core.util;
 
 import java.io.File;
 
-import com.pjsoft.j2arch.gui.ConfigurationTab;
+import com.pjsoft.j2arch.gui.UmlGenTab;
 
 /**
  * GUIStylePathResolver
@@ -31,7 +31,7 @@ import com.pjsoft.j2arch.gui.ConfigurationTab;
  */
 public class GUIStylePathResolver {
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConfigurationTab.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(UmlGenTab.class);
 
     /**
      * Resolves the style path dynamically.

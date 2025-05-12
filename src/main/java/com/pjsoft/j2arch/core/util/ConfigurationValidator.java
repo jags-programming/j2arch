@@ -7,9 +7,8 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pjsoft.j2arch.core.context.GenerationContext;
 import com.pjsoft.j2arch.docgen.javadoc.util.JavaDocGenerationContext;
-import com.pjsoft.j2arch.docgen.pumldoc.util.HTMLGenerationContext;
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerationContext;
 import com.pjsoft.j2arch.uml.util.UMLGenerationContext;
 
 /**
@@ -162,7 +161,7 @@ public class ConfigurationValidator {
      * @param context The HTMLGenerationContext containing paths to validate.
      * @throws IOException If a directory cannot be created or a file is missing.
      */
-    public static void validateContext(HTMLGenerationContext context) throws IOException {
+    public static void validateContext(HtmlGenerationContext context) throws IOException {
         validateDirectory(context.getInputDirectory());
         validateOrCreateDirectory(context.getOutputDirectory());
         validateOrCreateDirectory(PathResolver.resolvePath(context.getOutputDirectory(), DirectoryConstants.STYLES_DIR));

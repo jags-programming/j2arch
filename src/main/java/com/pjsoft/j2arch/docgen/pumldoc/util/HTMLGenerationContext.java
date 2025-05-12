@@ -45,7 +45,7 @@ import com.pjsoft.j2arch.core.util.StyleConstants;
  * Version: 2.2
  * Since: 1.0
  */
-public class HTMLGenerationContext {
+public class HtmlGenerationContext {
     private final String inputDirectory; // Path to the input directory containing .puml files
     private final String outputDirectory; // Path to the output directory for generated documentation
     private final String diagramTemplateFile; // Path to the diagram HTML template file
@@ -67,7 +67,7 @@ public class HTMLGenerationContext {
      * @param indexTemplateFile   The path to the index HTML template file.
      * @param styleSourceFile     The path to the source CSS file.
      */
-    public HTMLGenerationContext(String inputDirectory, String outputDirectory, String diagramTemplateFile,
+    public HtmlGenerationContext(String inputDirectory, String outputDirectory, String diagramTemplateFile,
             String indexTemplateFile, String styleSourceFile) {
         this.inputDirectory = inputDirectory;
         this.outputDirectory = outputDirectory;

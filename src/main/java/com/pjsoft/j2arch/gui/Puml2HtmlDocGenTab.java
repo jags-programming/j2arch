@@ -2,8 +2,11 @@ package com.pjsoft.j2arch.gui;
 
 import com.pjsoft.j2arch.core.util.ConfigurationValidator;
 import com.pjsoft.j2arch.core.util.ProgressTracker;
-import com.pjsoft.j2arch.docgen.pumldoc.PUML2HTMLDocGenerator;
-import com.pjsoft.j2arch.docgen.pumldoc.util.HTMLGenerationContext;
+import com.pjsoft.j2arch.core.util.ProgressTracker.UseCase;
+import com.pjsoft.j2arch.docgen.pumldoc.Puml2HtmlDocGenerator;
+
+import com.pjsoft.j2arch.docgen.pumldoc.util.HtmlGenerationContext;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -31,7 +34,7 @@ import java.io.IOException;
  * 
  * Dependencies:
  * - {@link HTMLGenerationContext}: Provides configuration details for HTML documentation generation.
- * - {@link PUML2HTMLDocGenerator}: Handles the actual HTML documentation generation process.
+ * - {@link Puml2HtmlDocGenerator}: Handles the actual HTML documentation generation process.
  * - {@link ProgressTracker}: Tracks and updates progress during the generation process.
  * - JavaFX: Used for building the UI components.
  * 
@@ -55,10 +58,10 @@ import java.io.IOException;
  * Version: 2.2
  * Since: 1.0
  */
-public class HtmlDocGenTab extends Tab {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(HtmlDocGenTab.class);
+public class Puml2HtmlDocGenTab extends Tab {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Puml2HtmlDocGenTab.class);
 
-    private final HTMLGenerationContext htmlContext; // Initial context for HTML documentation generation
+    private final HtmlGenerationContext htmlContext; // Initial context for HTML documentation generation
 
     /**
      * Constructs a new HtmlDocGenTab.
@@ -70,7 +73,7 @@ public class HtmlDocGenTab extends Tab {
      * @param primaryStage       The primary stage of the JavaFX application.
      * @param initialHtmlContext The initial context for HTML documentation generation.
      */
-    public HtmlDocGenTab(Stage primaryStage, HTMLGenerationContext initialHtmlContext) {
+    public Puml2HtmlDocGenTab(Stage primaryStage, HtmlGenerationContext initialHtmlContext) {
         this.htmlContext = initialHtmlContext;
         setText("HTML DocGen");
 
@@ -142,7 +145,7 @@ public class HtmlDocGenTab extends Tab {
         // Generate button action
         generateButton.setOnAction(event -> {
             // Create ProgressTracker
-            ProgressTracker progressTracker = new ProgressTracker(progressBarComponent, ProgressTracker.UseCase.HTML_DOC_GENERATION);
+            ProgressTracker progressTracker = new ProgressTracker(progressBarComponent, UseCase.HTML_DOC_GENERATION);
             String inputDir = inputDirField.getText().trim();
             String outputDir = outputDirField.getText().trim();
             String docTitle = docTitleField.getText().trim();
@@ -153,7 +156,7 @@ public class HtmlDocGenTab extends Tab {
             }
 
             // Create a new HTMLGenerationContext
-            HTMLGenerationContext newHtmlContext = new HTMLGenerationContext(
+            HtmlGenerationContext newHtmlContext = new HtmlGenerationContext(
                     inputDir,
                     outputDir,
                     initialHtmlContext.getDiagramTemplateFile(),
@@ -174,9 +177,9 @@ public class HtmlDocGenTab extends Tab {
             // Run the generation process in a background thread
             new Thread(() -> {
                 try {
-                    PUML2HTMLDocGenerator generator = new PUML2HTMLDocGenerator();
+                    Puml2HtmlDocGenerator generator = new Puml2HtmlDocGenerator();
                     progressTracker.onStatusUpdate("HTML document generation started...");
-                    generator.generateHtmlDocumentation(docTitle, newHtmlContext);
+                    generator.generateHtmlDocumentation(docTitle, newHtmlContext, progressTracker);
 
                     // Update message label on the JavaFX Application Thread
                     Platform.runLater(() -> {
