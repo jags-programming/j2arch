@@ -8,14 +8,10 @@ class J2ArchGUI {
 }
 J2ArchGUI --> ConfigurationLoader : caller-callee
 J2ArchGUI --> ContextFactory : caller-callee
-J2ArchGUI --> ContextFactory : caller-callee
-J2ArchGUI --> ContextFactory : caller-callee
-J2ArchGUI --> ContextFactory : caller-callee
 J2ArchGUI --> UmlGenTab : caller-callee
 J2ArchGUI --> PreviewTab : caller-callee
 J2ArchGUI --> Puml2HtmlDocGenTab : caller-callee
 J2ArchGUI --> JavaDocGenTab : caller-callee
-J2ArchGUI --> UmlGenTab : caller-callee
 class JavaDocGenTab {
     JavaDocGenerationContext initialContext
     TextField inputDirField
@@ -31,26 +27,11 @@ class JavaDocGenTab {
     private GridPane initializeLayout(Stage primaryStage)
 }
 JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
 JavaDocGenTab --> ProgressBarComponent : caller-callee
 JavaDocGenTab --> ConfigurationValidator : caller-callee
 JavaDocGenTab --> JavaDocGenerator : caller-callee
 JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
 JavaDocGenTab -- UseCase : association
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
 class PreviewTab {
     BorderPane layout
     org.slf4j.Logger logger
@@ -112,33 +93,14 @@ class UmlGenTab {
     private void updateCustomInputsVisibility()
 }
 UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> ProgressBarComponent : caller-callee
 UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab --> ConfigurationValidator : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab --> UMLDiagramGenerator : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab -- UseCase : association
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> GUIStylePathResolver : caller-callee
-UmlGenTab --> GUIStylePathResolver : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> ConfigurationLoader : caller-callee
 UmlGenTab --> DefaultContextFactory : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
 UmlGenTab --> UMLGenerationContext : caller-callee
 }
 @enduml

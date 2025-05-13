@@ -40,13 +40,5 @@ class CodeEntity {
 }
 CodeEntity --> Relative : caller-callee
 CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
 CodeEntity --> FieldEntity : caller-callee
 @enduml

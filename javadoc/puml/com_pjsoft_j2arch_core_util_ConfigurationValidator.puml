@@ -9,25 +9,8 @@ class ConfigurationValidator {
     public void validateOrCreateDirectory(String directoryPath)
 }
 ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator --> PathResolver : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator -- DirectoryConstants : association
 ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator -- DirectoryConstants : association
 @enduml

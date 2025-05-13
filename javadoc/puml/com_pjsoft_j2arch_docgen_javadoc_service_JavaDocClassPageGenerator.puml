@@ -7,33 +7,8 @@ class JavaDocClassPageGenerator {
 }
 JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 @enduml

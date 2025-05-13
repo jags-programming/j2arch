@@ -8,35 +8,10 @@ class JavaDocClassPageGenerator {
 }
 JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocClassPageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> MethodEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> FieldEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> Relative : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
-JavaDocClassPageGenerator --> CodeEntity : caller-callee
 class JavaDocIndexPageGenerator {
     org.slf4j.Logger logger
     public void generateIndexPage(Map<String,PackageEntity> packageEntities, JavaDocGenerationContext context)
@@ -44,10 +19,6 @@ class JavaDocIndexPageGenerator {
 }
 JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocIndexPageGenerator --> PackageEntity : caller-callee
-JavaDocIndexPageGenerator --> PackageEntity : caller-callee
 JavaDocIndexPageGenerator --> PackageEntity : caller-callee
 class JavaDocPackagePageGenerator {
     org.slf4j.Logger logger
@@ -56,19 +27,7 @@ class JavaDocPackagePageGenerator {
 }
 JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
 JavaDocPackagePageGenerator --> PackageEntity : caller-callee
 JavaDocPackagePageGenerator --> CodeEntity : caller-callee
-JavaDocPackagePageGenerator --> CodeEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
 }
 @enduml

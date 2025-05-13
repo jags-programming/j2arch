@@ -1,7 +1,5 @@
 package com.pjsoft.j2arch.uml;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.pjsoft.j2arch.core.model.CodeEntity;
 import com.pjsoft.j2arch.core.model.PackageEntity;
 import com.pjsoft.j2arch.core.util.ProgressTracker;
-import com.pjsoft.j2arch.core.util.ProgressTracker.WorkUnitType;
 import com.pjsoft.j2arch.uml.service.ClassDiagramService;
 import com.pjsoft.j2arch.uml.service.SequenceDiagramService;
 import com.pjsoft.j2arch.uml.service.StorageService;

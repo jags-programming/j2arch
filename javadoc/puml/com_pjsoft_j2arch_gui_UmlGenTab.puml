@@ -32,32 +32,13 @@ class UmlGenTab {
     private void updateCustomInputsVisibility()
 }
 UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> ProgressBarComponent : caller-callee
 UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab --> ConfigurationValidator : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab --> UMLDiagramGenerator : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
-UmlGenTab --> ProgressTracker : caller-callee
 UmlGenTab -- UseCase : association
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> GUIStylePathResolver : caller-callee
-UmlGenTab --> GUIStylePathResolver : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
-UmlGenTab --> GUIStyleContext : caller-callee
 UmlGenTab --> ConfigurationLoader : caller-callee
 UmlGenTab --> DefaultContextFactory : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
-UmlGenTab --> UMLGenerationContext : caller-callee
 UmlGenTab --> UMLGenerationContext : caller-callee
 @enduml

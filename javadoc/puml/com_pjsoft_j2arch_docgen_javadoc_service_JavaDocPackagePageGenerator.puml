@@ -7,18 +7,6 @@ class JavaDocPackagePageGenerator {
 }
 JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
 JavaDocPackagePageGenerator --> PackageEntity : caller-callee
 JavaDocPackagePageGenerator --> CodeEntity : caller-callee
-JavaDocPackagePageGenerator --> CodeEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> PackageEntity : caller-callee
-JavaDocPackagePageGenerator --> JavaDocGenerationContext : caller-callee
 @enduml

@@ -6,6 +6,4 @@ class EntryPointDetector {
 }
 EntryPointDetector --> EntryPointStrategy : caller-callee
 EntryPointDetector --> CodeEntity : caller-callee
-EntryPointDetector --> CodeEntity : caller-callee
-EntryPointDetector --> EntryPointStrategy : caller-callee
 @enduml

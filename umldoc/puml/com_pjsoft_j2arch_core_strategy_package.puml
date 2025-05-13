@@ -12,8 +12,6 @@ class EntryPointDetector {
 }
 EntryPointDetector --> EntryPointStrategy : caller-callee
 EntryPointDetector --> CodeEntity : caller-callee
-EntryPointDetector --> CodeEntity : caller-callee
-EntryPointDetector --> EntryPointStrategy : caller-callee
 class EntryPointStrategy {
      List<CodeEntity> identifyEntryPoints(CodeBase codeBase)
      boolean isApplicableToType(String applicationType)

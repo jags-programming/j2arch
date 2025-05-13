@@ -25,13 +25,7 @@ class HtmlGenerator {
     public String loadTemplate(String templateFilePath)
 }
 HtmlGenerator --> ProgressTracker : caller-callee
-HtmlGenerator --> ProgressTracker : caller-callee
 HtmlGenerator -- WorkUnitType : association
-HtmlGenerator -- WorkUnitType : association
-HtmlGenerator --> DiagramInfo : caller-callee
-HtmlGenerator --> DiagramInfo : caller-callee
-HtmlGenerator --> DiagramInfo : caller-callee
-HtmlGenerator --> DiagramInfo : caller-callee
 HtmlGenerator --> DiagramInfo : caller-callee
 }
 @enduml

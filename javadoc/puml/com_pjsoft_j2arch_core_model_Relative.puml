@@ -28,7 +28,4 @@ class Relative {
     public String toString()
 }
 Relative --> CodeEntity : caller-callee
-Relative --> CodeEntity : caller-callee
-Relative --> CodeEntity : caller-callee
-Relative --> CodeEntity : caller-callee
 @enduml

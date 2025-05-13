@@ -11,9 +11,6 @@ class ProjectAnalyzer {
 }
 ProjectAnalyzer --> GenerationContext : caller-callee
 ProjectAnalyzer --> SymbolSolverConfig : caller-callee
-ProjectAnalyzer --> GenerationContext : caller-callee
 ProjectAnalyzer --> JavaParserService : caller-callee
-ProjectAnalyzer --> JavaParserService : caller-callee
-ProjectAnalyzer --> ProgressTracker : caller-callee
 ProjectAnalyzer --> ProgressTracker : caller-callee
 @enduml

@@ -10,13 +10,7 @@ class UMLDiagramGenerator {
 }
 UMLDiagramGenerator --> ProgressTracker : caller-callee
 UMLDiagramGenerator --> ProjectAnalyzer : caller-callee
-UMLDiagramGenerator --> ProjectAnalyzer : caller-callee
-UMLDiagramGenerator --> ProgressTracker : caller-callee
 UMLDiagramGenerator --> UMLGenerationContext : caller-callee
-UMLDiagramGenerator --> ProgressTracker : caller-callee
 UMLDiagramGenerator --> ClassDiagramService : caller-callee
-UMLDiagramGenerator --> ProgressTracker : caller-callee
-UMLDiagramGenerator --> ProgressTracker : caller-callee
 UMLDiagramGenerator --> SequenceDiagramService : caller-callee
-UMLDiagramGenerator --> ProgressTracker : caller-callee
 @enduml

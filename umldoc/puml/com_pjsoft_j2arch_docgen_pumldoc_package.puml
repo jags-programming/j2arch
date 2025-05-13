@@ -13,33 +13,11 @@ class Puml2HtmlDocGenerator {
     private Map<String,DiagramInfo> processFilesAndGenerateDocs(List<File> files, String outputDir, String diagTemplate, ProgressTracker progressTracker)
 }
 Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerationContext : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerator : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerator : caller-callee
-Puml2HtmlDocGenerator --> ProgressTracker : caller-callee
-Puml2HtmlDocGenerator --> ProgressTracker : caller-callee
 Puml2HtmlDocGenerator --> HtmlGenerator : caller-callee
 Puml2HtmlDocGenerator --> ProgressTracker : caller-callee
 Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> HtmlGenerator : caller-callee
-Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> DiagramResult : caller-callee
-Puml2HtmlDocGenerator --> ProgressTracker : caller-callee
-Puml2HtmlDocGenerator -- WorkUnitType : association
-Puml2HtmlDocGenerator -- WorkUnitType : association
 Puml2HtmlDocGenerator -- WorkUnitType : association
 Puml2HtmlDocGenerator --> PathResolver : caller-callee
-Puml2HtmlDocGenerator --> PathResolver : caller-callee
-Puml2HtmlDocGenerator --> ProgressTracker : caller-callee
 Puml2HtmlDocGenerator -- DirectoryConstants : association
-Puml2HtmlDocGenerator -- DirectoryConstants : association
-Puml2HtmlDocGenerator -- WorkUnitType : association
 }
 @enduml

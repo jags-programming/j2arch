@@ -15,24 +15,9 @@ class JavaDocGenTab {
     private GridPane initializeLayout(Stage primaryStage)
 }
 JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
 JavaDocGenTab --> ProgressBarComponent : caller-callee
 JavaDocGenTab --> ConfigurationValidator : caller-callee
 JavaDocGenTab --> JavaDocGenerator : caller-callee
 JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
 JavaDocGenTab -- UseCase : association
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> JavaDocGenerationContext : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
-JavaDocGenTab --> ProgressTracker : caller-callee
 @enduml

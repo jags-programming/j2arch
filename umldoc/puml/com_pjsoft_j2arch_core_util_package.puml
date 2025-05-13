@@ -10,27 +10,10 @@ class ConfigurationValidator {
     public void validateOrCreateDirectory(String directoryPath)
 }
 ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> UMLGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator --> PathResolver : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
-ConfigurationValidator --> HtmlGenerationContext : caller-callee
 ConfigurationValidator -- DirectoryConstants : association
 ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator --> JavaDocGenerationContext : caller-callee
-ConfigurationValidator -- DirectoryConstants : association
 class DirectoryConstants {
     String DEFAULT_INPUT_DIR
     String DEFAULT_OUTPUT_HTMLDOC_DIR
@@ -69,51 +52,14 @@ class JavaParserService {
 JavaParserService --> GenerationContext : caller-callee
 JavaParserService --> SymbolSolverConfig : caller-callee
 JavaParserService --> ProgressTracker : caller-callee
-JavaParserService --> ProgressTracker : caller-callee
-JavaParserService --> ProgressTracker : caller-callee
-JavaParserService --> GenerationContext : caller-callee
 JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> ProgressTracker : caller-callee
-JavaParserService --> ProgressTracker : caller-callee
 JavaParserService --> EntryPointDetector : caller-callee
 JavaParserService -- WorkUnitType : association
-JavaParserService -- WorkUnitType : association
-JavaParserService --> CodeEntity : caller-callee
 JavaParserService -- RelationshipType : association
 JavaParserService -- Relative : association
 JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> MethodEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService -- RelationshipType : association
-JavaParserService -- Relative : association
 JavaParserService --> FieldEntity : caller-callee
-JavaParserService --> FieldEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService -- RelationshipType : association
-JavaParserService -- Relative : association
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService -- RelationshipType : association
-JavaParserService -- Relative : association
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> CodeEntity : caller-callee
 JavaParserService --> Relative : caller-callee
-JavaParserService --> CodeEntity : caller-callee
-JavaParserService --> Relative : caller-callee
-JavaParserService --> GenerationContext : caller-callee
-JavaParserService --> CodeEntity : caller-callee
 class PathResolver {
     public String resolvePath(String baseOutputDir, String subDir)
 }
@@ -145,10 +91,6 @@ class ProgressTracker {
     private void updateProgress()
 }
 ProgressTracker -- UseCase : association
-ProgressTracker -- UseCase : association
-ProgressTracker -- UseCase : association
-ProgressTracker --> ProgressBarComponent : caller-callee
-ProgressTracker --> ProgressBarComponent : caller-callee
 ProgressTracker --> ProgressBarComponent : caller-callee
 class ResourcePaths {
     String CUSTOM_CONFIGFILE_PROPERTY

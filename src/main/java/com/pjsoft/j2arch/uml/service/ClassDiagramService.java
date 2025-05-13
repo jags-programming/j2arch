@@ -391,6 +391,7 @@ public class ClassDiagramService {
             writer.write("}\n");
 
             // Add relationships
+            Set<String> uniqueRelationships = new HashSet<>(); // Track unique relationships
             for (Relative relative : codeEntity.getRelatives()) {
                 String sourceClassName = codeEntity.getName();
                 String targetClassName = relative.getCalleeEntity().getName();
@@ -424,7 +425,9 @@ public class ClassDiagramService {
                         relationship = ""; // Unsupported relationship type
                 }
 
-                if (!relationship.isEmpty()) {
+                if (!relationship.isEmpty() && uniqueRelationships.add(relationship)) {
+                //if (!relationship.isEmpty()) {
+
                     writer.write(relationship + "\n");
                 }
             }
