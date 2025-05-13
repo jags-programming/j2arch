@@ -29,10 +29,7 @@ class ProjectAnalyzer {
 }
 ProjectAnalyzer --> GenerationContext : caller-callee
 ProjectAnalyzer --> SymbolSolverConfig : caller-callee
-ProjectAnalyzer --> GenerationContext : caller-callee
 ProjectAnalyzer --> JavaParserService : caller-callee
-ProjectAnalyzer --> JavaParserService : caller-callee
-ProjectAnalyzer --> ProgressTracker : caller-callee
 ProjectAnalyzer --> ProgressTracker : caller-callee
 class ScenarioBuilder {
     org.slf4j.Logger logger
@@ -45,28 +42,11 @@ class ScenarioBuilder {
     private List<CodeEntity> identifyEntryClasses(List<CodeEntity> codeEntities)
 }
 ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 ScenarioBuilder --> Relative : caller-callee
 ScenarioBuilder --> Scenario : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> Relative : caller-callee
 ScenarioBuilder -- RelationshipType : association
 ScenarioBuilder -- Relative : association
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 class UMLGenerationContext {
     String diagramTypes
     String imagesOutputDirectory

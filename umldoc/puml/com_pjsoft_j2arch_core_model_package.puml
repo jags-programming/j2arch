@@ -46,14 +46,6 @@ class CodeEntity {
 }
 CodeEntity --> Relative : caller-callee
 CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> FieldEntity : caller-callee
-CodeEntity --> MethodEntity : caller-callee
 CodeEntity --> FieldEntity : caller-callee
 class FieldEntity {
     List<String> annotations
@@ -137,9 +129,6 @@ class Relative {
     public String toPlantUmlSyntax(String sourceClassName)
     public String toString()
 }
-Relative --> CodeEntity : caller-callee
-Relative --> CodeEntity : caller-callee
-Relative --> CodeEntity : caller-callee
 Relative --> CodeEntity : caller-callee
 }
 @enduml

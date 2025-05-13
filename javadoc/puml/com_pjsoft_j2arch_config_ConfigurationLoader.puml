@@ -8,8 +8,4 @@ class ConfigurationLoader {
     private boolean loadPropertiesFromFile(Properties properties, File file)
 }
 ConfigurationLoader -- ResourcePaths : association
-ConfigurationLoader -- ResourcePaths : association
-ConfigurationLoader -- ResourcePaths : association
-ConfigurationLoader -- ResourcePaths : association
-ConfigurationLoader -- ResourcePaths : association
 @enduml

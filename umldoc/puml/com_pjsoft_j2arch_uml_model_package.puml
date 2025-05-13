@@ -23,8 +23,5 @@ class Scenario {
     public String toPlantUmlSyntax()
 }
 Scenario --> Interaction : caller-callee
-Scenario --> Interaction : caller-callee
-Scenario --> Interaction : caller-callee
-Scenario --> Interaction : caller-callee
 }
 @enduml

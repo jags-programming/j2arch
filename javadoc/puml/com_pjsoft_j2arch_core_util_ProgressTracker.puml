@@ -24,9 +24,5 @@ class ProgressTracker {
     private void updateProgress()
 }
 ProgressTracker -- UseCase : association
-ProgressTracker -- UseCase : association
-ProgressTracker -- UseCase : association
-ProgressTracker --> ProgressBarComponent : caller-callee
-ProgressTracker --> ProgressBarComponent : caller-callee
 ProgressTracker --> ProgressBarComponent : caller-callee
 @enduml

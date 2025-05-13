@@ -11,26 +11,9 @@ class ScenarioBuilder {
     private List<CodeEntity> identifyEntryClasses(List<CodeEntity> codeEntities)
 }
 ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 ScenarioBuilder --> Relative : caller-callee
 ScenarioBuilder --> Scenario : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> MethodEntity : caller-callee
-ScenarioBuilder --> Relative : caller-callee
-ScenarioBuilder --> Relative : caller-callee
 ScenarioBuilder -- RelationshipType : association
 ScenarioBuilder -- Relative : association
-ScenarioBuilder --> CodeEntity : caller-callee
-ScenarioBuilder --> CodeEntity : caller-callee
 @enduml

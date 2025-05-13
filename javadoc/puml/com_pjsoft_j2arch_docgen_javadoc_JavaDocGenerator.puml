@@ -10,37 +10,12 @@ class JavaDocGenerator {
 }
 JavaDocGenerator --> ProgressTracker : caller-callee
 JavaDocGenerator --> ProjectAnalyzer : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
 JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator --> ProgressTracker : caller-callee
 JavaDocGenerator --> PackageDiagramService : caller-callee
 JavaDocGenerator --> JavaDocPackagePageGenerator : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator --> ProgressTracker : caller-callee
 JavaDocGenerator --> PackageEntity : caller-callee
 JavaDocGenerator --> ClassDiagramService : caller-callee
 JavaDocGenerator --> JavaDocClassPageGenerator : caller-callee
-JavaDocGenerator --> ProgressTracker : caller-callee
-JavaDocGenerator -- WorkUnitType : association
-JavaDocGenerator -- WorkUnitType : association
 JavaDocGenerator --> JavaDocIndexPageGenerator : caller-callee
-JavaDocGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocGenerator --> JavaDocGenerationContext : caller-callee
 @enduml

@@ -7,9 +7,5 @@ class JavaDocIndexPageGenerator {
 }
 JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
 JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocIndexPageGenerator --> JavaDocGenerationContext : caller-callee
-JavaDocIndexPageGenerator --> JavaDocHtmlGenerator : caller-callee
-JavaDocIndexPageGenerator --> PackageEntity : caller-callee
-JavaDocIndexPageGenerator --> PackageEntity : caller-callee
 JavaDocIndexPageGenerator --> PackageEntity : caller-callee
 @enduml

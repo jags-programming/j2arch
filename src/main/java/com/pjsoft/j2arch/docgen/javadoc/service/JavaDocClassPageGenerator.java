@@ -9,7 +9,9 @@ import com.pjsoft.j2arch.docgen.javadoc.util.JavaDocHtmlGenerator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * JavaDocClassPageGenerator
@@ -138,12 +140,20 @@ public class JavaDocClassPageGenerator {
 
         // Generate the table rows for relationships
         StringBuilder relationshipsTable = new StringBuilder();
+        Set<String> uniqueRelationships = new HashSet<>(); // Track unique relationships
+
         for (Relative relative : codeEntity.getRelatives()) {
+            // Create a unique key for the relationship
+    String relationshipKey = relative.getRelationshipType() + ":" + relative.getCalleeEntity().getName();
+
+            // Add the relationship only if it's unique
+            if (uniqueRelationships.add(relationshipKey)) {
             relationshipsTable.append("<tr>")
                     .append("<td>").append(relative.getRelationshipType()).append("</td>")
                     .append("<td>").append(relative.getCalleeEntity().getName()).append("</td>")
                     .append("<td>").append(relative.getDetails()).append("</td>") // Add details if available
                     .append("</tr>");
+            }
         }
 
         // Prepare placeholders

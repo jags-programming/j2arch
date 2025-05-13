@@ -6,16 +6,6 @@ class PackageDiagramService {
 }
 PackageDiagramService --> PackageEntity : caller-callee
 PackageDiagramService --> JavaDocGenerationContext : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
 PackageDiagramService --> CodeEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> JavaDocGenerationContext : caller-callee
 PackageDiagramService --> DiagramImageGenerator : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
-PackageDiagramService --> PackageEntity : caller-callee
 @enduml
