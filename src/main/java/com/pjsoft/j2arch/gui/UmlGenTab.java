@@ -41,9 +41,12 @@ import javafx.stage.Stage;
  * 
  * Dependencies:
  * - {@link GUIStyleContext}: Provides configuration details for GUI styling.
- * - {@link UMLGenerationContext}: Provides configuration details for UML diagram generation.
- * - {@link UMLDiagramGenerator}: Handles the actual UML diagram generation process.
- * - {@link ProgressTracker}: Tracks and updates progress during the generation process.
+ * - {@link UMLGenerationContext}: Provides configuration details for UML
+ * diagram generation.
+ * - {@link UMLDiagramGenerator}: Handles the actual UML diagram generation
+ * process.
+ * - {@link ProgressTracker}: Tracks and updates progress during the generation
+ * process.
  * - JavaFX: Used for building the UI components.
  * 
  * Limitations:
@@ -52,7 +55,8 @@ import javafx.stage.Stage;
  * - Requires user interaction for directory selection.
  * 
  * Thread Safety:
- * - This class is not thread-safe as it relies on JavaFX's single-threaded model.
+ * - This class is not thread-safe as it relies on JavaFX's single-threaded
+ * model.
  * - Uses `Platform.runLater` to ensure thread-safe updates to the UI.
  * 
  * Usage Example:
@@ -71,7 +75,8 @@ public class UmlGenTab {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(UmlGenTab.class);
 
     private final VBox layout; // Main layout of the tab
-    private final ProgressBarComponent progressBarComponent = new ProgressBarComponent(); // Progress bar for tracking progress
+    private final ProgressBarComponent progressBarComponent = new ProgressBarComponent(); // Progress bar for tracking
+                                                                                          // progress
     private Scene scene; // Scene to apply styles
 
     private final VBox customInputsBox = new VBox(10); // Container for custom input fields
@@ -79,6 +84,9 @@ public class UmlGenTab {
     private final RadioButton defaultSettingsOption = new RadioButton("Use default settings");
     private final RadioButton fileSettingsOption = new RadioButton("Load settings from a configuration file");
     private final RadioButton customSettingsOption = new RadioButton("Enter custom inputs interactively");
+
+    // Add a label for explanatory messages
+    private final Label explanationLabel = new Label("Toggle between options to see explanations. Default folders: [./input, ./output] Diagram types [class, sequence]"); // Default message
 
     // Fields for user inputs
     private final TextField inputDirField = new TextField();
@@ -95,7 +103,7 @@ public class UmlGenTab {
      * - Initializes the layout and UI components for the tab.
      * - Sets up event handlers for directory selection and UML diagram generation.
      * 
-     * @param primaryStage   The primary stage of the JavaFX application.
+     * @param primaryStage    The primary stage of the JavaFX application.
      * @param guiStyleContext The context for GUI styling.
      * @param umlContext      The context for UML diagram generation.
      */
@@ -110,8 +118,16 @@ public class UmlGenTab {
 
         Button generateButton = createGenerateButton(umlContext);
 
-        layout = new VBox(15, topRow, configOptionsBox, customInputsBox, generateButton, progressBarComponent);
+        // layout = new VBox(15, topRow, configOptionsBox, customInputsBox,
+        // generateButton, progressBarComponent);
+        // Add the explanation label to the layout
+        layout = new VBox(15, topRow, configOptionsBox, explanationLabel, customInputsBox, generateButton,
+                progressBarComponent);
         layout.setPadding(new Insets(20));
+        // Add a listener to update the explanation label based on the selected radio
+        // button
+        configOptionsGroup.selectedToggleProperty()
+                .addListener((obs, oldToggle, newToggle) -> updateExplanationLabel());
     }
 
     /**
@@ -259,7 +275,8 @@ public class UmlGenTab {
      * 
      * Responsibilities:
      * - Resets the progress bar and status.
-     * - Validates the configuration and starts the generation process in a background thread.
+     * - Validates the configuration and starts the generation process in a
+     * background thread.
      * 
      * @param context The UML generation context.
      */
@@ -302,7 +319,8 @@ public class UmlGenTab {
     }
 
     /**
-     * Updates the visibility of the custom inputs box based on the selected configuration option.
+     * Updates the visibility of the custom inputs box based on the selected
+     * configuration option.
      */
     private void updateCustomInputsVisibility() {
         RadioButton selected = (RadioButton) configOptionsGroup.getSelectedToggle();
@@ -385,8 +403,10 @@ public class UmlGenTab {
     /**
      * Creates a UMLGenerationContext based on custom user inputs.
      * 
-     * @param initialContext The initial context to use as a fallback for missing inputs.
-     * @return A new {@link UMLGenerationContext} based on user inputs and fallback values.
+     * @param initialContext The initial context to use as a fallback for missing
+     *                       inputs.
+     * @return A new {@link UMLGenerationContext} based on user inputs and fallback
+     *         values.
      */
     private UMLGenerationContext getContextFromCustomInputs(UMLGenerationContext initialContext) {
         String inputDir = inputDirField.getText();
@@ -409,5 +429,20 @@ public class UmlGenTab {
                 initialContext.getImagesOutputDirectory(),
                 initialContext.getUnifiedClassDiagram(),
                 initialContext.getLibsDirPath());
+    }
+
+    // Method to update the explanation label based on the selected radio button
+    private void updateExplanationLabel() {
+        RadioButton selected = (RadioButton) configOptionsGroup.getSelectedToggle();
+
+        if (selected == defaultSettingsOption) {
+            explanationLabel.setText("With respect to current folder: [ ./input, ./output ], Diagram types: [ class,sequence ]");
+        } else if (selected == fileSettingsOption) {
+            explanationLabel
+                    .setText("Load settings from a configuration file. With respect to current folder: ./config/application.properties");
+        } else if (selected == customSettingsOption) {
+            explanationLabel
+                    .setText("Enter custom inputs interactively, including input/output folders and diagram types.");
+        }
     }
 }
